@@ -185,6 +185,7 @@ extension MyViewController {
             selectedImage = originalImage
         }
         picker.dismiss(animated: true, completion: nil)
+        
         if let data = UIImageJPEGRepresentation(selectedImage!, 100) {
             
             let myParams: JSON = ["fileName": "newPicture"]

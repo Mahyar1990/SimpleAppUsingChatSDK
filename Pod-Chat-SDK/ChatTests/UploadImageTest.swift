@@ -93,6 +93,8 @@ class UploadImageTest: XCTestCase {
                 print("\(removeContactUniqueId)")
                 print("**********************************************")
                 print("**********************************************\n\n")
+            }, progress: { (progress) in
+                print("progress = \(progress)")
             }, completion: { (responseJSON) in
                 self.somethingWithDelegateAsyncResult = true
                 print("\n\n**********************************************")

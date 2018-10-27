@@ -35,7 +35,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "80afd6e3e0ed4be7b18949f68667e23a"
+    let token                   = "d9246b2f865a4e2e93b7edfd43cf7297"
     
     
     // Local Addresses
@@ -576,7 +576,7 @@ extension MyViewController {
     
     
     @objc func createThreadButtonPressed() {
-        let invitees: [JSON] = [["id": "09122964316", "idType": inviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue]]
+        let invitees: [JSON] = [["id": "2202", "idType": inviteeVOidTypes.TO_BE_USER_CONTACT_ID.rawValue]]
         let paramsToSend: JSON = ["type": "NORMAL", "title": "helooooo", "invitees": invitees]
         myChatObject?.createThread(params: paramsToSend, uniqueId: { (createThreadUniqueId) in
             print("\n create thread reqeuest uniqueId = \t \(createThreadUniqueId) \n")
@@ -728,9 +728,9 @@ extension MyViewController {
     
     
     @objc func addContactButtonPressed() {
-        let params: JSON = ["firstName": "Leornardo2",
-                            "lastName": "DiCaprio2",
-                            "cellphoneNumber": "09122964316"]
+        let params: JSON = ["firstName": "Masoud",
+                            "lastName": "Amjadi",
+                            "cellphoneNumber": "09148401824"]
         myChatObject?.addContact(params: params, uniqueId: { (addContactUniqueId) in
             print("\n add Contact request uniqueId = \t \(addContactUniqueId) \n")
         }, completion: { (myResponse) in
@@ -774,7 +774,7 @@ extension MyViewController {
     
     
     @objc func uploadFileButtonPressed() {
-        let image = UIImage(named: "test")
+        let image = UIImage(named: "pic")
         if let data = UIImageJPEGRepresentation(image!, 1) {
             let myParams: JSON = ["fileName": "newPic"]
             myChatObject?.uploadFile(params: myParams, dataToSend: data, uniqueId: { (uploadFileUniqueId) in
@@ -790,7 +790,6 @@ extension MyViewController {
                 print("********************************")
             })
         }
-        
     }
     
     
@@ -801,7 +800,37 @@ extension MyViewController {
     }
     
     
-    @objc func sendFileMessageButtonnPressed() {  }
+    @objc func sendFileMessageButtonnPressed() {
+        
+        let metadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
+        let paramsToSendMessage: JSON = ["subjectId": 1101, "content": "\(inputTextFieldToSendMessage.text ?? "empty message")", "metaData": metadata]
+        
+        let image = UIImage(named: "pic")
+        if let data = UIImageJPEGRepresentation(image!, 1) {
+            let uploadParams: JSON = ["fileName": "newPic"]
+            
+            myChatObject?.sendFileMessage(textMessagParams: paramsToSendMessage, fileParams: uploadParams, imageToSend: nil, fileToSend: data, uniqueId: { (messageUniqueId) in
+                print("message unique id is = \(messageUniqueId)")
+            }, uploadProgress: { (prpgress) in
+                print("upload progress is = \(prpgress)")
+            }, onSent: { (isSent) in
+                print("++++++++++++++++++++++++++")
+                print("message Sent:")
+                print("\(isSent)")
+                print("++++++++++++++++++++++++++")
+            }, onDelivered: { (isDelivered) in
+                print("++++++++++++++++++++++++++")
+                print("message Deliver:")
+                print("\(isDelivered)")
+                print("++++++++++++++++++++++++++")
+            }, onSeen: { (isSeen) in
+                print("++++++++++++++++++++++++++")
+                print("message Seen:")
+                print("\(isSeen)")
+                print("++++++++++++++++++++++++++")
+            })
+        }
+    }
     
     
     @objc func muteThreadButtonPressed() {
@@ -831,7 +860,25 @@ extension MyViewController {
     
     
     @objc func updateThreadInfoButtonPressed() {
-        
+        let metaData: JSON = ["id": 1202,
+                              "owner": "masoudmanson",
+                              "name": "Masoud"]
+        let paramsToSend: JSON = ["subjectId": 1202,
+                                  "image": "https://static2.farakav.com/files/pictures/thumb/01330672.jpg",
+                                  "description": "توضیحات ترد",
+                                  "title": "عنوان ترد",
+                                  "metadata": metaData]
+        myChatObject?.updateThreadInfo(params: paramsToSend, uniqueId: { (updateThreadInfoUniqueId) in
+            print("***************************")
+            print("update thread info unique id = \(updateThreadInfoUniqueId)")
+            print("***************************")
+        }, completion: { (response) in
+            print("***************************")
+            print("***************************")
+            print("\(response)")
+            print("***************************")
+            print("***************************")
+        })
     }
     
     
@@ -848,15 +895,15 @@ extension MyViewController {
     
     
     @objc func searchContactsButtonPressed() {
-        let paramsToSend: JSON = ["firstName": "mahyar"]
+        let paramsToSend: JSON = ["firstName": ""]
         myChatObject?.searchContacts(params: paramsToSend, uniqueId: { (searchContactsUniqueId) in
             print("\n search ontacts request uniqueId = \t\(searchContactsUniqueId)")
         }, completion: { (myResponse) in
             print("***********************")
-            let myResponseModel: GetContactsModel = myResponse as! GetContactsModel
+            let myResponseModel: ContactModel = myResponse as! ContactModel
             let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
             print("\n this is my get contacts response:")
-            print("\(myResponseJSON) \n")
+            print("\(myResponse) \n")
             print("***********************")
         })
     }
