@@ -49,7 +49,7 @@ class SearchContactTest: XCTestCase {
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "d9246b2f865a4e2e93b7edfd43cf7297"
+    let token                   = "1d089b3fb13d477aa3854b52fc98ba4b"
     
     // Local Addresses
     //    let socketAddress           = "ws://172.16.106.26:8003/ws"

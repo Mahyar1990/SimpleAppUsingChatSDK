@@ -49,7 +49,7 @@ class GetThreadsTest: XCTestCase {
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "71772fa079334cab831d5226a7e2b7f9"
+    let token                   = "2bea25879acc434caeaa978bd7356c0e"
     
     // Local Addresses
 //    let socketAddress           = "ws://172.16.106.26:8003/ws"
@@ -415,6 +415,66 @@ class GetThreadsTest: XCTestCase {
         }
         
     }
+    
+    
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    // MARK: - test with params: 
+    //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+    func test_Search_Thread_With_Count3_containsName_mas() {
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        
+        let spyDelegate = SpyDelegateGetThreads()
+        myChatObject?.delegate = spyDelegate
+        
+        let theExpectation = expectation(description: "Chat calls the delegate as the result of an async method completion")
+        theExpectation.isInverted = true
+        spyDelegate.asyncExpectation = theExpectation
+        
+        waitForExpectations(timeout: 15) { error in
+            if let error = error {
+                XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+            }
+            
+            let theExpectation2 = self.expectation(description: "get threads")
+            let getThreadsParameters: JSON = ["count": 3, "name": "mas"]
+            self.myChatObject?.getThreads(params: getThreadsParameters, uniqueId: { (getThreadsuniqueId) in
+                print("\n\n**********************************************")
+                print("**********************************************")
+                print("Get Threads with params: (count=3, name: ziasdfzi) Unique Id Response:")
+                print("**********************************************")
+                print("**********************************************")
+                print("\(getThreadsuniqueId)")
+                print("**********************************************")
+                print("**********************************************\n\n")
+            }, completion: { (responseJSON) in
+                self.somethingWithDelegateAsyncResult = true
+                print("\n\n**********************************************")
+                print("Get Threads with params: (count: 3, name: ziasdfzi) Test Response:")
+                print("**********************************************")
+                print("**********************************************")
+                let resModel: GetThreadsModel = responseJSON as! GetThreadsModel
+                let resJSON: JSON = resModel.returnDataAsJSON()
+                print("\(resJSON)")
+                print("**********************************************")
+                print("**********************************************\n\n")
+                theExpectation2.fulfill()
+            })
+            
+            self.waitForExpectations(timeout: 15) { error in
+                if let error = error {
+                    XCTFail("waitForExpectationsWithTimeout errored: \(error)")
+                }
+                guard let result = self.somethingWithDelegateAsyncResult else {
+                    XCTFail("Expected delegate to be called")
+                    return
+                }
+                XCTAssertTrue(result)
+            }
+            
+        }
+        
+    }
+    
     
     
     

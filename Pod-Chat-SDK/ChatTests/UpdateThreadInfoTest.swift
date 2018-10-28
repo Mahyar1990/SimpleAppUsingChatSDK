@@ -49,7 +49,7 @@ class UpdateThreadInfoTest: XCTestCase {
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "a6eb34ceca334a0ebaf8f9dae6ad0b83"
+    let token                   = "1d089b3fb13d477aa3854b52fc98ba4b"
     
     // Local Addresses
     //    let socketAddress           = "ws://172.16.106.26:8003/ws"

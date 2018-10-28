@@ -49,7 +49,7 @@ class SendFileMessageTest: XCTestCase {
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "41456ee203a443a8915124f9d6a6cba9"
+    let token                   = "81acce47a05d474384d1cbeb26622812"
     
     // Local Addresses
     //    let socketAddress           = "ws://172.16.106.26:8003/ws"
@@ -232,7 +232,7 @@ class SendFileMessageTest: XCTestCase {
             let myExpectation = self.expectation(description: "send message uniqueId")
             
             let metadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
-            let paramsToSendMessage: JSON = ["subjectId": 1101, "content": "empty message", "metaData": metadata]
+            let paramsToSendMessage: JSON = ["subjectId": 1101, "content": "Message bumber 1", "metaData": metadata]
             
             let image = UIImage(named: "pic", in: Bundle(for: Chat.self), compatibleWith: nil)
 //            let image = UIImage(named: "pic")
@@ -263,7 +263,7 @@ class SendFileMessageTest: XCTestCase {
                 })
             }
             
-            self.waitForExpectations(timeout: 19) { error in
+            self.waitForExpectations(timeout: 22) { error in
                 if let error = error {
                     XCTFail("waitForExpectationsWithTimeout errored: \(error)")
                 }

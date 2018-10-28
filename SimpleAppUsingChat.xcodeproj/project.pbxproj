@@ -12,9 +12,9 @@
 		3E63A06C213A526F00E4E2C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E63A06B213A526F00E4E2C2 /* Assets.xcassets */; };
 		3E63A06F213A526F00E4E2C2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E63A06D213A526F00E4E2C2 /* LaunchScreen.storyboard */; };
 		3E63A07A213A526F00E4E2C2 /* SimpleAppUsingChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63A079213A526F00E4E2C2 /* SimpleAppUsingChatTests.swift */; };
-		3E78AACB2184B1A8002A6EC0 /* Pod-Chat-SDK in Resources */ = {isa = PBXBuildFile; fileRef = 3E78AACA2184B1A8002A6EC0 /* Pod-Chat-SDK */; };
-		3E78AAD92184B1B7002A6EC0 /* Chat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E78AAD62184B1AB002A6EC0 /* Chat.framework */; };
 		3E85E841217B47E000CAE8EE /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E85E840217B47E000CAE8EE /* File.swift */; };
+		3EAF96E52185E242002E3915 /* Pod-Chat-SDK in Resources */ = {isa = PBXBuildFile; fileRef = 3EAF96E42185E242002E3915 /* Pod-Chat-SDK */; };
+		3EAF96F32185E253002E3915 /* Chat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EAF96F02185E247002E3915 /* Chat.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,16 +25,16 @@
 			remoteGlobalIDString = 3E63A060213A526D00E4E2C2;
 			remoteInfo = SimpleAppUsingChat;
 		};
-		3E78AAD52184B1AB002A6EC0 /* PBXContainerItemProxy */ = {
+		3EAF96EF2185E247002E3915 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 3E78AAD02184B1AB002A6EC0 /* Chat.xcodeproj */;
+			containerPortal = 3EAF96EA2185E247002E3915 /* Chat.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 3EE025ED21206E63001810FB;
 			remoteInfo = Chat;
 		};
-		3E78AAD72184B1AB002A6EC0 /* PBXContainerItemProxy */ = {
+		3EAF96F12185E247002E3915 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 3E78AAD02184B1AB002A6EC0 /* Chat.xcodeproj */;
+			containerPortal = 3EAF96EA2185E247002E3915 /* Chat.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 3EE025F621206E63001810FB;
 			remoteInfo = ChatTests;
@@ -51,9 +51,9 @@
 		3E63A075213A526F00E4E2C2 /* SimpleAppUsingChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleAppUsingChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E63A079213A526F00E4E2C2 /* SimpleAppUsingChatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleAppUsingChatTests.swift; sourceTree = "<group>"; };
 		3E63A07B213A526F00E4E2C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3E78AACA2184B1A8002A6EC0 /* Pod-Chat-SDK */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Pod-Chat-SDK"; sourceTree = "<group>"; };
-		3E78AAD02184B1AB002A6EC0 /* Chat.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Chat.xcodeproj; path = "Pod-Chat-SDK/Chat.xcodeproj"; sourceTree = "<group>"; };
 		3E85E840217B47E000CAE8EE /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		3EAF96E42185E242002E3915 /* Pod-Chat-SDK */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Pod-Chat-SDK"; sourceTree = "<group>"; };
+		3EAF96EA2185E247002E3915 /* Chat.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Chat.xcodeproj; path = "Pod-Chat-SDK/Chat.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +61,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E78AAD92184B1B7002A6EC0 /* Chat.framework in Frameworks */,
+				3EAF96F32185E253002E3915 /* Chat.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,8 +81,8 @@
 				3E63A063213A526D00E4E2C2 /* SimpleAppUsingChat */,
 				3E63A078213A526F00E4E2C2 /* SimpleAppUsingChatTests */,
 				3E63A062213A526D00E4E2C2 /* Products */,
-				3E78AAD02184B1AB002A6EC0 /* Chat.xcodeproj */,
-				3E78AACA2184B1A8002A6EC0 /* Pod-Chat-SDK */,
+				3EAF96EA2185E247002E3915 /* Chat.xcodeproj */,
+				3EAF96E42185E242002E3915 /* Pod-Chat-SDK */,
 				3E68E2BA21439100002C1E6B /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -125,11 +125,11 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		3E78AAD12184B1AB002A6EC0 /* Products */ = {
+		3EAF96EB2185E247002E3915 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3E78AAD62184B1AB002A6EC0 /* Chat.framework */,
-				3E78AAD82184B1AB002A6EC0 /* ChatTests.xctest */,
+				3EAF96F02185E247002E3915 /* Chat.framework */,
+				3EAF96F22185E247002E3915 /* ChatTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -204,8 +204,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 3E78AAD12184B1AB002A6EC0 /* Products */;
-					ProjectRef = 3E78AAD02184B1AB002A6EC0 /* Chat.xcodeproj */;
+					ProductGroup = 3EAF96EB2185E247002E3915 /* Products */;
+					ProjectRef = 3EAF96EA2185E247002E3915 /* Chat.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -217,18 +217,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		3E78AAD62184B1AB002A6EC0 /* Chat.framework */ = {
+		3EAF96F02185E247002E3915 /* Chat.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Chat.framework;
-			remoteRef = 3E78AAD52184B1AB002A6EC0 /* PBXContainerItemProxy */;
+			remoteRef = 3EAF96EF2185E247002E3915 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3E78AAD82184B1AB002A6EC0 /* ChatTests.xctest */ = {
+		3EAF96F22185E247002E3915 /* ChatTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = ChatTests.xctest;
-			remoteRef = 3E78AAD72184B1AB002A6EC0 /* PBXContainerItemProxy */;
+			remoteRef = 3EAF96F12185E247002E3915 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -238,7 +238,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E78AACB2184B1A8002A6EC0 /* Pod-Chat-SDK in Resources */,
+				3EAF96E52185E242002E3915 /* Pod-Chat-SDK in Resources */,
 				3E63A06F213A526F00E4E2C2 /* LaunchScreen.storyboard in Resources */,
 				3E63A06C213A526F00E4E2C2 /* Assets.xcassets in Resources */,
 			);

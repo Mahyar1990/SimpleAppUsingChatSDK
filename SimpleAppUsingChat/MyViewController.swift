@@ -35,7 +35,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "d9246b2f865a4e2e93b7edfd43cf7297"
+    let token                   = "f8e5f460bb4549669168412012a75217"
     
     
     // Local Addresses
@@ -712,13 +712,14 @@ extension MyViewController {
     
     
     @objc func addParticipantsButtonPressed() {
-        //        let paramsToSend: JSON = ["threadId": 1133, "contacts": [583, 583]]
-        //        myChatObject?.addParticipants(params: paramsToSend, uniqueId: { (addParticipantsUniqueId) in
-        //            print("\n add participant request uniqueId = \t \(addParticipantsUniqueId) \n")
-        //        }, completion: { (myResponse) in
-        //            print("\n this is my add participants response:")
-        //            print("\(myResponse) \n")
-        //        })
+        let paramsToSend: JSON = ["threadId": 1101, "contacts": [583, 583]]
+        
+        myChatObject?.addParticipants(params: paramsToSend, uniqueId: { (addParticipantsUniqueId) in
+            print("\n add participant request uniqueId = \t \(addParticipantsUniqueId) \n")
+        }, completion: { (myResponse) in
+            print("\n this is my add participants response:")
+            print("\(myResponse) \n")
+        })
     }
     
     
