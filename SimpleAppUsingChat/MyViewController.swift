@@ -35,7 +35,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "f8e5f460bb4549669168412012a75217"
+    let token                   = "c332d0ff983c48b988114adc6a89c12b"
     
     
     // Local Addresses
@@ -718,13 +718,24 @@ extension MyViewController {
             print("\n add participant request uniqueId = \t \(addParticipantsUniqueId) \n")
         }, completion: { (myResponse) in
             print("\n this is my add participants response:")
-            print("\(myResponse) \n")
+            let response: AddParticipantModel = myResponse as! AddParticipantModel
+            let responseJSON: JSON = response.returnDataAsJSON()
+            print("\(responseJSON) \n")
         })
     }
     
     
     @objc func removeParticipantsButtonPressed() {
+        let paramsToSend: JSON = ["threadId": 1101, "participants": 123]
         
+        myChatObject?.removeParticipants(params: paramsToSend, uniqueId: { (removeParticipantsUniqueId) in
+            print("\n remove participant request uniqueId = \t \(removeParticipantsUniqueId) \n")
+        }, completion: { (myResponse) in
+            print("\n this is my remove participants response:")
+            let response: AddParticipantModel = myResponse as! AddParticipantModel
+            let responseJSON: JSON = response.returnDataAsJSON()
+            print("\(responseJSON) \n")
+        })
     }
     
     
