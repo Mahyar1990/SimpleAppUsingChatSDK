@@ -44,6 +44,10 @@ extension MyViewController {
         view.addSubview(searchContactButton)
         view.addSubview(searchHistoryButton)
         
+        view.addSubview(blockButton)
+        view.addSubview(unblockButton)
+        view.addSubview(getBlockedButton)
+        
         view.addSubview(logView)
         logView.addSubview(myLogCollectionView)
         
@@ -163,7 +167,22 @@ extension MyViewController {
         searchHistoryButton.rightAnchor.constraint(equalTo: getUserInfoButton.rightAnchor).isActive = true
         searchHistoryButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
         
-        logView.topAnchor.constraint(equalTo: searchHistoryButton.bottomAnchor, constant: 8).isActive = true
+        blockButton.topAnchor.constraint(equalTo: searchHistoryButton.bottomAnchor, constant: 8).isActive = true
+        blockButton.leftAnchor.constraint(equalTo: getUserInfoButton.leftAnchor).isActive = true
+        blockButton.rightAnchor.constraint(equalTo: getUserInfoButton.rightAnchor).isActive = true
+        blockButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        
+        unblockButton.topAnchor.constraint(equalTo: blockButton.topAnchor).isActive = true
+        unblockButton.leftAnchor.constraint(equalTo: getThreadsButton.leftAnchor).isActive = true
+        unblockButton.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
+        unblockButton.bottomAnchor.constraint(equalTo: blockButton.bottomAnchor).isActive = true
+        
+        getBlockedButton.topAnchor.constraint(equalTo: blockButton.bottomAnchor, constant: 8).isActive = true
+        getBlockedButton.leftAnchor.constraint(equalTo: getUserInfoButton.leftAnchor).isActive = true
+        getBlockedButton.rightAnchor.constraint(equalTo: getUserInfoButton.rightAnchor).isActive = true
+        getBlockedButton.heightAnchor.constraint(equalToConstant: 25).isActive = true
+        
+        logView.topAnchor.constraint(equalTo: getBlockedButton.bottomAnchor, constant: 8).isActive = true
         logView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true
         logView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -8).isActive = true
         logView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8).isActive = true

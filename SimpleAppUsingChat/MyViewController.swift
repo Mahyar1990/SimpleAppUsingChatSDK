@@ -35,7 +35,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "c332d0ff983c48b988114adc6a89c12b"
+    let token                   = "0ade894c93bb4164bf7467aef86ffe1d"
     
     
     // Local Addresses
@@ -465,6 +465,62 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         mb.titleLabel?.numberOfLines = 1
         mb.titleLabel?.adjustsFontSizeToFitWidth = true
         mb.addTarget(self, action: #selector(searchHistoryButtonPressed), for: UIControlEvents.touchUpInside)
+        return mb
+    }()
+    
+    
+    let blockButton: UIButton = {
+        let mb = UIButton()
+        mb.translatesAutoresizingMaskIntoConstraints = false
+        mb.setTitle("Block...", for: UIControlState.normal)
+        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
+        mb.layer.cornerRadius = 5
+        mb.layer.borderWidth = 2
+        mb.layer.borderColor = UIColor.clear.cgColor
+        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
+        mb.layer.shadowOpacity = 2
+        mb.layer.shadowRadius = 1
+        mb.layer.shadowOffset = CGSize(width: 0, height: 3)
+        mb.titleLabel?.numberOfLines = 1
+        mb.titleLabel?.adjustsFontSizeToFitWidth = true
+        mb.addTarget(self, action: #selector(blockUserButtonPressed), for: UIControlEvents.touchUpInside)
+        return mb
+    }()
+    
+    
+    let unblockButton: UIButton = {
+        let mb = UIButton()
+        mb.translatesAutoresizingMaskIntoConstraints = false
+        mb.setTitle("Unblock...", for: UIControlState.normal)
+        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
+        mb.layer.cornerRadius = 5
+        mb.layer.borderWidth = 2
+        mb.layer.borderColor = UIColor.clear.cgColor
+        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
+        mb.layer.shadowOpacity = 2
+        mb.layer.shadowRadius = 1
+        mb.layer.shadowOffset = CGSize(width: 0, height: 3)
+        mb.titleLabel?.numberOfLines = 1
+        mb.titleLabel?.adjustsFontSizeToFitWidth = true
+        mb.addTarget(self, action: #selector(unblockUserButtonPressed), for: UIControlEvents.touchUpInside)
+        return mb
+    }()
+    
+    let getBlockedButton: UIButton = {
+        let mb = UIButton()
+        mb.translatesAutoresizingMaskIntoConstraints = false
+        mb.setTitle("Get Block List...", for: UIControlState.normal)
+        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
+        mb.layer.cornerRadius = 5
+        mb.layer.borderWidth = 2
+        mb.layer.borderColor = UIColor.clear.cgColor
+        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
+        mb.layer.shadowOpacity = 2
+        mb.layer.shadowRadius = 1
+        mb.layer.shadowOffset = CGSize(width: 0, height: 3)
+        mb.titleLabel?.numberOfLines = 1
+        mb.titleLabel?.adjustsFontSizeToFitWidth = true
+        mb.addTarget(self, action: #selector(getBlockedUserButtonPressed), for: UIControlEvents.touchUpInside)
         return mb
     }()
     
@@ -924,6 +980,46 @@ extension MyViewController {
     @objc func searchHistoryButtonPressed() {  }
     @objc func searchThreadButtonPressed() {  }
  
+    @objc func blockUserButtonPressed() {
+        let paramsToSend: JSON = ["contactId": 563]
+        myChatObject?.block(params: paramsToSend, uniqueId: { (blockUniqueId) in
+            print("\n block request uniqueId = \t \(blockUniqueId) \n")
+        }, completion: { (myResponse) in
+            print("***********************")
+            print("\n this is my block response:")
+            let myResponseModel: BlockedUserModel = myResponse as! BlockedUserModel
+            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+            print("\(myResponseJSON) \n")
+            print("***********************")
+        })
+    }
+    
+    @objc func unblockUserButtonPressed() {
+        let paramsToSend: JSON = ["blockId": 42]
+        myChatObject?.unblock(params: paramsToSend, uniqueId: { (blockUniqueId) in
+            print("\n unblock request uniqueId = \t \(blockUniqueId) \n")
+        }, completion: { (myResponse) in
+            print("***********************")
+            print("\n this is my unblock response:")
+            let myResponseModel: BlockedUserModel = myResponse as! BlockedUserModel
+            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+            print("\(myResponseJSON) \n")
+            print("***********************")
+        })
+    }
+    
+    @objc func getBlockedUserButtonPressed() {
+        myChatObject?.getBlocked(params: nil, uniqueId: { (getBlockedListUniqueId) in
+            print("\n get blocked list request uniqueId = \t \(getBlockedListUniqueId) \n")
+        }, completion: { (myResponse) in
+            let myResponseModel: GetBlockedListModel = myResponse as! GetBlockedListModel
+            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+            print("\n this is my get thread response:")
+            print("\(myResponseJSON) \n")
+        })
+    }
+    
+    
     
 }
 

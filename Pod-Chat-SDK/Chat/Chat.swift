@@ -142,6 +142,9 @@ public class Chat {
     private var muteThreadCallbackToUser: callbackTypeAlias?
     private var unmuteThreadCallbackToUser: callbackTypeAlias?
     private var updateThreadInfoCallbackToUser: callbackTypeAlias?
+    private var blockCallbackToUser: callbackTypeAlias?
+    private var unblockCallbackToUser: callbackTypeAlias?
+    private var getBlockedCallbackToUser: callbackTypeAlias?
     
     var tempSendMessageArr: [[String : JSON]] = []
     var tempReceiveMessageArr: [[String: JSON]] = []
@@ -633,11 +636,27 @@ extension Chat {
             break
             
         case chatMessageVOTypes.BLOCK.rawValue:
-            
+            print("\n:: On Chat:\n Message BLOCK recieved\n")
+            if Chat.map[uniqueId] != nil {
+                let returnData: JSON = createReturnData(hasError: false, errorMessage: "", errorCode: 0, result: messageContent, resultAsString: nil, contentCount: contentCount)
+                let callback: CallbackProtocol = Chat.map[uniqueId]!
+                callback.onResultCallback(uID: uniqueId, response: returnData, success: { (successJSON) in
+                    self.blockCallbackToUser?(successJSON)
+                }) { _ in }
+                Chat.map.removeValue(forKey: uniqueId)
+            }
             break
             
         case chatMessageVOTypes.UNBLOCK.rawValue:
-            
+            print("\n:: On Chat:\n Message UNBLOCK recieved\n")
+            if Chat.map[uniqueId] != nil {
+                let returnData: JSON = createReturnData(hasError: false, errorMessage: "", errorCode: 0, result: messageContent, resultAsString: nil, contentCount: contentCount)
+                let callback: CallbackProtocol = Chat.map[uniqueId]!
+                callback.onResultCallback(uID: uniqueId, response: returnData, success: { (successJSON) in
+                    self.unblockCallbackToUser?(successJSON)
+                }) { _ in }
+                Chat.map.removeValue(forKey: uniqueId)
+            }
             break
             
         case chatMessageVOTypes.LEAVE_THREAD.rawValue:
@@ -818,7 +837,15 @@ extension Chat {
             }
             break
         case chatMessageVOTypes.GET_BLOCKED.rawValue:
-            //
+            print("\n:: On Chat:\n Message GET_BLOCKED recieved\n")
+            if Chat.map[uniqueId] != nil {
+                let returnData: JSON = createReturnData(hasError: false, errorMessage: "", errorCode: 0, result: messageContent, resultAsString: nil, contentCount: contentCount)
+                let callback: CallbackProtocol = Chat.map[uniqueId]!
+                callback.onResultCallback(uID: uniqueId, response: returnData, success: { (successJSON) in
+                    self.getBlockedCallbackToUser?(successJSON)
+                }) { _ in }
+                Chat.map.removeValue(forKey: uniqueId)
+            }
             break
         case chatMessageVOTypes.THREAD_PARTICIPANTS.rawValue:
             print("\n:: On Chat:\n Message THREAD_PARTICIPANTS recieved\n")
@@ -2089,8 +2116,76 @@ extension Chat {
             uniqueId(updateThreadInfoUniqueId)
         }
         updateThreadInfoCallbackToUser = completion
-        
     }
+    
+    
+    public func block(params: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+        print("\n On Chat")
+        print(":: \t Try to request to block user with this parameters:")
+        print("\(params) \n")
+        
+        var sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.BLOCK.rawValue]
+        
+        var content: JSON = [:]
+        
+        if let contactId = params["contactId"].int {
+            content["contactId"] = JSON(contactId)
+        }
+        
+        sendMessageParams["content"] = JSON("\(content)")
+        
+        sendMessageWithCallback(params: sendMessageParams, callback: BlockCallbacks(), sentCallback: nil, deliverCallback: nil, seenCallback: nil) { (blockUniqueId) in
+            uniqueId(blockUniqueId)
+        }
+        blockCallbackToUser = completion
+    }
+    
+    
+    public func unblock(params: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+        print("\n On Chat")
+        print(":: \t Try to request to unblock user with this parameters:")
+        print("\(params) \n")
+        
+        var sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.UNBLOCK.rawValue]
+        
+        if let subjectId = params["blockId"].int {
+            sendMessageParams["subjectId"] = JSON(subjectId)
+        }
+        
+        sendMessageWithCallback(params: sendMessageParams, callback: UnblockCallbacks(), sentCallback: nil, deliverCallback: nil, seenCallback: nil) { (blockUniqueId) in
+            uniqueId(blockUniqueId)
+        }
+        unblockCallbackToUser = completion
+    }
+    
+    
+    public func getBlocked(params: JSON?, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+        print("\n On Chat")
+        print(":: \t Try to request to get block users with this parameters:")
+        print("\(params ?? "there isn't any parameter") \n")
+        
+        var content: JSON = ["count": 50, "offset": 0]
+        if let parameters = params {
+            if let count = parameters["count"].int {
+                if count > 0 {
+                    content.appendIfDictionary(key: "count", json: JSON(count))
+                }
+            }
+            if let offset = parameters["offset"].int {
+                if offset > 0 {
+                    content.appendIfDictionary(key: "offset", json: JSON(offset))
+                }
+            }
+        }
+        let sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.GET_BLOCKED.rawValue,
+                                       "content": content]
+        
+        sendMessageWithCallback(params: sendMessageParams, callback: GetBlocked(parameters: sendMessageParams), sentCallback: nil, deliverCallback: nil, seenCallback: nil) { (getBlockedUniqueId) in
+            uniqueId(getBlockedUniqueId)
+        }
+        getBlockedCallbackToUser = completion
+    }
+    
     
     
     
@@ -2229,7 +2324,6 @@ extension Chat {
                 let getThreadsModel = GetThreadsModel(messageContent: messageContent, contentCount: contentCount, count: count, offset: offset, hasError: hasError, errorMessage: errorMessage, errorCode: errorCode)
                 
                 success(getThreadsModel)
-                
             }
         }
         
@@ -2503,6 +2597,70 @@ extension Chat {
             success(response)
         }
         
+    }
+    
+    
+    private class BlockCallbacks: CallbackProtocol {
+        func onResultCallback(uID: String, response: JSON, success: @escaping callbackTypeAlias, failure: @escaping callbackTypeAlias) {
+            
+            let hasError = response["hasError"].boolValue
+            let errorMessage = response["errorMessage"].stringValue
+            let errorCode = response["errorCode"].intValue
+            
+            if response["result"] != JSON.null {
+                let messageContent = response["result"]
+                
+                let blockUserModel = BlockedUserModel(messageContent: messageContent, hasError: hasError, errorMessage: errorMessage, errorCode: errorCode)
+                
+                success(blockUserModel)
+            }
+        }
+    }
+    
+    
+    private class UnblockCallbacks: CallbackProtocol {
+        func onResultCallback(uID: String, response: JSON, success: @escaping callbackTypeAlias, failure: @escaping callbackTypeAlias) {
+            
+            let hasError = response["hasError"].boolValue
+            let errorMessage = response["errorMessage"].stringValue
+            let errorCode = response["errorCode"].intValue
+            
+            if response["result"] != JSON.null {
+                let messageContent = response["result"]
+                
+                let unblockUserModel = BlockedUserModel(messageContent: messageContent, hasError: hasError, errorMessage: errorMessage, errorCode: errorCode)
+                
+                success(unblockUserModel)
+            }
+        }
+    }
+    
+    
+    private class GetBlocked: CallbackProtocol {
+        var sendParams: JSON
+        init(parameters: JSON) {
+            self.sendParams = parameters
+        }
+        func onResultCallback(uID: String, response: JSON, success: @escaping callbackTypeAlias, failure: @escaping callbackTypeAlias) {
+            
+            let hasError = response["hasError"].boolValue
+            let errorMessage = response["errorMessage"].stringValue
+            let errorCode = response["errorCode"].intValue
+            
+            if (!hasError) {
+                let content = sendParams["content"]
+                let count = content["count"].intValue
+                let offset = content["offset"].intValue
+                
+                let messageContent: [JSON] = response["result"].arrayValue
+                let contentCount = response["contentCount"].intValue
+                
+                let getBlockedModel = GetBlockedListModel(messageContent: messageContent, contentCount: contentCount, count: count, offset: offset, hasError: hasError, errorMessage: errorMessage, errorCode: errorCode)
+                
+                success(getBlockedModel)
+            }
+            
+        }
     }
     
     

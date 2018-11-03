@@ -61,7 +61,7 @@ open class GetThreadsModel {
     let errorMessage:       String
     let errorCode:          Int
     
-    // result model
+    // result models
     var contentCount:       Int = 0
     var hasNext:            Bool = false
     var nextOffset:         Int = 0
