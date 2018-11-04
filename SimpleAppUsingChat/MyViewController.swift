@@ -35,7 +35,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "0ade894c93bb4164bf7467aef86ffe1d"
+    let token                   = "1e1263b3e0ed4d4c8b61ca6db8c1bf41"
     
     
     // Local Addresses
@@ -524,6 +524,42 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         return mb
     }()
     
+    let leaveThreadButton: UIButton = {
+        let mb = UIButton()
+        mb.translatesAutoresizingMaskIntoConstraints = false
+        mb.setTitle("Leave Thread...", for: UIControlState.normal)
+        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
+        mb.layer.cornerRadius = 5
+        mb.layer.borderWidth = 2
+        mb.layer.borderColor = UIColor.clear.cgColor
+        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
+        mb.layer.shadowOpacity = 2
+        mb.layer.shadowRadius = 1
+        mb.layer.shadowOffset = CGSize(width: 0, height: 3)
+        mb.titleLabel?.numberOfLines = 1
+        mb.titleLabel?.adjustsFontSizeToFitWidth = true
+        mb.addTarget(self, action: #selector(leaveThreadButtonPressed), for: UIControlEvents.touchUpInside)
+        return mb
+    }()
+    
+    let spamThreadButton: UIButton = {
+        let mb = UIButton()
+        mb.translatesAutoresizingMaskIntoConstraints = false
+        mb.setTitle("Spam Pv Thread...", for: UIControlState.normal)
+        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
+        mb.layer.cornerRadius = 5
+        mb.layer.borderWidth = 2
+        mb.layer.borderColor = UIColor.clear.cgColor
+        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
+        mb.layer.shadowOpacity = 2
+        mb.layer.shadowRadius = 1
+        mb.layer.shadowOffset = CGSize(width: 0, height: 3)
+        mb.titleLabel?.numberOfLines = 1
+        mb.titleLabel?.adjustsFontSizeToFitWidth = true
+        mb.addTarget(self, action: #selector(spamThreadButtonPressed), for: UIControlEvents.touchUpInside)
+        return mb
+    }()
+    
     
     let logView: UIView = {
         let mv = UIView()
@@ -619,7 +655,7 @@ extension MyViewController {
     
     
     @objc func getThreadParticipantsButtonPressed() {
-        let paramsToSend: JSON = ["count": 3, "offset": 0, "threadId": 1133]
+        let paramsToSend: JSON = ["count": 3, "offset": 0, "threadId": 1323]
         myChatObject?.getThreadParticipants(params: paramsToSend, uniqueId: { (getThreadParticipantUniqueId) in
             print("\n get thread participant request unique id = \t \(getThreadParticipantUniqueId) \t")
         }, completion: { (myResponse) in
@@ -632,8 +668,13 @@ extension MyViewController {
     
     
     @objc func createThreadButtonPressed() {
-        let invitees: [JSON] = [["id": "2202", "idType": inviteeVOidTypes.TO_BE_USER_CONTACT_ID.rawValue]]
-        let paramsToSend: JSON = ["type": "NORMAL", "title": "helooooo", "invitees": invitees]
+        let user1: JSON = ["id": "2202", "idType": inviteeVOidTypes.TO_BE_USER_CONTACT_ID.rawValue]
+        let user2: JSON = ["id": "121", "idType": inviteeVOidTypes.TO_BE_USER_SSO_ID.rawValue]
+        let user3: JSON = ["id": "2306", "idType": inviteeVOidTypes.TO_BE_USER_CONTACT_ID.rawValue] // 2306
+        
+        let invitees: [JSON] = [user1, user3]
+        
+        let paramsToSend: JSON = ["type": createThreadTypes.PUBLIC_GROUP.rawValue, "title": "helooooo", "invitees": invitees]
         myChatObject?.createThread(params: paramsToSend, uniqueId: { (createThreadUniqueId) in
             print("\n create thread reqeuest uniqueId = \t \(createThreadUniqueId) \n")
         }, completion: { (myResponse) in
@@ -768,7 +809,7 @@ extension MyViewController {
     
     
     @objc func addParticipantsButtonPressed() {
-        let paramsToSend: JSON = ["threadId": 1101, "contacts": [583, 583]]
+        let paramsToSend: JSON = ["threadId": 1323, "contacts": [2202, 952, 1281, 2306]]
         
         myChatObject?.addParticipants(params: paramsToSend, uniqueId: { (addParticipantsUniqueId) in
             print("\n add participant request uniqueId = \t \(addParticipantsUniqueId) \n")
@@ -782,13 +823,13 @@ extension MyViewController {
     
     
     @objc func removeParticipantsButtonPressed() {
-        let paramsToSend: JSON = ["threadId": 1101, "participants": 123]
+        let paramsToSend: JSON = ["threadId": 1323, "participants": [1, 2]]
         
         myChatObject?.removeParticipants(params: paramsToSend, uniqueId: { (removeParticipantsUniqueId) in
             print("\n remove participant request uniqueId = \t \(removeParticipantsUniqueId) \n")
         }, completion: { (myResponse) in
             print("\n this is my remove participants response:")
-            let response: AddParticipantModel = myResponse as! AddParticipantModel
+            let response: RemoveParticipantModel = myResponse as! RemoveParticipantModel
             let responseJSON: JSON = response.returnDataAsJSON()
             print("\(responseJSON) \n")
         })
@@ -796,9 +837,9 @@ extension MyViewController {
     
     
     @objc func addContactButtonPressed() {
-        let params: JSON = ["firstName": "Masoud",
-                            "lastName": "Amjadi",
-                            "cellphoneNumber": "09148401824"]
+        let params: JSON = ["firstName": "Pouria",
+                            "lastName": "Pahlevani",
+                            "cellphoneNumber": "09387181694"]
         myChatObject?.addContact(params: params, uniqueId: { (addContactUniqueId) in
             print("\n add Contact request uniqueId = \t \(addContactUniqueId) \n")
         }, completion: { (myResponse) in
@@ -979,6 +1020,7 @@ extension MyViewController {
     
     @objc func searchHistoryButtonPressed() {  }
     @objc func searchThreadButtonPressed() {  }
+    
  
     @objc func blockUserButtonPressed() {
         let paramsToSend: JSON = ["contactId": 563]
@@ -994,6 +1036,7 @@ extension MyViewController {
         })
     }
     
+    
     @objc func unblockUserButtonPressed() {
         let paramsToSend: JSON = ["blockId": 42]
         myChatObject?.unblock(params: paramsToSend, uniqueId: { (blockUniqueId) in
@@ -1008,6 +1051,7 @@ extension MyViewController {
         })
     }
     
+    
     @objc func getBlockedUserButtonPressed() {
         myChatObject?.getBlocked(params: nil, uniqueId: { (getBlockedListUniqueId) in
             print("\n get blocked list request uniqueId = \t \(getBlockedListUniqueId) \n")
@@ -1019,6 +1063,29 @@ extension MyViewController {
         })
     }
     
+    
+    @objc func leaveThreadButtonPressed() {
+        let paramsToSend: JSON = ["threadId": 1324]
+        myChatObject?.leaveThread(params: paramsToSend, uniqueId: { (leaveThreadUniqueId) in
+            print("\n get blocked list request uniqueId = \t \(leaveThreadUniqueId) \n")
+        }, completion: { (myResponse) in
+            let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
+            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+            print("\n this is my leave thread response:")
+            print("\(myResponseJSON) \n")
+        })
+    }
+    
+    
+    @objc func spamThreadButtonPressed() {
+        let paramsToSend: JSON = ["threadId": 1329]
+        myChatObject?.spamPvThread(params: paramsToSend, uniqueId: { (spamThreadUniqueId) in
+            print("\n get blocked list request uniqueId = \t \(spamThreadUniqueId) \n")
+        }, completion: { (myResponse) in
+            print("\n this is my spam thread response:")
+            print("\(myResponse) \n")
+        })
+    }
     
     
 }

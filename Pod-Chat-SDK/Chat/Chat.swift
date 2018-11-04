@@ -145,6 +145,8 @@ public class Chat {
     private var blockCallbackToUser: callbackTypeAlias?
     private var unblockCallbackToUser: callbackTypeAlias?
     private var getBlockedCallbackToUser: callbackTypeAlias?
+    private var leaveThreadCallbackToUser: callbackTypeAlias?
+    private var spamPvThreadCallbackToUser: callbackTypeAlias?
     
     var tempSendMessageArr: [[String : JSON]] = []
     var tempReceiveMessageArr: [[String: JSON]] = []
@@ -660,8 +662,36 @@ extension Chat {
             break
             
         case chatMessageVOTypes.LEAVE_THREAD.rawValue:
-            //
+            print("\n:: On Chat:\n Message LEAVE_THREAD recieved\n")
+            if Chat.map[uniqueId] != nil {
+                let returnData: JSON = createReturnData(hasError: false, errorMessage: "", errorCode: 0, result: messageContent, resultAsString: nil, contentCount: contentCount)
+                let callback: CallbackProtocol = Chat.map[uniqueId]!
+                callback.onResultCallback(uID: uniqueId, response: returnData, success: { (successJSON) in
+                    self.leaveThreadCallbackToUser?(successJSON)
+                }) { _ in }
+                Chat.map.removeValue(forKey: uniqueId)
+            }
+            
+            let threadIds = messageContent["id"].intValue
+            let paramsToSend: JSON = ["threadIds": threadIds]
+            getThreads(params: paramsToSend, uniqueId: { _ in }) { (response) in
+                
+                let responseModel: GetThreadsModel = response as! GetThreadsModel
+                let responseJSON: JSON = responseModel.returnDataAsJSON()
+                let threads = responseJSON["result"]["threads"].array
+                
+                if let myThreads = threads {
+                    let result: JSON = ["thread": myThreads[0]]
+                    self.delegate?.threadEvents(type: "THREAD_LEAVE_PARTICIPANT", result: result)
+                    self.delegate?.threadEvents(type: "THREAD_LAST_ACTIVITY_TIME", result: result)
+                } else {
+                    let result: JSON = ["threadId": threadId]
+                    self.delegate?.threadEvents(type: "THREAD_LEAVE_PARTICIPANT", result: result)
+                }
+                
+            }
             break
+            
         case chatMessageVOTypes.RENAME.rawValue:
             //
             break
@@ -679,12 +709,13 @@ extension Chat {
             let threadIds = messageContent["id"].intValue
             let paramsToSend: JSON = ["threadIds": threadIds]
             getThreads(params: paramsToSend, uniqueId: { _ in }) { (response) in
-                
                 let responseModel: GetThreadsModel = response as! GetThreadsModel
                 let responseJSON: JSON = responseModel.returnDataAsJSON()
                 let threads = responseJSON["result"]["threads"].arrayValue
-                self.delegate?.threadEvents(type: "THREAD_ADD_PARTICIPANTS", result: threads[0])
-                self.delegate?.threadEvents(type: "THREAD_LAST_ACTIVITY_TIME", result: threads[0])
+                
+                let result: JSON = ["thread": threads[0]]
+                self.delegate?.threadEvents(type: "THREAD_ADD_PARTICIPANTS", result: result)
+                self.delegate?.threadEvents(type: "THREAD_LAST_ACTIVITY_TIME", result: result)
             }
             break
             
@@ -741,13 +772,14 @@ extension Chat {
             }
             //            let threadIds = threadId
             let paramsToSend: JSON = ["threadIds": threadId]
-            getThreads(params: paramsToSend, uniqueId: { (uniqueIdStr) in
-                // print(uniqueIdStr)
-            }) { (response) in
-                let responseJSON = response as! JSON
-                let threads = responseJSON["result"]["threads"].arrayValue
-                self.delegate?.threadEvents(type: "THREAD_REMOVE_PARTICIPANTS", result: threads[0])
-                self.delegate?.threadEvents(type: "THREAD_LAST_ACTIVITY_TIME", result: threads[0])
+            getThreads(params: paramsToSend, uniqueId: { _ in }) { (myResponse) in
+                let myResponseModel: GetThreadsModel = myResponse as! GetThreadsModel
+                let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+                let threads = myResponseJSON["result"]["threads"].arrayValue
+                
+                let result: JSON = ["thread": threads[0]]
+                self.delegate?.threadEvents(type: "THREAD_REMOVE_PARTICIPANTS", result: result)
+                self.delegate?.threadEvents(type: "THREAD_LAST_ACTIVITY_TIME", result: result)
             }
             break
             
@@ -763,10 +795,12 @@ extension Chat {
                 
                 let paramsToSend: JSON = ["threadIds": [threadId]]
                 getThreads(params: paramsToSend, uniqueId: { _ in }) { (myResponse) in
-                    let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
+                    let myResponseModel: GetThreadsModel = myResponse as! GetThreadsModel
                     let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
                     let threads = myResponseJSON["result"]["threads"].arrayValue
-                    self.delegate?.threadEvents(type: "THREAD_MUTE", result: threads.first!)
+                    
+                    let result: JSON = ["thread": threads.first!]
+                    self.delegate?.threadEvents(type: "THREAD_MUTE", result: result)
                 }
             }
             break
@@ -783,10 +817,12 @@ extension Chat {
                 
                 let paramsToSend: JSON = ["threadIds": [threadId]]
                 getThreads(params: paramsToSend, uniqueId: { _ in }) { (myResponse) in
-                    let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
+                    let myResponseModel: GetThreadsModel = myResponse as! GetThreadsModel
                     let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
                     let threads = myResponseJSON["result"]["threads"].arrayValue
-                    self.delegate?.threadEvents(type: "THREAD_UNMUTE", result: threads.first!)
+                    
+                    let result: JSON = ["thread": threads.first!]
+                    self.delegate?.threadEvents(type: "THREAD_UNMUTE", result: result)
                 }
             }
             break
@@ -803,7 +839,7 @@ extension Chat {
                 
                 let paramsToSend: JSON = ["threadIds": messageContent["id"].intValue]
                 getThreads(params: paramsToSend, uniqueId: { _ in }) { (myResponse) in
-                    let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
+                    let myResponseModel: GetThreadsModel = myResponse as! GetThreadsModel
                     let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
                     let threads = myResponseJSON["result"]["threads"].arrayValue
                     let thread: JSON = ["thread": threads.first!]
@@ -885,17 +921,67 @@ extension Chat {
             break
             
         case chatMessageVOTypes.THREAD_INFO_UPDATED.rawValue:
-            //
+            let conversation: Conversation = Conversation(messageContent: messageContent)
+            let result: JSON = ["thread": conversation]
+            delegate?.threadEvents(type: "THREAD_INFO_UPDATED", result: result)
             break
+            
         case chatMessageVOTypes.LAST_SEEN_UPDATED.rawValue:
-            //
+            let paramsToSend: JSON = ["threadIds": messageContent["conversationId"].intValue]
+            getThreads(params: paramsToSend, uniqueId: { _ in }) { (myResponse) in
+                let myResponseModel: GetThreadsModel = myResponse as! GetThreadsModel
+                let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+                let threads = myResponseJSON["result"]["threads"].arrayValue
+                
+                let result: JSON = ["thread": threads[0],
+                                    "messageId": messageContent["messageId"].intValue,
+                                    "senderId": messageContent["participantId"].intValue]
+                self.delegate?.threadEvents(type: "THREAD_UNREAD_COUNT_UPDATED", result: result)
+                
+                let result2: JSON = ["thread": threads[0]]
+                self.delegate?.threadEvents(type: "THREAD_LAST_ACTIVITY_TIME", result: result2)
+            }
             break
+            
+        case chatMessageVOTypes.BOT_MESSAGE.rawValue:
+            //            let result: JSON = ["bot": messageContent]
+            //            self.delegate?.botEvents(type: "BOT_MESSAGE", result: result)
+            break
+            
         case chatMessageVOTypes.SPAM_PV_THREAD.rawValue:
-            //
+            print("\n:: On Chat:\n Message SPAM_PV_THREAD recieved\n")
+            if Chat.map[uniqueId] != nil {
+                let returnData: JSON = createReturnData(hasError: false, errorMessage: "", errorCode: 0, result: messageContent, resultAsString: nil, contentCount: nil)
+                let callback: CallbackProtocol = Chat.map[uniqueId]!
+                callback.onResultCallback(uID: uniqueId, response: returnData, success: { (successJSON) in
+                    self.spamPvThreadCallbackToUser?(successJSON)
+                }) { _ in }
+                Chat.map.removeValue(forKey: uniqueId)
+            }
             break
+            
         case chatMessageVOTypes.ERROR.rawValue:
+            //            print("\n:: On Chat:\n Message Error recieved\n")
+            //            if Chat.map[uniqueId] != nil {
+            //                let message: String = messageContent["message"].stringValue
+            //                let code: Int = messageContent["code"].intValue
             //
+            //                let returnData: JSON = createReturnData(hasError: true, errorMessage: message, errorCode: code, result: messageContent, resultAsString: nil, contentCount: 0)
+            //                let callback: CallbackProtocol = Chat.map[uniqueId]!
+            //                callback.onResultCallback(uID: uniqueId, response: returnData, success: { (successJSON) in
+            //                    self.spamPvThreadCallbackToUser?(successJSON)
+            //                }) { _ in }
+            //                Chat.map.removeValue(forKey: uniqueId)
+            //
+            //                if (messageContent["code"].intValue == 21) {
+            //                    chatState = false
+            //                    asyncClient?.asyncLogOut()
+            ////                    clearCache()
+            //                }
+            //                delegate?.chatError(errorCode: code, errorMessage: message, errorResult: messageContent)
+            //            }
             break
+            
         default:
             //
             break
@@ -1287,8 +1373,8 @@ extension Chat {
                 }
             }
             
-            if let participants = parameters["participants"].arrayObject {
-                sendMessageParams["content"] = JSON(participants)
+            if (parameters["participants"] != JSON.null) {
+                sendMessageParams["content"] = JSON(parameters["participants"])
             }
         }
         
@@ -1788,8 +1874,8 @@ extension Chat {
     public func uploadImage(params: JSON, dataToSend: Data, uniqueId: @escaping (String) -> (), progress: @escaping (Float) -> (), completion: @escaping callbackTypeAlias) {
         
         var fileName:           String  = ""
-        var fileType:           String  = ""
-        var fileSize:           Int     = 0
+        //        var fileType:           String  = ""
+        //        var fileSize:           Int     = 0
         var fileExtension:      String  = ""
         
         var uploadFileData: JSON = []
@@ -2180,12 +2266,49 @@ extension Chat {
         let sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.GET_BLOCKED.rawValue,
                                        "content": content]
         
-        sendMessageWithCallback(params: sendMessageParams, callback: GetBlocked(parameters: sendMessageParams), sentCallback: nil, deliverCallback: nil, seenCallback: nil) { (getBlockedUniqueId) in
+        sendMessageWithCallback(params: sendMessageParams, callback: GetBlockedCallbacks(parameters: sendMessageParams), sentCallback: nil, deliverCallback: nil, seenCallback: nil) { (getBlockedUniqueId) in
             uniqueId(getBlockedUniqueId)
         }
         getBlockedCallbackToUser = completion
     }
     
+    
+    public func leaveThread(params: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+        print("\n On Chat")
+        print(":: \t Try to request to leave thread with this parameters:")
+        print("\(params) \n")
+        /**
+         * + LeaveThreadRequest    {object}
+         *    - subjectId          {long}
+         *    - uniqueId           {string}
+         */
+        
+        var sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.LEAVE_THREAD.rawValue]
+        
+        if let subjectId = params["threadId"].int {
+            sendMessageParams["subjectId"] = JSON(subjectId)
+        }
+        
+        sendMessageWithCallback(params: sendMessageParams, callback: LeaveThreadCallbacks(), sentCallback: nil, deliverCallback: nil, seenCallback: nil) { (leaveThreadUniqueId) in
+            uniqueId(leaveThreadUniqueId)
+        }
+        leaveThreadCallbackToUser = completion
+    }
+    
+    
+    public func spamPvThread(params: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+        
+        var sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.SPAM_PV_THREAD.rawValue]
+        
+        if let subjectId = params["threadId"].int {
+            sendMessageParams["subjectId"] = JSON(subjectId)
+        }
+        
+        sendMessageWithCallback(params: sendMessageParams, callback: SpamPvThread(), sentCallback: nil, deliverCallback: nil, seenCallback: nil) { (spamUniqueId) in
+            uniqueId(spamUniqueId)
+        }
+        spamPvThreadCallbackToUser = completion
+    }
     
     
     
@@ -2424,7 +2547,6 @@ extension Chat {
             success(response)
         }
         
-        
     }
     
     
@@ -2480,11 +2602,10 @@ extension Chat {
             let errorCode = response["errorCode"].intValue
             
             if (!hasError) {
-                let messageContent = response["result"]
                 
-                let addParticipantModel = AddParticipantModel(messageContent: messageContent, hasError: hasError, errorMessage: errorMessage, errorCode: errorCode)
+                let removeParticipantModel = RemoveParticipantModel(messageContent: response, hasError: hasError, errorMessage: errorMessage, errorCode: errorCode)
                 
-                success(addParticipantModel)
+                success(removeParticipantModel)
             }
         }
     }
@@ -2636,7 +2757,7 @@ extension Chat {
     }
     
     
-    private class GetBlocked: CallbackProtocol {
+    private class GetBlockedCallbacks: CallbackProtocol {
         var sendParams: JSON
         init(parameters: JSON) {
             self.sendParams = parameters
@@ -2660,6 +2781,36 @@ extension Chat {
                 success(getBlockedModel)
             }
             
+        }
+    }
+    
+    
+    private class LeaveThreadCallbacks: CallbackProtocol {
+        func onResultCallback(uID: String, response: JSON, success: @escaping callbackTypeAlias, failure: @escaping callbackTypeAlias) {
+            print("\n On Chat")
+            print(":: \t LeaveThreads \n")
+            
+            let hasError = response["hasError"].boolValue
+            let errorMessage = response["errorMessage"].stringValue
+            let errorCode = response["errorCode"].intValue
+            
+            if (!hasError) {
+                let resultData: JSON = response["result"]
+                
+                let leaveThreadModel = CreateThreadModel(messageContent: resultData, hasError: hasError, errorMessage: errorMessage, errorCode: errorCode)
+                
+                success(leaveThreadModel)
+            }
+        }
+    }
+    
+    
+    private class SpamPvThread: CallbackProtocol {
+        func onResultCallback(uID: String, response: JSON, success: @escaping callbackTypeAlias, failure: @escaping callbackTypeAlias) {
+            print("\n On Chat")
+            print(":: \t SpamPvThread \n")
+            
+            success(response)
         }
     }
     
