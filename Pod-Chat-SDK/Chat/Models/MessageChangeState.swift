@@ -14,7 +14,7 @@ import SwiftyJSON
 //#############################      MessageChangeState        (formatDataToMakeMessageChangeState)
 //#######################################################################################
 
-class MessageChangeState {
+open class MessageChangeState {
     /*
      * + MessageChangeStateVO   MessageChangeState:
      *    - messageId               Int?
@@ -22,9 +22,9 @@ class MessageChangeState {
      *    - threadId                Int?
      */
     
-    let messageId:  Int?
-    let senderId:   Int?
-    let threadId:   Int?
+    public let messageId:  Int?
+    public let senderId:   Int?
+    public let threadId:   Int?
     
     init(messageContent: JSON) {
         self.messageId  = messageContent["messageId"].int

@@ -40,15 +40,15 @@ open class ContactModel {
      */
     
     // AddContactcs model properties
-    let hasError:           Bool
-    let errorMessage:       String?
-    let errorCode:          Int?
-    var contentCount:       Int = 0
+    public let hasError:           Bool
+    public let errorMessage:       String?
+    public let errorCode:          Int?
+    public var contentCount:       Int = 0
     
     // result model
-    var contacts:           [Contact] = []
+    public var contacts:           [Contact] = []
     
-    var contactsJSON:       [JSON] = []
+    public var contactsJSON:       [JSON] = []
     
     init(messageContent: JSON) {
         

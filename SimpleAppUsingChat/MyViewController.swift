@@ -35,7 +35,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "1e1263b3e0ed4d4c8b61ca6db8c1bf41"
+    let token                   = "bba7028b1fb54ae59276c2d15da8743b"
     
     
     // Local Addresses
@@ -483,7 +483,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         mb.layer.shadowOffset = CGSize(width: 0, height: 3)
         mb.titleLabel?.numberOfLines = 1
         mb.titleLabel?.adjustsFontSizeToFitWidth = true
-        mb.addTarget(self, action: #selector(blockUserButtonPressed), for: UIControlEvents.touchUpInside)
+        mb.addTarget(self, action: #selector(blockContactButtonPressed), for: UIControlEvents.touchUpInside)
         return mb
     }()
     
@@ -502,7 +502,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         mb.layer.shadowOffset = CGSize(width: 0, height: 3)
         mb.titleLabel?.numberOfLines = 1
         mb.titleLabel?.adjustsFontSizeToFitWidth = true
-        mb.addTarget(self, action: #selector(unblockUserButtonPressed), for: UIControlEvents.touchUpInside)
+        mb.addTarget(self, action: #selector(unblockContactButtonPressed), for: UIControlEvents.touchUpInside)
         return mb
     }()
     
@@ -520,7 +520,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         mb.layer.shadowOffset = CGSize(width: 0, height: 3)
         mb.titleLabel?.numberOfLines = 1
         mb.titleLabel?.adjustsFontSizeToFitWidth = true
-        mb.addTarget(self, action: #selector(getBlockedUserButtonPressed), for: UIControlEvents.touchUpInside)
+        mb.addTarget(self, action: #selector(getBlockedContactsButtonPressed), for: UIControlEvents.touchUpInside)
         return mb
     }()
     
@@ -597,7 +597,22 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         
         setupView()
         
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress,
+                            ssoHost: ssoHost,
+                            platformHost: platformHost,
+                            fileServer: fileServer,
+                            serverName: serverName,
+                            token: token,
+                            msgPriority: 1,
+                            msgTTL: messageTtl,
+                            httpRequestTimeout: nil,
+                            actualTimingLog: nil,
+                            wsConnectionWaitTime: Double(wsConnectionWaitTime),
+                            connectionRetryInterval: connectionRetryInterval,
+                            connectionCheckTimeout: connectionCheckTimeout,
+                            messageTtl: messageTtl,
+                            reconnectOnClose: true)
+        
         myChatObject?.delegate = self
         
         //        myChatObject = Chat(...)
@@ -629,7 +644,7 @@ extension MyViewController {
     
     
     @objc func getThreadsButtonPressed() {
-        let paramsToSend: JSON = ["count": 5, "offset": 0]
+        let paramsToSend: JSON = ["count": 1, "offset": 0]
         myChatObject?.getThreads(params: paramsToSend, uniqueId: { (getThreadUniqueId) in
             print("\n get thread request uniqueId = \t \(getThreadUniqueId) \n")
         }, completion: { (myResponse) in
@@ -642,7 +657,7 @@ extension MyViewController {
     
     
     @objc func getHistoryButtonPressed() {
-        let paramsToSend: JSON = ["threadId": 1133, "count": 5, "offset": 0]
+        let paramsToSend: JSON = ["threadId": 1101, "count": 1, "offset": 0]
         myChatObject?.getHistory(params: paramsToSend, uniqueId: { (getHistoryUniqueId) in
             print("\n get history request uniqueId = \t \(getHistoryUniqueId) \n")
         }, completion: { (myResponse) in
@@ -655,7 +670,7 @@ extension MyViewController {
     
     
     @objc func getThreadParticipantsButtonPressed() {
-        let paramsToSend: JSON = ["count": 3, "offset": 0, "threadId": 1323]
+        let paramsToSend: JSON = ["count": 3, "offset": 0, "threadId": 1101]
         myChatObject?.getThreadParticipants(params: paramsToSend, uniqueId: { (getThreadParticipantUniqueId) in
             print("\n get thread participant request unique id = \t \(getThreadParticipantUniqueId) \t")
         }, completion: { (myResponse) in
@@ -668,13 +683,17 @@ extension MyViewController {
     
     
     @objc func createThreadButtonPressed() {
-        let user1: JSON = ["id": "2202", "idType": inviteeVOidTypes.TO_BE_USER_CONTACT_ID.rawValue]
-        let user2: JSON = ["id": "121", "idType": inviteeVOidTypes.TO_BE_USER_SSO_ID.rawValue]
-        let user3: JSON = ["id": "2306", "idType": inviteeVOidTypes.TO_BE_USER_CONTACT_ID.rawValue] // 2306
+//        let user1: JSON = ["id": "2202", "idType": inviteeVOidTypes.TO_BE_USER_CONTACT_ID.rawValue]
+//        let user2: JSON = ["id": "121", "idType": inviteeVOidTypes.TO_BE_USER_SSO_ID.rawValue]
+        let pouria: JSON = ["id": "2306", "idType": inviteeVOidTypes.TO_BE_USER_CONTACT_ID.rawValue] // 2306
+//        let mahyar: JSON = ["id": "521", "idType": inviteeVOidTypes.TO_BE_USER_SSO_ID.rawValue]
+//        let mahyarPhone: JSON = ["id": "09358590677", "idType": inviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue]
+//        let akbariId: JSON = ["id": "1321", "idType": inviteeVOidTypes.TO_BE_USER_SSO_ID.rawValue]
+//        let akbariPhone: JSON = ["id": "09369865820", "idType": inviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue]
         
-        let invitees: [JSON] = [user1, user3]
+        let invitees: [JSON] = [pouria]
         
-        let paramsToSend: JSON = ["type": createThreadTypes.PUBLIC_GROUP.rawValue, "title": "helooooo", "invitees": invitees]
+        let paramsToSend: JSON = ["type": createThreadTypes.NORMAL.rawValue, "title": "salam Pouria", "invitees": invitees]
         myChatObject?.createThread(params: paramsToSend, uniqueId: { (createThreadUniqueId) in
             print("\n create thread reqeuest uniqueId = \t \(createThreadUniqueId) \n")
         }, completion: { (myResponse) in
@@ -687,7 +706,8 @@ extension MyViewController {
     
     
     @objc func getContactsButtonPressed() {
-        myChatObject?.getContacts(params: nil, uniqueId: { (getContactUniqueId) in
+        let paramsToSend: JSON = ["count": 2, "offset": 0]
+        myChatObject?.getContacts(params: paramsToSend, uniqueId: { (getContactUniqueId) in
             print("\n get contact request uniqueId = \t \(getContactUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: GetContactsModel = myResponse as! GetContactsModel
@@ -709,7 +729,7 @@ extension MyViewController {
     
     func sendMessage() {
         let metadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
-        let paramsToSend: JSON = ["subjectId": 1101, "content": "\(inputTextFieldToSendMessage.text ?? "empty message")", "metaData": metadata]
+        let paramsToSend: JSON = ["subjectId": 1328, "content": "\(inputTextFieldToSendMessage.text ?? "empty message")", "metaData": metadata]
         myChatObject?.sendTextMessage(params: paramsToSend, uniqueId: { (uniqueIdStr) in
             print("**************************")
             print("message uniqueId is: \(uniqueIdStr)")
@@ -809,7 +829,7 @@ extension MyViewController {
     
     
     @objc func addParticipantsButtonPressed() {
-        let paramsToSend: JSON = ["threadId": 1323, "contacts": [2202, 952, 1281, 2306]]
+        let paramsToSend: JSON = ["threadId": 1327, "contacts": [2202, 952, 1281, 2306]]
         
         myChatObject?.addParticipants(params: paramsToSend, uniqueId: { (addParticipantsUniqueId) in
             print("\n add participant request uniqueId = \t \(addParticipantsUniqueId) \n")
@@ -823,7 +843,7 @@ extension MyViewController {
     
     
     @objc func removeParticipantsButtonPressed() {
-        let paramsToSend: JSON = ["threadId": 1323, "participants": [1, 2]]
+        let paramsToSend: JSON = ["threadId": 1327, "participants": [1]]
         
         myChatObject?.removeParticipants(params: paramsToSend, uniqueId: { (removeParticipantsUniqueId) in
             print("\n remove participant request uniqueId = \t \(removeParticipantsUniqueId) \n")
@@ -837,9 +857,9 @@ extension MyViewController {
     
     
     @objc func addContactButtonPressed() {
-        let params: JSON = ["firstName": "Pouria",
-                            "lastName": "Pahlevani",
-                            "cellphoneNumber": "09387181694"]
+        let params: JSON = ["firstName": "Mehdi",
+                            "lastName": "Akbarian",
+                            "cellphoneNumber": "09368640180"]
         myChatObject?.addContact(params: params, uniqueId: { (addContactUniqueId) in
             print("\n add Contact request uniqueId = \t \(addContactUniqueId) \n")
         }, completion: { (myResponse) in
@@ -1022,14 +1042,14 @@ extension MyViewController {
     @objc func searchThreadButtonPressed() {  }
     
  
-    @objc func blockUserButtonPressed() {
+    @objc func blockContactButtonPressed() {
         let paramsToSend: JSON = ["contactId": 563]
-        myChatObject?.block(params: paramsToSend, uniqueId: { (blockUniqueId) in
-            print("\n block request uniqueId = \t \(blockUniqueId) \n")
+        myChatObject?.blockContact(params: paramsToSend, uniqueId: { (blockContactUniqueId) in
+            print("\n block request uniqueId = \t \(blockContactUniqueId) \n")
         }, completion: { (myResponse) in
             print("***********************")
             print("\n this is my block response:")
-            let myResponseModel: BlockedUserModel = myResponse as! BlockedUserModel
+            let myResponseModel: BlockedContactModel = myResponse as! BlockedContactModel
             let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
             print("\(myResponseJSON) \n")
             print("***********************")
@@ -1037,14 +1057,14 @@ extension MyViewController {
     }
     
     
-    @objc func unblockUserButtonPressed() {
-        let paramsToSend: JSON = ["blockId": 42]
-        myChatObject?.unblock(params: paramsToSend, uniqueId: { (blockUniqueId) in
-            print("\n unblock request uniqueId = \t \(blockUniqueId) \n")
+    @objc func unblockContactButtonPressed() {
+        let paramsToSend: JSON = ["blockId": 63]
+        myChatObject?.unblockContact(params: paramsToSend, uniqueId: { (unblockContactUniqueId) in
+            print("\n unblock request uniqueId = \t \(unblockContactUniqueId) \n")
         }, completion: { (myResponse) in
             print("***********************")
             print("\n this is my unblock response:")
-            let myResponseModel: BlockedUserModel = myResponse as! BlockedUserModel
+            let myResponseModel: BlockedContactModel = myResponse as! BlockedContactModel
             let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
             print("\(myResponseJSON) \n")
             print("***********************")
@@ -1052,11 +1072,11 @@ extension MyViewController {
     }
     
     
-    @objc func getBlockedUserButtonPressed() {
-        myChatObject?.getBlocked(params: nil, uniqueId: { (getBlockedListUniqueId) in
-            print("\n get blocked list request uniqueId = \t \(getBlockedListUniqueId) \n")
+    @objc func getBlockedContactsButtonPressed() {
+        myChatObject?.getBlockedContacts(params: nil, uniqueId: { (getBlockedContactListUniqueId) in
+            print("\n get blocked list request uniqueId = \t \(getBlockedContactListUniqueId) \n")
         }, completion: { (myResponse) in
-            let myResponseModel: GetBlockedListModel = myResponse as! GetBlockedListModel
+            let myResponseModel: GetBlockedContactListModel = myResponse as! GetBlockedContactListModel
             let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
             print("\n this is my get thread response:")
             print("\(myResponseJSON) \n")
@@ -1065,7 +1085,7 @@ extension MyViewController {
     
     
     @objc func leaveThreadButtonPressed() {
-        let paramsToSend: JSON = ["threadId": 1324]
+        let paramsToSend: JSON = ["threadId": 1343]
         myChatObject?.leaveThread(params: paramsToSend, uniqueId: { (leaveThreadUniqueId) in
             print("\n get blocked list request uniqueId = \t \(leaveThreadUniqueId) \n")
         }, completion: { (myResponse) in
@@ -1137,6 +1157,25 @@ extension MyViewController: ChatDelegates {
     
     func threadEvents(type: String, result: JSON) {
         //        print("@@MyLog:(Chat): ThreadEvents: \n type = \(type) , \n result: \(result) \n")
+        
+        if type == "THREAD_UNREAD_COUNT_UPDATED" {
+            print("\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+            print("THREAD_UNREAD_COUNT_UPDATED : ")
+            print("\(result)")
+            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n")
+        }
+        
+        if (type == "THREAD_LAST_ACTIVITY_TIME") {
+            print("\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+            print("THREAD_LAST_ACTIVITY_TIME : ")
+            print("\(result)")
+            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
+            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n")
+        }
+        
     }
     
     

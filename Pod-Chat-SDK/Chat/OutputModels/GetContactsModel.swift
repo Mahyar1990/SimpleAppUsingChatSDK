@@ -43,17 +43,17 @@ open class GetContactsModel {
      */
     
     // GetContact model properties
-    let hasError:           Bool
-    let errorMessage:       String
-    let errorCode:          Int
+    public let hasError:           Bool
+    public let errorMessage:       String
+    public let errorCode:          Int
     
     // result model
-    var contentCount:       Int = 0
-    var hasNext:            Bool = false
-    var nextOffset:         Int = 0
-    var contacts:           [Contact] = []
+    public var contentCount:       Int = 0
+    public var hasNext:            Bool = false
+    public var nextOffset:         Int = 0
+    public var contacts:           [Contact] = []
     
-    var contacrsJSON:       [JSON] = []
+    public var contacrsJSON:       [JSON] = []
     
     init(messageContent: [JSON], contentCount: Int, count: Int, offset: Int, hasError: Bool, errorMessage: String, errorCode: Int) {
         
