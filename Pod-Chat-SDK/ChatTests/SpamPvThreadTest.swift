@@ -49,7 +49,7 @@ class SpamPvThreadTest: XCTestCase {
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "108c74444b3f42b9b6c5f846cfe0124b"
+    let token                   = "fdc1234e27a14845bd2d79ab6fef2628"
     
     // Local Addresses
     //    let socketAddress           = "ws://172.16.106.26:8003/ws"
@@ -151,12 +151,12 @@ class SpamPvThreadTest: XCTestCase {
             }
             
             let myExpectation = self.expectation(description: "get threads")
-            let spamPvThreadParameters: JSON = ["threadId": 1329]
+            let spamPvThreadParameters: JSON = ["threadId": 1362]
             
             self.myChatObject?.spamPvThread(params: spamPvThreadParameters, uniqueId: { (spamPvThreadUniqueId) in
                 print("\n\n**********************************************")
                 print("**********************************************")
-                print("Spam Pv Thread with params: (threadId: 1328) Unique Id Response:")
+                print("Spam Pv Thread with params: (threadId: 1362) Unique Id Response:")
                 print("**********************************************")
                 print("**********************************************")
                 print("\(spamPvThreadUniqueId)")
@@ -165,7 +165,7 @@ class SpamPvThreadTest: XCTestCase {
             }, completion: { (responseJSON) in
                 self.somethingWithDelegateAsyncResult = true
                 print("\n\n**********************************************")
-                print("Spam Pv Thread with params: (threadId: 1328) Test Response:")
+                print("Spam Pv Thread with params: (threadId: 1362) Test Response:")
                 print("**********************************************")
                 print("**********************************************")
                 print("\(responseJSON)")

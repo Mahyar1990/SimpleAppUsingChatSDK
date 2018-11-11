@@ -49,7 +49,7 @@ class RemoveParticipantsTest: XCTestCase {
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "911da79620544bd2acdb336febcc73d1"
+    let token                   = "24734db21ffc449ebd424e56f2c1c55e"
     
     // Local Addresses
     //    let socketAddress           = "ws://172.16.106.26:8003/ws"

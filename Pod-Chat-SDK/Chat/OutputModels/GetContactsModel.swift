@@ -38,7 +38,8 @@ open class GetContactsModel {
      *  - hasError      Bool
      *  - errorMessage  String
      *  - errorCode     Int
-     *  + contact       [Contact]
+     *  + result
+     *      - contacts       [Contact]
      ---------------------------------------
      */
     

@@ -35,7 +35,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "bba7028b1fb54ae59276c2d15da8743b"
+    let token                   = "b304d32ec4bd49d5992b90450a644d9e"
     
     
     // Local Addresses
@@ -644,7 +644,7 @@ extension MyViewController {
     
     
     @objc func getThreadsButtonPressed() {
-        let paramsToSend: JSON = ["count": 1, "offset": 0]
+        let paramsToSend: JSON = ["count": 3, "offset": 0]
         myChatObject?.getThreads(params: paramsToSend, uniqueId: { (getThreadUniqueId) in
             print("\n get thread request uniqueId = \t \(getThreadUniqueId) \n")
         }, completion: { (myResponse) in
@@ -685,15 +685,15 @@ extension MyViewController {
     @objc func createThreadButtonPressed() {
 //        let user1: JSON = ["id": "2202", "idType": inviteeVOidTypes.TO_BE_USER_CONTACT_ID.rawValue]
 //        let user2: JSON = ["id": "121", "idType": inviteeVOidTypes.TO_BE_USER_SSO_ID.rawValue]
-        let pouria: JSON = ["id": "2306", "idType": inviteeVOidTypes.TO_BE_USER_CONTACT_ID.rawValue] // 2306
+//        let pouria: JSON = ["id": "2306", "idType": inviteeVOidTypes.TO_BE_USER_CONTACT_ID.rawValue] // 2306
 //        let mahyar: JSON = ["id": "521", "idType": inviteeVOidTypes.TO_BE_USER_SSO_ID.rawValue]
 //        let mahyarPhone: JSON = ["id": "09358590677", "idType": inviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue]
 //        let akbariId: JSON = ["id": "1321", "idType": inviteeVOidTypes.TO_BE_USER_SSO_ID.rawValue]
-//        let akbariPhone: JSON = ["id": "09369865820", "idType": inviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue]
+        let akbariPhone: JSON = ["id": "09369865820", "idType": inviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue]
         
-        let invitees: [JSON] = [pouria]
+        let invitees: [JSON] = [akbariPhone]
         
-        let paramsToSend: JSON = ["type": createThreadTypes.NORMAL.rawValue, "title": "salam Pouria", "invitees": invitees]
+        let paramsToSend: JSON = ["type": createThreadTypes.NORMAL.rawValue, "title": "Me & Akbari", "invitees": invitees]
         myChatObject?.createThread(params: paramsToSend, uniqueId: { (createThreadUniqueId) in
             print("\n create thread reqeuest uniqueId = \t \(createThreadUniqueId) \n")
         }, completion: { (myResponse) in
@@ -729,7 +729,7 @@ extension MyViewController {
     
     func sendMessage() {
         let metadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
-        let paramsToSend: JSON = ["subjectId": 1328, "content": "\(inputTextFieldToSendMessage.text ?? "empty message")", "metaData": metadata]
+        let paramsToSend: JSON = ["subjectId": 1362, "content": "\(inputTextFieldToSendMessage.text ?? "empty message")", "metaData": metadata]
         myChatObject?.sendTextMessage(params: paramsToSend, uniqueId: { (uniqueIdStr) in
             print("**************************")
             print("message uniqueId is: \(uniqueIdStr)")
@@ -872,11 +872,11 @@ extension MyViewController {
     
     
     @objc func updateContactButtonPressed() {
-        let params: JSON = ["id": 1801,
-                            "firstName": "mahyar",
-                            "lastName": "Zhiani",
-                            "cellphoneNumber": "0935",
-                            "email": "asdfa@ads.com"]
+        let params: JSON = ["id": 2225,
+                            "firstName": "Mehdi",
+                            "lastName": "Akbarian",
+                            "cellphoneNumber": "09368640180",
+                            "email": "Mehdi.Akbarian@fanap.ir"]
         myChatObject?.updateContact(params: params, uniqueId: { (updateContactUniqueId) in
             print("\n update Contact request uniqueId = \t \(updateContactUniqueId) \n")
         }, completion: { (myResponse) in
@@ -890,7 +890,7 @@ extension MyViewController {
     
     
     @objc func removeContactButtonPressed() {
-        let params: JSON = ["id": 1801]
+        let params: JSON = ["id": 2224]
         myChatObject?.removeContact(params: params, uniqueId: { (removeContactUniqueId) in
             print("\n remove Contact request uniqueId = \t \(removeContactUniqueId) \n")
         }, completion: { (myResponse) in
@@ -915,7 +915,9 @@ extension MyViewController {
             }, completion: { (response) in
                 print("********************************")
                 print("Response from Upload File:")
-                print("\(response)")
+                let responseModel: UploadFileModel = response as! UploadFileModel
+                let responseJSON: JSON = responseModel.returnDataAsJSON()
+                print("\(responseJSON)")
                 print("********************************")
             })
         }
@@ -1024,15 +1026,15 @@ extension MyViewController {
     
     
     @objc func searchContactsButtonPressed() {
-        let paramsToSend: JSON = ["firstName": ""]
+        let paramsToSend: JSON = ["firstName": "Mas"]
         myChatObject?.searchContacts(params: paramsToSend, uniqueId: { (searchContactsUniqueId) in
-            print("\n search ontacts request uniqueId = \t\(searchContactsUniqueId)")
+            print("\n search contacts request uniqueId = \t\(searchContactsUniqueId)")
         }, completion: { (myResponse) in
             print("***********************")
             let myResponseModel: ContactModel = myResponse as! ContactModel
             let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
-            print("\n this is my get contacts response:")
-            print("\(myResponse) \n")
+            print("\n this is my search contacts response:")
+            print("\(myResponseJSON) \n")
             print("***********************")
         })
     }
@@ -1058,7 +1060,7 @@ extension MyViewController {
     
     
     @objc func unblockContactButtonPressed() {
-        let paramsToSend: JSON = ["blockId": 63]
+        let paramsToSend: JSON = ["blockId": 61]
         myChatObject?.unblockContact(params: paramsToSend, uniqueId: { (unblockContactUniqueId) in
             print("\n unblock request uniqueId = \t \(unblockContactUniqueId) \n")
         }, completion: { (myResponse) in
@@ -1078,7 +1080,7 @@ extension MyViewController {
         }, completion: { (myResponse) in
             let myResponseModel: GetBlockedContactListModel = myResponse as! GetBlockedContactListModel
             let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
-            print("\n this is my get thread response:")
+            print("\n this is my get blocked list response:")
             print("\(myResponseJSON) \n")
         })
     }

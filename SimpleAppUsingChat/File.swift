@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Chat
 import SwiftyJSON
 
 
@@ -220,7 +221,7 @@ extension MyViewController {
         
         if let data = UIImageJPEGRepresentation(selectedImage!, 100) {
             
-            let myParams: JSON = ["fileName": "newPicture"]
+            let myParams: JSON = ["imageName": "newPicture"]
             
             myChatObject?.uploadImage(params: myParams, dataToSend: data, uniqueId: { (uploadFileUniqueId) in
                 print("********************************")
@@ -231,7 +232,9 @@ extension MyViewController {
             }, completion: { (response) in
                 print("********************************")
                 print("Response from Upload Image:")
-                print("\(response)")
+                let responseModel: UploadImageModel = response as! UploadImageModel
+                let responseJSON: JSON = responseModel.returnDataAsJSON()
+                print("\(responseJSON)")
                 print("********************************")
             })
             

@@ -49,7 +49,7 @@ class UnblockUserTest: XCTestCase {
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "acc732443cf6441fb4a0337f0c4bfc75"
+    let token                   = "24734db21ffc449ebd424e56f2c1c55e"
     
     // Local Addresses
     //    let socketAddress           = "ws://172.16.106.26:8003/ws"
@@ -93,7 +93,7 @@ class UnblockUserTest: XCTestCase {
             }
             
             let myExpectation = self.expectation(description: "get threads")
-            let unblockUserParameters: JSON = ["blockId": 42]
+            let unblockUserParameters: JSON = ["blockId": 62]
             
             self.myChatObject?.unblock(params: unblockUserParameters, uniqueId: { (unblockUserUniqueId) in
                 self.somethingWithDelegateAsyncResult = true
@@ -151,7 +151,7 @@ class UnblockUserTest: XCTestCase {
             }
             
             let myExpectation = self.expectation(description: "get threads")
-            let unblockUserParameters: JSON = ["blockId": 43]
+            let unblockUserParameters: JSON = ["blockId": 62]
             
             self.myChatObject?.unblock(params: unblockUserParameters, uniqueId: { (unblockUserUniqueId) in
                 print("\n\n**********************************************")

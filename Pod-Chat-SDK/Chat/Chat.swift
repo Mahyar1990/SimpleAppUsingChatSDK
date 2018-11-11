@@ -1115,18 +1115,18 @@ extension Chat {
                 if count > 0 {
                     content["count"] = JSON(count)
                     content["size"] = JSON(count)
-//                    content.appendIfDictionary(key: "count", json: JSON(count))
+                    //                    content.appendIfDictionary(key: "count", json: JSON(count))
                 }
             }
             if let offset = parameters["offset"].int {
                 if offset > 0 {
                     content["offset"] = JSON(offset)
-//                    content.appendIfDictionary(key: "offset", json: JSON(offset))
+                    //                    content.appendIfDictionary(key: "offset", json: JSON(offset))
                 }
             }
             if let name = parameters["name"].string {
                 content["name"] = JSON(name)
-//                content.appendIfDictionary(key: "name", json: JSON(name))
+                //                content.appendIfDictionary(key: "name", json: JSON(name))
             }
         }
         
@@ -1149,27 +1149,27 @@ extension Chat {
             if let count = parameters["count"].int {
                 if count > 0 {
                     content["count"] = JSON(count)
-//                    content.appendIfDictionary(key: "count", json: JSON(count))
+                    //                    content.appendIfDictionary(key: "count", json: JSON(count))
                 }
             }
             if let offset = parameters["offset"].int {
                 if offset > 0 {
                     content["offset"] = JSON(offset)
-//                    content.appendIfDictionary(key: "offset", json: JSON(offset))
+                    //                    content.appendIfDictionary(key: "offset", json: JSON(offset))
                 }
             }
             if let name = parameters["name"].string {
                 content["name"] = JSON(name)
-//                content.appendIfDictionary(key: "name", json: JSON(name))
+                //                content.appendIfDictionary(key: "name", json: JSON(name))
                 
             }
             if let new = parameters["new"].bool {
                 content["new"] = JSON(new)
-//                content.appendIfDictionary(key: "new", json: JSON(new))
+                //                content.appendIfDictionary(key: "new", json: JSON(new))
             }
             if let threadIds = parameters["threadIds"].arrayObject {
                 content["threadIds"] = JSON(threadIds)
-//                content.appendIfDictionary(key: "threadIds", json: JSON(threadIds))
+                //                content.appendIfDictionary(key: "threadIds", json: JSON(threadIds))
             }
         }
         let sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.GET_THREADS.rawValue,
@@ -1191,38 +1191,38 @@ extension Chat {
         if let count = params["count"].int {
             if count > 0 {
                 content["count"] = JSON(count)
-//                content.appendIfDictionary(key: "count", json: JSON(count))
+                //                content.appendIfDictionary(key: "count", json: JSON(count))
             }
         }
         if let offset = params["offset"].int {
             if offset > 0 {
                 content["offset"] = JSON(offset)
-//                content.appendIfDictionary(key: "offset", json: JSON(offset))
+                //                content.appendIfDictionary(key: "offset", json: JSON(offset))
             }
         }
         if let firstMessageId = params["firstMessageId"].int {
             if firstMessageId > 0 {
                 content["firstMessageId"] = JSON(firstMessageId)
-//                content.appendIfDictionary(key: "firstMessageId", json: JSON(firstMessageId))
+                //                content.appendIfDictionary(key: "firstMessageId", json: JSON(firstMessageId))
             }
         }
         if let lastMessageId = params["lastMessageId"].int {
             if lastMessageId > 0 {
                 content["lastMessageId"] = JSON(lastMessageId)
-//                content.appendIfDictionary(key: "lastMessageId", json: JSON(lastMessageId))
+                //                content.appendIfDictionary(key: "lastMessageId", json: JSON(lastMessageId))
             }
         }
         if let order = params["order"].string {
             content["order"] = JSON(order)
-//            content.appendIfDictionary(key: "order", json: JSON(order))
+            //            content.appendIfDictionary(key: "order", json: JSON(order))
         }
         if let query = params["query"].string {
             content["query"] = JSON(query)
-//            content.appendIfDictionary(key: "query", json: JSON(query))
+            //            content.appendIfDictionary(key: "query", json: JSON(query))
         }
         if let metadataCriteria = params["metadataCriteria"].string {
             content["metadataCriteria"] = JSON(metadataCriteria)
-//            content.appendIfDictionary(key: "metadataCriteria", json: JSON(metadataCriteria))
+            //            content.appendIfDictionary(key: "metadataCriteria", json: JSON(metadataCriteria))
         } else if (params["metadataCriteria"] != JSON.null) {
             content["metadataCriteria"] = params["metadataCriteria"]
         }
@@ -1253,30 +1253,30 @@ extension Chat {
             if let count = parameters["count"].int {
                 if count > 0 {
                     content["count"] = JSON(count)
-//                    content.appendIfDictionary(key: "count", json: JSON(count))
+                    //                    content.appendIfDictionary(key: "count", json: JSON(count))
                 }
             }
             if let offset = parameters["offset"].int {
                 if offset > 0 {
                     content["offset"] = JSON(offset)
-//                    content.appendIfDictionary(key: "offset", json: JSON(offset))
+                    //                    content.appendIfDictionary(key: "offset", json: JSON(offset))
                 }
             }
             if let firstMessageId = parameters["firstMessageId"].int {
                 if firstMessageId > 0 {
                     content["firstMessageId"] = JSON(firstMessageId)
-//                    content.appendIfDictionary(key: "firstMessageId", json: JSON(firstMessageId))
+                    //                    content.appendIfDictionary(key: "firstMessageId", json: JSON(firstMessageId))
                 }
             }
             if let lastMessageId = parameters["lastMessageId"].int {
                 if lastMessageId > 0 {
                     content["lastMessageId"] = JSON(lastMessageId)
-//                    content.appendIfDictionary(key: "lastMessageId", json: JSON(lastMessageId))
+                    //                    content.appendIfDictionary(key: "lastMessageId", json: JSON(lastMessageId))
                 }
             }
             if let name = parameters["name"].string {
                 content["name"] = JSON(name)
-//                content.appendIfDictionary(key: "name", json: JSON(name))
+                //                content.appendIfDictionary(key: "name", json: JSON(name))
             }
         }
         
@@ -1710,13 +1710,13 @@ extension Chat {
             delegate?.chatError(errorCode: 999, errorMessage: "lastName is required for Updating Contact!", errorResult: nil)
         }
         
-        if let cellphoneNumber = params["lastName"].string {
+        if let cellphoneNumber = params["cellphoneNumber"].string {
             data["cellphoneNumber"] = JSON(cellphoneNumber)
         } else {
             delegate?.chatError(errorCode: 999, errorMessage: "cellphoneNumber is required for Updating Contact!", errorResult: nil)
         }
         
-        if let email = params["lastName"].string {
+        if let email = params["email"].string {
             data["email"] = JSON(email)
         } else {
             delegate?.chatError(errorCode: 999, errorMessage: "email is required for Updating Contact!", errorResult: nil)
@@ -1935,6 +1935,22 @@ extension Chat {
         }
         
         uploadFileData["fileName"] = JSON(fileName)
+        
+        if let xC = params["xC"].int {
+            uploadFileData["xC"] = JSON(xC)
+        }
+        
+        if let yC = params["yC"].int {
+            uploadFileData["yC"] = JSON(yC)
+        }
+        
+        if let hC = params["hC"].int {
+            uploadFileData["hC"] = JSON(hC)
+        }
+        
+        if let wC = params["wC"].int {
+            uploadFileData["wC"] = JSON(wC)
+        }
         
         /*
          *  + data:

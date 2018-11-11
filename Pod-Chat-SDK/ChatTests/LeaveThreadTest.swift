@@ -49,7 +49,7 @@ class LeaveThreadTest: XCTestCase {
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "5fce7d09976a45b4a78db7f7587819eb"
+    let token                   = "d3ccad9cd3dc440fb4ba1d1b2010cf86"
     
     // Local Addresses
     //    let socketAddress           = "ws://172.16.106.26:8003/ws"
@@ -93,7 +93,7 @@ class LeaveThreadTest: XCTestCase {
             }
             
             let myExpectation = self.expectation(description: "get threads")
-            let leaveThreadParameters: JSON = ["threadId": 1324]
+            let leaveThreadParameters: JSON = ["threadId": 1362]
             
             self.myChatObject?.leaveThread(params: leaveThreadParameters, uniqueId: { (leaveThreadUniqueId) in
                 self.somethingWithDelegateAsyncResult = true
@@ -150,7 +150,7 @@ class LeaveThreadTest: XCTestCase {
             }
             
             let myExpectation = self.expectation(description: "get threads")
-            let leaveThreadParameters: JSON = ["threadId": 1326]
+            let leaveThreadParameters: JSON = ["threadId": 1323]
             
             self.myChatObject?.leaveThread(params: leaveThreadParameters, uniqueId: { (leaveThreadUniqueId) in
                 print("\n\n**********************************************")

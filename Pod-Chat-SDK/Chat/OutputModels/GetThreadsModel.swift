@@ -57,17 +57,17 @@ open class GetThreadsModel {
      */
     
     // GetThreads model properties
-    public let hasError:           Bool
-    public let errorMessage:       String
-    public let errorCode:          Int
+    let hasError:           Bool
+    let errorMessage:       String
+    let errorCode:          Int
     
     // result model
-    public var contentCount:       Int = 0
-    public var hasNext:            Bool = false
-    public var nextOffset:         Int = 0
-    public var threads:            [Conversation] = []
+    var contentCount:       Int = 0
+    var hasNext:            Bool = false
+    var nextOffset:         Int = 0
+    var threads:            [Conversation] = []
     
-    public var threadsJSON:        [JSON] = []
+    var threadsJSON:        [JSON] = []
     
     init(messageContent: [JSON], contentCount: Int, count: Int, offset: Int, hasError: Bool, errorMessage: String, errorCode: Int) {
         

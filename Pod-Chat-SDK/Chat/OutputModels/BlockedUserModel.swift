@@ -1,5 +1,5 @@
 //
-//  BlockedUserModel.swift
+//  BlockedContactModel.swift
 //  Chat
 //
 //  Created by Mahyar Zhiani on 8/13/1397 AP.
