@@ -35,7 +35,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "b304d32ec4bd49d5992b90450a644d9e"
+    let token                   = "e684346c6c6847679d87c8ea9896c2aa"
     
     
     // Local Addresses
@@ -603,6 +603,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
                             fileServer: fileServer,
                             serverName: serverName,
                             token: token,
+                            typeCode: 2,
                             msgPriority: 1,
                             msgTTL: messageTtl,
                             httpRequestTimeout: nil,
@@ -729,7 +730,7 @@ extension MyViewController {
     
     func sendMessage() {
         let metadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
-        let paramsToSend: JSON = ["subjectId": 1362, "content": "\(inputTextFieldToSendMessage.text ?? "empty message")", "metaData": metadata]
+        let paramsToSend: JSON = ["subjectId": 1330, "content": "\(inputTextFieldToSendMessage.text ?? "empty message")", "metaData": metadata]
         myChatObject?.sendTextMessage(params: paramsToSend, uniqueId: { (uniqueIdStr) in
             print("**************************")
             print("message uniqueId is: \(uniqueIdStr)")
@@ -829,7 +830,7 @@ extension MyViewController {
     
     
     @objc func addParticipantsButtonPressed() {
-        let paramsToSend: JSON = ["threadId": 1327, "contacts": [2202, 952, 1281, 2306]]
+        let paramsToSend: JSON = ["threadId": 1330, "contacts": [2202, 952, 1281, 2306]]
         
         myChatObject?.addParticipants(params: paramsToSend, uniqueId: { (addParticipantsUniqueId) in
             print("\n add participant request uniqueId = \t \(addParticipantsUniqueId) \n")
@@ -843,7 +844,7 @@ extension MyViewController {
     
     
     @objc func removeParticipantsButtonPressed() {
-        let paramsToSend: JSON = ["threadId": 1327, "participants": [1]]
+        let paramsToSend: JSON = ["threadId": 1330, "participants": [1]]
         
         myChatObject?.removeParticipants(params: paramsToSend, uniqueId: { (removeParticipantsUniqueId) in
             print("\n remove participant request uniqueId = \t \(removeParticipantsUniqueId) \n")
