@@ -684,6 +684,10 @@ extension MyViewController {
     
     
     @objc func createThreadButtonPressed() {
+        
+        let messageMetadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
+        let messageParamsToSend: JSON = ["content": "\(inputTextFieldToSendMessage.text ?? "empty message")", "metaData": messageMetadata]
+        
 //        let user1: JSON = ["id": "2202", "idType": inviteeVOidTypes.TO_BE_USER_CONTACT_ID.rawValue]
 //        let user2: JSON = ["id": "121", "idType": inviteeVOidTypes.TO_BE_USER_SSO_ID.rawValue]
 //        let pouria: JSON = ["id": "2306", "idType": inviteeVOidTypes.TO_BE_USER_CONTACT_ID.rawValue] // 2306
@@ -695,14 +699,27 @@ extension MyViewController {
         let invitees: [JSON] = [akbariPhone]
         
         let paramsToSend: JSON = ["type": createThreadTypes.NORMAL.rawValue, "title": "Me & Akbari", "invitees": invitees]
-        myChatObject?.createThread(params: paramsToSend, uniqueId: { (createThreadUniqueId) in
+        myChatObject?.createThreadAndSendMessage(params: paramsToSend, sendMessageParams: messageParamsToSend, uniqueId: { (createThreadUniqueId) in
             print("\n create thread reqeuest uniqueId = \t \(createThreadUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
             let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
             print("\n this is my create thread response:")
             print("\(myResponseJSON) \n")
+        }, onSent: { (isSent) in
+            print("**************************")
+            print("the message is sent = \(isSent)")
+            print("**************************")
+        }, onDelivere: { (isDeliver) in
+            print("**************************")
+            print("the message is delivered: '\(isDeliver)'")
+            print("**************************")
+        }, onSeen: { (isSeen) in
+            print("**************************")
+            print("the message with is Seen: '\(isSeen)'")
+            print("**************************")
         })
+        
     }
     
     

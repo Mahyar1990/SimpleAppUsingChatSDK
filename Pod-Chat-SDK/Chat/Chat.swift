@@ -1359,7 +1359,37 @@ extension Chat {
     }
     
     
-    public func createThread(params: JSON?, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+    public func createThreadAndSendMessage(params: JSON?, sendMessageParams: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias, onSent: @escaping callbackTypeAlias, onDelivere: @escaping callbackTypeAlias, onSeen: @escaping callbackTypeAlias) {
+        
+        var myUniqueId: String = ""
+        createThread(params: params, uniqueId: { (createThreadUniqueId) in
+            myUniqueId = createThreadUniqueId
+            uniqueId(createThreadUniqueId)
+        }) { (myCreateThreadResponse) in
+            
+            let myResponseModel: CreateThreadModel = myCreateThreadResponse as! CreateThreadModel
+            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+            
+            var sendParams: JSON = sendMessageParams
+            sendParams["uniqueId"] = JSON(myUniqueId)
+            if let theId = myResponseJSON["result"]["thread"]["id"].int {
+                sendParams["subjectId"] = JSON(theId)
+            }
+            
+            self.sendTextMessage(params: sendParams, uniqueId: { _ in }, onSent: { (isSent) in
+                onSent(isSent)
+            }, onDelivere: { (isDeliver) in
+                onDelivere(isDeliver)
+            }, onSeen: { (isSeen) in
+                onSeen(isSeen)
+            })
+            
+        }
+        
+    }
+    
+    
+    func createThread(params: JSON?, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         print("\n On Chat")
         print(":: \t Try to request to create thread with this parameters:")
         print("\(params ?? "params is empty") \n")
@@ -1394,19 +1424,17 @@ extension Chat {
             }
             
             if let invitees = parameters["invitees"].array {
-                //                var tempInvitee = []
-                //                for item in invitees {
-                //                    tempInvitee.append(item)
-                //                }
                 content.appendIfDictionary(key: "invitees", json: JSON(invitees))
             }
         }
-        let sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.CREATE_THREAD.rawValue,
-                                       "content": content]
-        sendMessageWithCallback(params: sendMessageParams, callback: CreateThreadCallback(parameters: sendMessageParams), sentCallback: nil, deliverCallback: nil, seenCallback: nil) { (createThreadUniqueId) in
+        let sendMessageCreateThreadParams: JSON = ["chatMessageVOType": chatMessageVOTypes.CREATE_THREAD.rawValue,
+                                                   "content": content]
+        sendMessageWithCallback(params: sendMessageCreateThreadParams, callback: CreateThreadCallback(parameters: sendMessageCreateThreadParams), sentCallback: nil, deliverCallback: nil, seenCallback: nil) { (createThreadUniqueId) in
             uniqueId(createThreadUniqueId)
         }
+        
         createThreadCallbackToUser = completion
+        
     }
     
     
@@ -1492,7 +1520,7 @@ extension Chat {
     }
     
     
-    func makeCustomTextToSend(textMessage: String) -> String {
+    public func makeCustomTextToSend(textMessage: String) -> String {
         var returnStr = ""
         for c in textMessage {
             if (c == " ") {
@@ -1525,7 +1553,8 @@ extension Chat {
 //        var sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.MESSAGE.rawValue, "pushMsgType": 4,
 //                                       "content": content]
         
-        var sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.MESSAGE.rawValue, "pushMsgType": 4,
+        var sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.MESSAGE.rawValue,
+                                       "pushMsgType": 4,
                                        "typeCode": params["typeCode"].int ?? generalTypeCode,
                                        "content": messageTxtContent]
         //        content.appendIfDictionary(key: "metaData", json: JSON(metaDataStr))
@@ -2663,9 +2692,9 @@ extension Chat {
     
     
     private class CreateThreadCallback: CallbackProtocol {
-        var sendParams: JSON
+        var mySendMessageParams: JSON
         init(parameters: JSON) {
-            self.sendParams = parameters
+            self.mySendMessageParams = parameters
         }
         func onResultCallback(uID: String, response: JSON, success: @escaping callbackTypeAlias, failure: @escaping callbackTypeAlias) {
             print("\n On Chat")
@@ -2681,8 +2710,10 @@ extension Chat {
                 let createThreadModel = CreateThreadModel(messageContent: resultData, hasError: hasError, errorMessage: errorMessage, errorCode: errorCode)
                 
                 success(createThreadModel)
+                
             }
         }
+        
     }
     
     
