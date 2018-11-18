@@ -177,6 +177,8 @@ public class Chat {
     private var getBlockedCallbackToUser: callbackTypeAlias?
     private var leaveThreadCallbackToUser: callbackTypeAlias?
     private var spamPvThreadCallbackToUser: callbackTypeAlias?
+    private var getMessageSeenListCallbackToUser: callbackTypeAlias?
+    private var getMessageDeliverListCallbackToUser: callbackTypeAlias?
     
     var tempSendMessageArr: [[String : JSON]] = []
     var tempReceiveMessageArr: [[String: JSON]] = []
@@ -980,6 +982,30 @@ extension Chat {
                 
                 let result2: JSON = ["thread": threads]
                 self.delegate?.threadEvents(type: "THREAD_LAST_ACTIVITY_TIME", result: result2)
+            }
+            break
+            
+        case chatMessageVOTypes.GET_MESSAGE_DELEVERY_PARTICIPANTS.rawValue:
+            print("\n:: On Chat:\n Message GET_MESSAGE_DELEVERY_PARTICIPANTS recieved\n")
+            if Chat.map[uniqueId] != nil {
+                let returnData: JSON = createReturnData(hasError: false, errorMessage: "", errorCode: 0, result: messageContent, resultAsString: nil, contentCount: contentCount)
+                let callback: CallbackProtocol = Chat.map[uniqueId]!
+                callback.onResultCallback(uID: uniqueId, response: returnData, success: { (successJSON) in
+                    self.getMessageDeliverListCallbackToUser?(successJSON)
+                }) { _ in }
+                Chat.map.removeValue(forKey: uniqueId)
+            }
+            break
+        
+        case chatMessageVOTypes.GET_MESSAGE_SEEN_PARTICIPANTS.rawValue:
+            print("\n:: On Chat:\n Message GET_MESSAGE_SEEN_PARTICIPANTS recieved\n")
+            if Chat.map[uniqueId] != nil {
+                let returnData: JSON = createReturnData(hasError: false, errorMessage: "", errorCode: 0, result: messageContent, resultAsString: nil, contentCount: contentCount)
+                let callback: CallbackProtocol = Chat.map[uniqueId]!
+                callback.onResultCallback(uID: uniqueId, response: returnData, success: { (successJSON) in
+                    self.getMessageSeenListCallbackToUser?(successJSON)
+                }) { _ in }
+                Chat.map.removeValue(forKey: uniqueId)
             }
             break
             
@@ -2439,6 +2465,7 @@ extension Chat {
             }
             
         }
+        
         let sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.GET_BLOCKED.rawValue,
                                        "typeCode": myTypeCode,
                                        "content": content]
@@ -2489,6 +2516,78 @@ extension Chat {
         spamPvThreadCallbackToUser = completion
     }
     
+    
+    public func messageDeliveryList(params: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+        print("\n On Chat")
+        print(":: \t Try to request to get message deliver participants with this parameters:")
+        print("\(params) \n")
+        
+        var sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.GET_MESSAGE_DELEVERY_PARTICIPANTS.rawValue]
+        
+        var content: JSON = ["count": 50, "offset": 0]
+        
+        if let count = params["count"].int {
+            if count > 0 {
+                content["count"] = JSON(count)
+            }
+        }
+        
+        if let offset = params["offset"].int {
+            if offset > 0 {
+                content["offset"] = JSON(offset)
+            }
+        }
+        
+        if let typeCode = params["typeCode"].int {
+            sendMessageParams["typeCode"] = JSON(typeCode)
+        } else {
+            sendMessageParams["typeCode"] = JSON(generalTypeCode)
+        }
+        
+        sendMessageParams["content"] = content
+        
+        sendMessageWithCallback(params: sendMessageParams, callback: GetMessageDeliverList(parameters: sendMessageParams), sentCallback: nil, deliverCallback: nil, seenCallback: nil) { (messageDeliverListUniqueId) in
+            uniqueId(messageDeliverListUniqueId)
+        }
+        getMessageDeliverListCallbackToUser = completion
+    }
+    
+    
+    public func messageSeenList(params: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+        print("\n On Chat")
+        print(":: \t Try to request to get message seen participants with this parameters:")
+        print("\(params) \n")
+        
+        var sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.GET_MESSAGE_SEEN_PARTICIPANTS.rawValue]
+        
+        var content: JSON = ["count": 50, "offset": 0]
+        
+        if let count = params["count"].int {
+            if count > 0 {
+                content["count"] = JSON(count)
+            }
+        }
+        
+        if let offset = params["offset"].int {
+            if offset > 0 {
+                content["offset"] = JSON(offset)
+            }
+        }
+        
+        if let typeCode = params["typeCode"].int {
+            sendMessageParams["typeCode"] = JSON(typeCode)
+        } else {
+            sendMessageParams["typeCode"] = JSON(generalTypeCode)
+        }
+        
+        sendMessageParams["content"] = content
+        
+        sendMessageWithCallback(params: sendMessageParams, callback: GetMessageSeenList(parameters: sendMessageParams), sentCallback: nil, deliverCallback: nil, seenCallback: nil) { (messageSeenListUniqueId) in
+            uniqueId(messageSeenListUniqueId)
+        }
+        getMessageSeenListCallbackToUser = completion
+        
+    }
     
     
     public func deliver(params: JSON) {
@@ -2995,6 +3094,67 @@ extension Chat {
             success(response)
         }
     }
+    
+    
+    
+    private class GetMessageDeliverList: CallbackProtocol {
+        var sendParams: JSON
+        init(parameters: JSON) {
+            self.sendParams = parameters
+        }
+        func onResultCallback(uID: String, response: JSON, success: @escaping callbackTypeAlias, failure: @escaping callbackTypeAlias) {
+            
+            let hasError = response["hasError"].boolValue
+            let errorMessage = response["errorMessage"].stringValue
+            let errorCode = response["errorCode"].intValue
+            
+            if (!hasError) {
+                let content = sendParams["content"]
+                let count = content["count"].intValue
+                let offset = content["offset"].intValue
+                
+                let messageContent: [JSON] = response["result"].arrayValue
+                let contentCount = response["contentCount"].intValue
+                
+                let getBlockedModel = GetThreadParticipantsModel(messageContent: messageContent, contentCount: contentCount, count: count, offset: offset, hasError: hasError, errorMessage: errorMessage, errorCode: errorCode)
+                
+                success(getBlockedModel)
+            }
+            
+        }
+        
+    }
+    
+    
+    
+    private class GetMessageSeenList: CallbackProtocol {
+        var sendParams: JSON
+        init(parameters: JSON) {
+            self.sendParams = parameters
+        }
+        func onResultCallback(uID: String, response: JSON, success: @escaping callbackTypeAlias, failure: @escaping callbackTypeAlias) {
+            
+            let hasError = response["hasError"].boolValue
+            let errorMessage = response["errorMessage"].stringValue
+            let errorCode = response["errorCode"].intValue
+            
+            if (!hasError) {
+                let content = sendParams["content"]
+                let count = content["count"].intValue
+                let offset = content["offset"].intValue
+                
+                let messageContent: [JSON] = response["result"].arrayValue
+                let contentCount = response["contentCount"].intValue
+                
+                let getBlockedModel = GetThreadParticipantsModel(messageContent: messageContent, contentCount: contentCount, count: count, offset: offset, hasError: hasError, errorMessage: errorMessage, errorCode: errorCode)
+                
+                success(getBlockedModel)
+            }
+            
+        }
+        
+    }
+    
     
     
 }
