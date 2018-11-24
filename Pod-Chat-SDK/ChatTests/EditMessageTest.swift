@@ -7,6 +7,7 @@
 //
 
 import SwiftyJSON
+import Async
 import XCTest
 @testable import Chat
 
@@ -23,13 +24,13 @@ class SpyDelegateEditMessage: ChatDelegates {
     func chatDeliver(messageId: Int, ownerId: Int) {}
     func chatThreadEvents() {}
     func chatReady() {
-        guard let expectation = asyncExpectation else {
-            XCTFail("SpyDelegateGetUserInfo was not setup correctly. Missing XCTExpectation reference")
+        guard let _ = asyncExpectation else {
+            XCTFail("SpyDelegateEditMessage was not setup correctly. Missing XCTExpectation reference")
             return
         }
-        print("\n\n\n******************************")
-        print("Chat is Ready")
-        print("******************************\n")
+        
+        log.debug("Test Response: \n|| Chat is Ready")
+        
 //        expectation.fulfill()
     }
     func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {}
@@ -77,7 +78,7 @@ class EditMessageTest: XCTestCase {
     // MARK: - test with params: ["subjectId": 182, "content": "Hi", "metaData": ["id": 2341234132, "type": "BOT_MESSAGE", "owner": "Masoud"]]
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     func test_Edit_Message() {
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, typeCode: 1, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
         
         let spyDelegate = SpyDelegateEditMessage()
         myChatObject?.delegate = spyDelegate
@@ -91,26 +92,13 @@ class EditMessageTest: XCTestCase {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
             
-            let myExpectation = self.expectation(description: "send message uniqueId")
+            let myExpectation = self.expectation(description: "Edit Message")
             let cont: JSON = ["subjectId": 15396, "content": "this is edited message"]
             self.myChatObject?.editMessage(params: cont, uniqueId: { (editMessageUniqueId) in
-                print("\n\n**********************************************")
-                print("**********************************************")
-                print("Edit Message with params: [subjectId: 15395, content: 'this is edited message'] Unique Id Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(editMessageUniqueId)")
-                print("**********************************************")
-                print("**********************************************\n\n")
+                log.debug("Edit Message with params: [subjectId: 15395, content: 'this is edited message'] Unique Id Response: \n|| \(editMessageUniqueId)", context: "Test")
             }, completion: { (successResponse) in
+                log.debug("Edit Message with params: [subjectId: 15395, content: 'this is edited message'] Test Response: \n|| \(successResponse)", context: "Test")
                 self.somethingWithDelegateAsyncResult = true
-                print("\n\n**********************************************")
-                print("Edit Message with params: [subjectId: 15395, content: 'this is edited message'] Test Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(successResponse)")
-                print("**********************************************")
-                print("**********************************************\n\n")
                 myExpectation.fulfill()
             })
             
@@ -128,6 +116,7 @@ class EditMessageTest: XCTestCase {
         }
         
     }
+
 }
 
 

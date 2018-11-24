@@ -7,6 +7,7 @@
 //
 
 import SwiftyJSON
+import Async
 import XCTest
 @testable import Chat
 
@@ -23,14 +24,13 @@ class SpyDelegateSpamPvThread: ChatDelegates {
     func chatDeliver(messageId: Int, ownerId: Int) {}
     func chatThreadEvents() {}
     func chatReady() {
-        guard let expectation = asyncExpectation else {
-            XCTFail("SpyDelegateGetUserInfo was not setup correctly. Missing XCTExpectation reference")
+        guard let _ = asyncExpectation else {
+            XCTFail("SpyDelegateSpamPvThread was not setup correctly. Missing XCTExpectation reference")
             return
         }
-        print("\n\n\n******************************")
-        print("Chat is Ready")
-        print("******************************\n")
-        //        expectation.fulfill()
+        
+        log.debug("Test Response: \n|| Chat is Ready")
+        
     }
     func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {}
     func chatState(state: Int) {}
@@ -78,7 +78,7 @@ class SpamPvThreadTest: XCTestCase {
     // MARK: - test with params: [contactId: 563]
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     func test_Spam_Pv_Thread_uniqueId() {
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, typeCode: 1, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
         
         let spyDelegate = SpyDelegateSpamPvThread()
         myChatObject?.delegate = spyDelegate
@@ -92,28 +92,15 @@ class SpamPvThreadTest: XCTestCase {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
             
-            let myExpectation = self.expectation(description: "get threads")
+            let myExpectation = self.expectation(description: "spam Pv Thread")
             let spamPvThreadParameters: JSON = ["threadId": 1327]
             
             self.myChatObject?.spamPvThread(params: spamPvThreadParameters, uniqueId: { (spamPvThreadUniqueId) in
                 self.somethingWithDelegateAsyncResult = true
-                print("\n\n**********************************************")
-                print("**********************************************")
-                print("Spam Pv Thread with params: (threadId: 1327) Unique Id Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(spamPvThreadUniqueId)")
-                print("**********************************************")
-                print("**********************************************\n\n")
+                log.debug("Spam Pv Thread with params: (threadId: 1327) Unique Id Response: \n|| \(spamPvThreadUniqueId)", context: "Test")
                 myExpectation.fulfill()
             }, completion: { (responseJSON) in
-                print("\n\n**********************************************")
-                print("Spam Pv Thread with params: (threadId: 1327) Test Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(responseJSON)")
-                print("**********************************************")
-                print("**********************************************\n\n")
+                log.debug("Spam Pv Thread with params: (threadId: 1327) Test Response: \n|| \(responseJSON)", context: "Test")
             })
             
             self.waitForExpectations(timeout: 19) { error in
@@ -136,7 +123,7 @@ class SpamPvThreadTest: XCTestCase {
     // MARK: - test with params: [contactId: 563]
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     func test_Spam_Pv_Thread_With_threadId_1328() {
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, typeCode: 1, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
         
         let spyDelegate = SpyDelegateSpamPvThread()
         myChatObject?.delegate = spyDelegate
@@ -150,27 +137,14 @@ class SpamPvThreadTest: XCTestCase {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
             
-            let myExpectation = self.expectation(description: "get threads")
+            let myExpectation = self.expectation(description: "spam Pv Thread")
             let spamPvThreadParameters: JSON = ["threadId": 1362]
             
             self.myChatObject?.spamPvThread(params: spamPvThreadParameters, uniqueId: { (spamPvThreadUniqueId) in
-                print("\n\n**********************************************")
-                print("**********************************************")
-                print("Spam Pv Thread with params: (threadId: 1362) Unique Id Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(spamPvThreadUniqueId)")
-                print("**********************************************")
-                print("**********************************************\n\n")
+                log.debug("Spam Pv Thread with params: (threadId: 1362) Unique Id Response: \n|| \(spamPvThreadUniqueId)", context: "Test")
             }, completion: { (responseJSON) in
+                log.debug("Spam Pv Thread with params: (threadId: 1362) Test Response: \n|| \(responseJSON)", context: "Test")
                 self.somethingWithDelegateAsyncResult = true
-                print("\n\n**********************************************")
-                print("Spam Pv Thread with params: (threadId: 1362) Test Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(responseJSON)")
-                print("**********************************************")
-                print("**********************************************\n\n")
                 myExpectation.fulfill()
             })
             

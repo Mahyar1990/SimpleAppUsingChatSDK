@@ -7,6 +7,7 @@
 //
 
 import SwiftyJSON
+import Async
 import XCTest
 @testable import Chat
 
@@ -27,10 +28,9 @@ class SpyDelegateGetUserInfo: ChatDelegates {
             XCTFail("SpyDelegateGetUserInfo was not setup correctly. Missing XCTExpectation reference")
             return
         }
-        print("\n\nTest Response:")
-        print("******************************")
-        print("Chat is Ready")
-        print("******************************\n\n")
+        
+        log.debug("Test Response: \n|| Chat is Ready")
+        
         somethingWithDelegateAsyncResult = true
         expectation.fulfill()
     }
@@ -50,7 +50,7 @@ class GetUserInfoTest: XCTestCase {
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "56fbeec771eb44408a7e3a5799845ee7"
+    let token                   = "2ad12e6e0cd645d5b66b3f2b4b611651"
     
     // Local Addresses
 //    let socketAddress           = "ws://172.16.106.26:8003/ws"
@@ -74,7 +74,7 @@ class GetUserInfoTest: XCTestCase {
     let reconnectOnClose        = true              // auto connect to socket after socket close
     
     func testCreateChatObject() {
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, typeCode: 1, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
         
         let spyDelegate = SpyDelegateGetUserInfo()
         myChatObject?.delegate = spyDelegate
@@ -97,7 +97,7 @@ class GetUserInfoTest: XCTestCase {
     
     
     func test_getUserInfo() {
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, typeCode: 1, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
         
         let spyDelegate = SpyDelegateGetUserInfo()
         myChatObject?.delegate = spyDelegate
@@ -105,7 +105,7 @@ class GetUserInfoTest: XCTestCase {
         let theExpectation = expectation(description: "Chat calls the delegate as the result of an async method completion")
         spyDelegate.asyncExpectation = theExpectation
         
-        waitForExpectations(timeout: 10) { error in
+        waitForExpectations(timeout: 15) { error in
             if let error = error {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }

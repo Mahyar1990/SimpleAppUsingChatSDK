@@ -7,6 +7,7 @@
 //
 
 import SwiftyJSON
+import Async
 import XCTest
 @testable import Chat
 
@@ -23,13 +24,13 @@ class SpyDelegateSearchContact: ChatDelegates {
     func chatDeliver(messageId: Int, ownerId: Int) {}
     func chatThreadEvents() {}
     func chatReady() {
-        guard let expectation = asyncExpectation else {
-            XCTFail("SpyDelegateGetUserInfo was not setup correctly. Missing XCTExpectation reference")
+        guard let _ = asyncExpectation else {
+            XCTFail("SpyDelegateSearchContact was not setup correctly. Missing XCTExpectation reference")
             return
         }
-        print("\n\n\n******************************")
-        print("Chat is Ready")
-        print("******************************\n")
+        
+        log.debug("Test Response: \n|| Chat is Ready")
+        
     }
     func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {}
     func chatState(state: Int) {}
@@ -77,7 +78,7 @@ class SearchContactTest: XCTestCase {
     // MARK: - test with params: [subjectId: 1133,repliedTo: 15397,content: 'empty message']
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     func test_Search_Contact_response() {
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, typeCode: 1, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
         
         let spyDelegate = SpyDelegateSearchContact()
         myChatObject?.delegate = spyDelegate
@@ -91,21 +92,16 @@ class SearchContactTest: XCTestCase {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
             
-            let myExpectation = self.expectation(description: "send message uniqueId")
+            let myExpectation = self.expectation(description: "Search Contacts")
             let paramsToSend: JSON = ["firstName": ""]
             
             self.myChatObject?.searchContacts(params: paramsToSend, uniqueId: { (searchContactsUniqueId) in
-                print("\n search ontacts request uniqueId = \t\(searchContactsUniqueId)")
+                log.debug("Search ontacts request uniqueId = \t\(searchContactsUniqueId)", context: "Test")
             }, completion: { (myResponse) in
-                self.somethingWithDelegateAsyncResult = true
-                print("******************************")
-                print("******************************")
                 let myResponseModel: ContactModel = myResponse as! ContactModel
                 let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
-                print("\n this is my get contacts response:")
-                print("\(myResponseJSON) \n")
-                print("******************************")
-                print("******************************")
+                log.debug("Search ontacts request Response = \n|| \(myResponseJSON)", context: "Test")
+                self.somethingWithDelegateAsyncResult = true
                 myExpectation.fulfill()
             })
             
@@ -123,4 +119,5 @@ class SearchContactTest: XCTestCase {
         }
         
     }
+    
 }

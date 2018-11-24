@@ -7,6 +7,7 @@
 //
 
 import SwiftyJSON
+import Async
 import XCTest
 @testable import Chat
 
@@ -23,13 +24,13 @@ class SpyDelegateUploadImage: ChatDelegates {
     func chatDeliver(messageId: Int, ownerId: Int) {}
     func chatThreadEvents() {}
     func chatReady() {
-        guard let expectation = asyncExpectation else {
+        guard let _ = asyncExpectation else {
             XCTFail("SpyDelegateUploadImage was not setup correctly. Missing XCTExpectation reference")
             return
         }
-        print("\n\n\n******************************")
-        print("Chat is Ready")
-        print("******************************\n")
+        
+        log.debug("Test Response: \n|| Chat is Ready")
+        
     }
     func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {}
     func chatState(state: Int) {}
@@ -76,7 +77,7 @@ class UploadImageTest: XCTestCase {
     // MARK: - test with params: ["id": 1762]
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     func test_Upload_Image_With() {
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, typeCode: 1, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
         
         let spyDelegate = SpyDelegateUploadImage()
         myChatObject?.delegate = spyDelegate
@@ -90,33 +91,19 @@ class UploadImageTest: XCTestCase {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
             
-            let myExpectation = self.expectation(description: "add contact")
+            let myExpectation = self.expectation(description: "Upload Image")
             let uploadImageParams: JSON = ["fileName": "newPicture"]
             let image = UIImage(named: "pic", in: Bundle(for: Chat.self), compatibleWith: nil)
             let data = UIImageJPEGRepresentation(image!, 1)
 //            let data = UIImageJPEGRepresentation(UIImage(named: "")!, 1)
             
             self.myChatObject?.uploadImage(params: uploadImageParams, dataToSend: data!, uniqueId: { (uploadUniqueId) in
-                print("\n\n**********************************************")
-                print("**********************************************")
-                print("upload Unique Id Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(uploadUniqueId)")
-                print("**********************************************")
-                print("**********************************************\n\n")
+                log.debug("Upload Unique Id Response: \n|| \(uploadUniqueId)", context: "Test")
             }, progress: { (progress) in
                 print("progress = \(progress)")
             }, completion: { (responseJSON) in
+                log.debug("Upload Progress Test Response: \n|| \(responseJSON)", context: "Test")
                 self.somethingWithDelegateAsyncResult = true
-                print("\n\n**********************************************")
-                print("**********************************************")
-                print("Upload Progress Test Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(responseJSON)")
-                print("**********************************************")
-                print("**********************************************\n\n")
                 myExpectation.fulfill()
             })
             
@@ -134,4 +121,5 @@ class UploadImageTest: XCTestCase {
         }
         
     }
+
 }

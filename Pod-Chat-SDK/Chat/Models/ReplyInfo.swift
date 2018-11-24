@@ -36,7 +36,7 @@ open class ReplyInfo {
     public var systemMetadata:      String?
     
     public var participant:        Participant?
-//    public let repliedToMessage:    String?
+    //    public let repliedToMessage:    String?
     
     init(messageContent: JSON) {
         

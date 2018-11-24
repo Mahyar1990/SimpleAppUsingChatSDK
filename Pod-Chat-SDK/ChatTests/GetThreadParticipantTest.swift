@@ -8,6 +8,7 @@
 
 
 import SwiftyJSON
+import Async
 import XCTest
 @testable import Chat
 
@@ -24,13 +25,13 @@ class SpyDelegateGetThreadParticipants: ChatDelegates {
     func chatDeliver(messageId: Int, ownerId: Int) {}
     func chatThreadEvents() {}
     func chatReady() {
-        guard let expectation = asyncExpectation else {
-            XCTFail("SpyDelegateGetUserInfo was not setup correctly. Missing XCTExpectation reference")
+        guard let _ = asyncExpectation else {
+            XCTFail("SpyDelegateGetThreadParticipants was not setup correctly. Missing XCTExpectation reference")
             return
         }
-        print("\n\n\n******************************")
-        print("Chat is Ready")
-        print("******************************\n")
+        
+        log.debug("Test Response: \n|| Chat is Ready")
+        
 //        expectation.fulfill()
     }
     func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {}
@@ -79,7 +80,7 @@ class GetThreadParticipantsTest: XCTestCase {
     // MARK: - test with params: ["threadId": 1131]
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     func test_Get_ThreadParticipants_With_ThreadId1131() {
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, typeCode: 1, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
         
         let spyDelegate = SpyDelegateGetThreadParticipants()
         myChatObject?.delegate = spyDelegate
@@ -93,26 +94,13 @@ class GetThreadParticipantsTest: XCTestCase {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
             
-            let myExpectation = self.expectation(description: "get threads")
+            let myExpectation = self.expectation(description: "Get Thread Participants")
             let getThreadsParticipantsParameters: JSON = ["threadId": 1131]
             self.myChatObject?.getThreadParticipants(params: getThreadsParticipantsParameters, uniqueId: { (getThreadsParticipantsUniqueId) in
-                print("\n\n**********************************************")
-                print("**********************************************")
-                print("Get Thread Participants with params: (threadId: 1131) Unique Id Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(getThreadsParticipantsUniqueId)")
-                print("**********************************************")
-                print("**********************************************\n\n")
+                log.debug("Get Thread Participants with params: (threadId: 1131) Unique Id Response: \n|| \(getThreadsParticipantsUniqueId)", context: "Test")
             }, completion: { (responseJSON) in
+                log.debug("Get Thread Participants with params: (threadId: 1131) Test Response: \n|| \(responseJSON)", context: "Test")
                 self.somethingWithDelegateAsyncResult = true
-                print("\n\n**********************************************")
-                print("Get Thread Participants with params: (threadId: 1131) Test Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(responseJSON)")
-                print("**********************************************")
-                print("**********************************************\n\n")
                 myExpectation.fulfill()
             })
             
@@ -137,7 +125,7 @@ class GetThreadParticipantsTest: XCTestCase {
     // MARK: - test with params: ["count": 2, "offset": 0, "threadId": 1133]
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     func test_Get_ThreadParticipants_With_ThreadId1133_Count2_Offset0() {
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, typeCode: 1, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
         
         let spyDelegate = SpyDelegateGetThreadParticipants()
         myChatObject?.delegate = spyDelegate
@@ -151,26 +139,13 @@ class GetThreadParticipantsTest: XCTestCase {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
             
-            let myExpectation = self.expectation(description: "get threads")
+            let myExpectation = self.expectation(description: "Get Thread Participants")
             let getThreadsParticipantsParameters: JSON = ["count": 2, "offset": 0, "threadId": 1133]
             self.myChatObject?.getThreadParticipants(params: getThreadsParticipantsParameters, uniqueId: { (getThreadsParticipantsUniqueId) in
-                print("\n\n**********************************************")
-                print("**********************************************")
-                print("Get Thread Participants with params: (count: 2, offset: 0, threadId: 1133) Unique Id Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(getThreadsParticipantsUniqueId)")
-                print("**********************************************")
-                print("**********************************************\n\n")
+                log.debug("Get Thread Participants with params: (count: 2, offset: 0, threadId: 1133) Unique Id Response: \n|| \(getThreadsParticipantsUniqueId)", context: "Test")
             }, completion: { (responseJSON) in
+                log.debug("Get Thread Participants with params: (count: 2, offset: 0, threadId: 1133) Test Response: \n|| \(responseJSON)", context: "Test")
                 self.somethingWithDelegateAsyncResult = true
-                print("\n\n**********************************************")
-                print("Get Thread Participants with params: (count: 2, offset: 0, threadId: 1133) Test Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(responseJSON)")
-                print("**********************************************")
-                print("**********************************************\n\n")
                 myExpectation.fulfill()
             })
             

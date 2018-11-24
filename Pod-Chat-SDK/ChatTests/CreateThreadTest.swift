@@ -8,6 +8,7 @@
 
 
 import SwiftyJSON
+import Async
 import XCTest
 @testable import Chat
 
@@ -24,13 +25,13 @@ class SpyDelegateCreateThread: ChatDelegates {
     func chatDeliver(messageId: Int, ownerId: Int) {}
     func chatThreadEvents() {}
     func chatReady() {
-        guard let expectation = asyncExpectation else {
-            XCTFail("SpyDelegateGetUserInfo was not setup correctly. Missing XCTExpectation reference")
+        guard let _ = asyncExpectation else {
+            XCTFail("SpyDelegateCreateThread was not setup correctly. Missing XCTExpectation reference")
             return
         }
-        print("\n\n\n******************************")
-        print("Chat is Ready")
-        print("******************************\n")
+        
+        log.debug("Test Response: \n|| Chat is Ready")
+        
 //        expectation.fulfill()
     }
     func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {}
@@ -77,7 +78,7 @@ class CreateThreadTest: XCTestCase {
     // MARK: - test with params: ["ownerSsoId": ssoHost, "title": "helooooo", "invitees": [["id": 3132, "idType": 1]]]
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     func test_Create_Thread_With_OwnerSsoId_Title_twoInvitees() {
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, typeCode: 1, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
         
         let spyDelegate = SpyDelegateCreateThread()
         myChatObject?.delegate = spyDelegate
@@ -91,27 +92,14 @@ class CreateThreadTest: XCTestCase {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
             
-            let myExpectation = self.expectation(description: "get threads")
+            let myExpectation = self.expectation(description: "Create Thread")
             let invitees: [JSON] = [["id": 182, "idType": 1]]
             let paramsToSend: JSON = ["ownerSsoId": self.ssoHost, "title": "helooooo", "invitees": invitees]
             self.myChatObject?.createThread(params: paramsToSend, uniqueId: { (createThreadUniqueId) in
-                print("\n\n**********************************************")
-                print("**********************************************")
-                print("Create Threads with params: (ownerSsoId: http://172.16.110.76, title: helooooo, invitees: [[id: 182, idType: 1]]) Unique Id Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(createThreadUniqueId)")
-                print("**********************************************")
-                print("**********************************************\n\n")
+                log.debug("Create Threads with params: (ownerSsoId: http://172.16.110.76, title: helooooo, invitees: [[id: 182, idType: 1]]) Unique Id Response: \n|| \(createThreadUniqueId)", context: "Test")
             }, completion: { (responseJSON) in
+                log.debug("Create Threads with params: (ownerSsoId: http://172.16.110.76, title: helooooo, invitees: [[id: 182, idType: 1]]) Test Response: \n|| \(responseJSON)", context: "Test")
                 self.somethingWithDelegateAsyncResult = true
-                print("\n\n**********************************************")
-                print("Create Threads with params: (ownerSsoId: http://172.16.110.76, title: helooooo, invitees: [[id: 182, idType: 1]]) Test Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(responseJSON)")
-                print("**********************************************")
-                print("**********************************************\n\n")
                 myExpectation.fulfill()
             })
             
@@ -135,7 +123,7 @@ class CreateThreadTest: XCTestCase {
     // MARK: - test with params: ["ownerSsoId": ssoHost, "title": "helooooo", "invitees": [["id": 3132, "idType": 1]]]
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     func test_Create_Thread_With_OwnerSsoId_Title_twoInvitees341() {
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, typeCode: 1, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
         
         let spyDelegate = SpyDelegateCreateThread()
         myChatObject?.delegate = spyDelegate
@@ -149,27 +137,14 @@ class CreateThreadTest: XCTestCase {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
             
-            let myExpectation = self.expectation(description: "get threads")
+            let myExpectation = self.expectation(description: "Create Thread")
             let invitees: [JSON] = [["id": 341, "idType": 1]]
             let paramsToSend: JSON = ["ownerSsoId": self.ssoHost, "title": "helooooo", "invitees": invitees]
             self.myChatObject?.createThread(params: paramsToSend, uniqueId: { (createThreadUniqueId) in
-                print("\n\n**********************************************")
-                print("**********************************************")
-                print("Create Threads with params: (ownerSsoId: http://172.16.110.76, title: helooooo, invitees: [[id: 341, idType: 1]]) Unique Id Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(createThreadUniqueId)")
-                print("**********************************************")
-                print("**********************************************\n\n")
+                log.debug("Create Threads with params: (ownerSsoId: http://172.16.110.76, title: helooooo, invitees: [[id: 341, idType: 1]]) Unique Id Response: \n|| \(createThreadUniqueId)", context: "Test")
             }, completion: { (responseJSON) in
+                log.debug("Create Threads with params: (ownerSsoId: http://172.16.110.76, title: helooooo, invitees: [[id: 341, idType: 1]]) Test Response: \n|| \(responseJSON)", context: "Test")
                 self.somethingWithDelegateAsyncResult = true
-                print("\n\n**********************************************")
-                print("Create Threads with params: (ownerSsoId: http://172.16.110.76, title: helooooo, invitees: [[id: 341, idType: 1]]) Test Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(responseJSON)")
-                print("**********************************************")
-                print("**********************************************\n\n")
                 myExpectation.fulfill()
             })
             

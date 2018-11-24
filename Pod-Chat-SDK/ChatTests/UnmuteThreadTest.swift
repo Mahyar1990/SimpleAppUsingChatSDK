@@ -7,6 +7,7 @@
 //
 
 import SwiftyJSON
+import Async
 import XCTest
 @testable import Chat
 
@@ -23,13 +24,13 @@ class SpyDelegateUnmuteThread: ChatDelegates {
     func chatDeliver(messageId: Int, ownerId: Int) {}
     func chatThreadEvents() {}
     func chatReady() {
-        guard let expectation = asyncExpectation else {
-            XCTFail("SpyDelegateGetUserInfo was not setup correctly. Missing XCTExpectation reference")
+        guard let _ = asyncExpectation else {
+            XCTFail("SpyDelegateUnmuteThread was not setup correctly. Missing XCTExpectation reference")
             return
         }
-        print("\n\n\n******************************")
-        print("Chat is Ready")
-        print("******************************\n")
+        
+        log.debug("Test Response: \n|| Chat is Ready")
+        
     }
     func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {}
     func chatState(state: Int) {}
@@ -77,7 +78,7 @@ class UnmuteThreadTest: XCTestCase {
     // MARK: - test with params: [subjectId: 1133,repliedTo: 15397,content: 'empty message']
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     func test_Mute_Thread_response() {
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, typeCode: 1, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
         
         let spyDelegate = SpyDelegateUnmuteThread()
         myChatObject?.delegate = spyDelegate
@@ -91,20 +92,15 @@ class UnmuteThreadTest: XCTestCase {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
             
-            let myExpectation = self.expectation(description: "send message uniqueId")
+            let myExpectation = self.expectation(description: "Unmute Thread")
             
             let paramsToSend: JSON = ["subjectId": 1101]
             
-            self.myChatObject?.unmuteThread(params: paramsToSend, uniqueId: { (muteThreadUniqueId) in
-                print("\n mute thread request uniqueId = \t \(muteThreadUniqueId) \n")
+            self.myChatObject?.unmuteThread(params: paramsToSend, uniqueId: { (unmuteThreadUniqueId) in
+                log.debug("Unmute thread request uniqueId = \n|| \(unmuteThreadUniqueId)", context: "Test")
             }, completion: { (response) in
+                log.debug("This is my Unmute thread response = \n|| \(response)", context: "Test")
                 self.somethingWithDelegateAsyncResult = true
-                print("******************************")
-                print("******************************")
-                print("\n this is my unmute thread response:")
-                print("\(response) \n")
-                print("******************************")
-                print("******************************")
                 myExpectation.fulfill()
             })
             

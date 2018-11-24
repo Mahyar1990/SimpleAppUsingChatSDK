@@ -7,6 +7,7 @@
 //
 
 import SwiftyJSON
+import Async
 import XCTest
 @testable import Chat
 
@@ -23,13 +24,13 @@ class SpyDelegateSendFileMesssage: ChatDelegates {
     func chatDeliver(messageId: Int, ownerId: Int) {}
     func chatThreadEvents() {}
     func chatReady() {
-        guard let expectation = asyncExpectation else {
-            XCTFail("SpyDelegateGetUserInfo was not setup correctly. Missing XCTExpectation reference")
+        guard let _ = asyncExpectation else {
+            XCTFail("SpyDelegateSendFileMesssage was not setup correctly. Missing XCTExpectation reference")
             return
         }
-        print("\n\n\n******************************")
-        print("Chat is Ready")
-        print("******************************\n")
+        
+        log.debug("Test Response: \n|| Chat is Ready")
+        
     }
     func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {}
     func chatState(state: Int) {}
@@ -77,7 +78,7 @@ class SendFileMessageTest: XCTestCase {
     // MARK: - test with params:
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     func test_Send_File_Message_uniqueId_response() {
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, typeCode: 1, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
         
         let spyDelegate = SpyDelegateSendFileMesssage()
         myChatObject?.delegate = spyDelegate
@@ -91,7 +92,7 @@ class SendFileMessageTest: XCTestCase {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
             
-            let myExpectation = self.expectation(description: "send message uniqueId")
+            let myExpectation = self.expectation(description: "Send File Message")
             
             let metadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
             let paramsToSendMessage: JSON = ["subjectId": 1101, "content": "empty message", "metaData": metadata]
@@ -105,26 +106,17 @@ class SendFileMessageTest: XCTestCase {
                 let uploadParams: JSON = ["fileName": "newPic"]
                 
                 self.myChatObject?.sendFileMessage(textMessagParams: paramsToSendMessage, fileParams: uploadParams, imageToSend: nil, fileToSend: data, uniqueId: { (messageUniqueId) in
-                    print("message unique id is = \(messageUniqueId)")
+                    log.debug("Message unique id is = \(messageUniqueId)", context: "Test")
                     self.somethingWithDelegateAsyncResult = true
                     myExpectation.fulfill()
                 }, uploadProgress: { (progress) in
                     print("upload progress is = \(progress)")
                 }, onSent: { (isSent) in
-                    print("++++++++++++++++++++++++++")
-                    print("message Sent:")
-                    print("\(isSent)")
-                    print("++++++++++++++++++++++++++")
+                    log.debug("Message Sent: \n|| \(isSent)", context: "Test")
                 }, onDelivered: { (isDelivered) in
-                    print("++++++++++++++++++++++++++")
-                    print("message Deliver:")
-                    print("\(isDelivered)")
-                    print("++++++++++++++++++++++++++")
+                    log.debug("Message Deliver: \n|| \(isDelivered)", context: "Test")
                 }, onSeen: { (isSeen) in
-                    print("++++++++++++++++++++++++++")
-                    print("message Seen:")
-                    print("\(isSeen)")
-                    print("++++++++++++++++++++++++++")
+                    log.debug("Message Seen: \n|| \(isSeen)", context: "Test")
                 })
             }
             
@@ -147,7 +139,7 @@ class SendFileMessageTest: XCTestCase {
     // MARK: - test with params:
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     func test_Send_File_Message_uploaded_response() {
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, typeCode: 1, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
         
         let spyDelegate = SpyDelegateSendFileMesssage()
         myChatObject?.delegate = spyDelegate
@@ -161,7 +153,7 @@ class SendFileMessageTest: XCTestCase {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
             
-            let myExpectation = self.expectation(description: "send message uniqueId")
+            let myExpectation = self.expectation(description: "Send File Message")
             
             let metadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
             let paramsToSendMessage: JSON = ["subjectId": 1101, "content": "empty message", "metaData": metadata]
@@ -172,7 +164,7 @@ class SendFileMessageTest: XCTestCase {
                 let uploadParams: JSON = ["fileName": "newPic"]
                 
                 self.myChatObject?.sendFileMessage(textMessagParams: paramsToSendMessage, fileParams: uploadParams, imageToSend: nil, fileToSend: data, uniqueId: { (messageUniqueId) in
-                    print("message unique id is = \(messageUniqueId)")
+                    log.debug("Message unique id is = \(messageUniqueId)", context: "Test")
                 }, uploadProgress: { (progress) in
                     print("upload progress is = \(progress)")
                     if progress == 1 {
@@ -180,20 +172,11 @@ class SendFileMessageTest: XCTestCase {
                         myExpectation.fulfill()
                     }
                 }, onSent: { (isSent) in
-                    print("++++++++++++++++++++++++++")
-                    print("message Sent:")
-                    print("\(isSent)")
-                    print("++++++++++++++++++++++++++")
+                    log.debug("Message Sent: \n|| \(isSent)", context: "Test")
                 }, onDelivered: { (isDelivered) in
-                    print("++++++++++++++++++++++++++")
-                    print("message Deliver:")
-                    print("\(isDelivered)")
-                    print("++++++++++++++++++++++++++")
+                    log.debug("Message Deliver: \n|| \(isDelivered)", context: "Test")
                 }, onSeen: { (isSeen) in
-                    print("++++++++++++++++++++++++++")
-                    print("message Seen:")
-                    print("\(isSeen)")
-                    print("++++++++++++++++++++++++++")
+                    log.debug("Message Seen: \n|| \(isSeen)", context: "Test")
                 })
             }
             
@@ -215,7 +198,7 @@ class SendFileMessageTest: XCTestCase {
     // MARK: - test with params:
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     func test_Send_File_Message_isSent_response() {
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, typeCode: 1, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
         
         let spyDelegate = SpyDelegateSendFileMesssage()
         myChatObject?.delegate = spyDelegate
@@ -229,7 +212,7 @@ class SendFileMessageTest: XCTestCase {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
             
-            let myExpectation = self.expectation(description: "send message uniqueId")
+            let myExpectation = self.expectation(description: "Send File Message")
             
             let metadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
             let paramsToSendMessage: JSON = ["subjectId": 1101, "content": "Message bumber 1", "metaData": metadata]
@@ -240,26 +223,17 @@ class SendFileMessageTest: XCTestCase {
                 let uploadParams: JSON = ["fileName": "newPic"]
                 
                 self.myChatObject?.sendFileMessage(textMessagParams: paramsToSendMessage, fileParams: uploadParams, imageToSend: nil, fileToSend: data, uniqueId: { (messageUniqueId) in
-                    print("message unique id is = \(messageUniqueId)")
+                    log.debug("Message unique id is = \(messageUniqueId)", context: "Test")
                 }, uploadProgress: { (prpgress) in
                     print("upload progress is = \(prpgress)")
                 }, onSent: { (isSent) in
                     self.somethingWithDelegateAsyncResult = true
-                    print("++++++++++++++++++++++++++")
-                    print("message Sent:")
-                    print("\(isSent)")
-                    print("++++++++++++++++++++++++++")
+                    log.debug("Message Sent: \n|| \(isSent)", context: "Test")
                     myExpectation.fulfill()
                 }, onDelivered: { (isDelivered) in
-                    print("++++++++++++++++++++++++++")
-                    print("message Deliver:")
-                    print("\(isDelivered)")
-                    print("++++++++++++++++++++++++++")
+                    log.debug("Message Deliver: \n|| \(isDelivered)", context: "Test")
                 }, onSeen: { (isSeen) in
-                    print("++++++++++++++++++++++++++")
-                    print("message Seen:")
-                    print("\(isSeen)")
-                    print("++++++++++++++++++++++++++")
+                    log.debug("Message Seen: \n|| \(isSeen)", context: "Test")
                 })
             }
             

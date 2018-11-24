@@ -560,6 +560,41 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         return mb
     }()
     
+    let messageDeliverList: UIButton = {
+        let mb = UIButton()
+        mb.translatesAutoresizingMaskIntoConstraints = false
+        mb.setTitle("Message Deliver List...", for: UIControlState.normal)
+        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
+        mb.layer.cornerRadius = 5
+        mb.layer.borderWidth = 2
+        mb.layer.borderColor = UIColor.clear.cgColor
+        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
+        mb.layer.shadowOpacity = 2
+        mb.layer.shadowRadius = 1
+        mb.layer.shadowOffset = CGSize(width: 0, height: 3)
+        mb.titleLabel?.numberOfLines = 1
+        mb.titleLabel?.adjustsFontSizeToFitWidth = true
+        mb.addTarget(self, action: #selector(messageDeliverListButtonPressed), for: UIControlEvents.touchUpInside)
+        return mb
+    }()
+    
+    let messageSeenList: UIButton = {
+        let mb = UIButton()
+        mb.translatesAutoresizingMaskIntoConstraints = false
+        mb.setTitle("Message Seen List...", for: UIControlState.normal)
+        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
+        mb.layer.cornerRadius = 5
+        mb.layer.borderWidth = 2
+        mb.layer.borderColor = UIColor.clear.cgColor
+        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
+        mb.layer.shadowOpacity = 2
+        mb.layer.shadowRadius = 1
+        mb.layer.shadowOffset = CGSize(width: 0, height: 3)
+        mb.titleLabel?.numberOfLines = 1
+        mb.titleLabel?.adjustsFontSizeToFitWidth = true
+        mb.addTarget(self, action: #selector(messageSeenListButtonPressed), for: UIControlEvents.touchUpInside)
+        return mb
+    }()
     
     let logView: UIView = {
         let mv = UIView()
@@ -1127,6 +1162,26 @@ extension MyViewController {
         })
     }
     
+    
+    @objc func messageDeliverListButtonPressed() {
+        let paramsToSend: JSON = ["threadId": 1329]
+        myChatObject?.messageDeliveryList(params: paramsToSend, uniqueId: { (messageDeliverListUniqueId) in
+            print("\n Message Deliver list request uniqueId = \t \(messageDeliverListUniqueId) \n")
+        }, completion: { (myResponse) in
+            print("\n this is my Message Deliver list response:")
+            print("\(myResponse) \n")
+        })
+    }
+    
+    @objc func messageSeenListButtonPressed() {
+        let paramsToSend: JSON = ["threadId": 1329]
+        myChatObject?.messageSeenList(params: paramsToSend, uniqueId: { (messageSeenListUniqueId) in
+            print("\n Message Seen list request uniqueId = \t \(messageSeenListUniqueId) \n")
+        }, completion: { (myResponse) in
+            print("\n this is my Message Seen list response:")
+            print("\(myResponse) \n")
+        })
+    }
     
 }
 

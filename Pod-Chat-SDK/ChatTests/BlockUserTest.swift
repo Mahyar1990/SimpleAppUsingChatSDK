@@ -7,6 +7,7 @@
 //
 
 import SwiftyJSON
+import Async
 import XCTest
 @testable import Chat
 
@@ -23,14 +24,12 @@ class SpyDelegateBlockUser: ChatDelegates {
     func chatDeliver(messageId: Int, ownerId: Int) {}
     func chatThreadEvents() {}
     func chatReady() {
-        guard let expectation = asyncExpectation else {
-            XCTFail("SpyDelegateGetUserInfo was not setup correctly. Missing XCTExpectation reference")
+        guard let _ = asyncExpectation else {
+            XCTFail("SpyDelegateBlockUser was not setup correctly. Missing XCTExpectation reference")
             return
         }
-        print("\n\n\n******************************")
-        print("Chat is Ready")
-        print("******************************\n")
-        //        expectation.fulfill()
+        
+        log.debug("Test Response: \n|| Chat is Ready")
     }
     func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {}
     func chatState(state: Int) {}
@@ -78,7 +77,7 @@ class BlockUserTest: XCTestCase {
     // MARK: - test with params: [contactId: 563]
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     func test_Block_User_uniqueId() {
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, typeCode: 1, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
         
         let spyDelegate = SpyDelegateBlockUser()
         myChatObject?.delegate = spyDelegate
@@ -92,28 +91,15 @@ class BlockUserTest: XCTestCase {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
             
-            let myExpectation = self.expectation(description: "get threads")
+            let myExpectation = self.expectation(description: "Block Contact")
             let blockUserParameters: JSON = ["contactId": 563]
             
-            self.myChatObject?.block(params: blockUserParameters, uniqueId: { (BlockUserUniqueId) in
+            self.myChatObject?.blockContact(params: blockUserParameters, uniqueId: { (BlockUserUniqueId) in
+                log.debug("Block User with params: (contactId: 563) Unique Id Response: \n|| \(BlockUserUniqueId)", context: "Test")
                 self.somethingWithDelegateAsyncResult = true
-                print("\n\n**********************************************")
-                print("**********************************************")
-                print("Block User with params: (contactId: 563) Unique Id Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(BlockUserUniqueId)")
-                print("**********************************************")
-                print("**********************************************\n\n")
                 myExpectation.fulfill()
             }, completion: { (responseJSON) in
-                print("\n\n**********************************************")
-                print("Block User with params: (contactId: 563) Test Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(responseJSON)")
-                print("**********************************************")
-                print("**********************************************\n\n")
+                log.debug("Block User with params: (contactId: 563) Test Response: \n|| \(responseJSON)", context: "Test")
             })
             
             
@@ -136,7 +122,7 @@ class BlockUserTest: XCTestCase {
     // MARK: - test with params: [contactId: 563]
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     func test_Block_User_With_contactId563() {
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, typeCode: 1, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
         
         let spyDelegate = SpyDelegateBlockUser()
         myChatObject?.delegate = spyDelegate
@@ -150,27 +136,14 @@ class BlockUserTest: XCTestCase {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
             
-            let myExpectation = self.expectation(description: "get threads")
+            let myExpectation = self.expectation(description: "Block Contact")
             let blockUserParameters: JSON = ["contactId": 563]
             
-            self.myChatObject?.block(params: blockUserParameters, uniqueId: { (BlockUserUniqueId) in
-                print("\n\n**********************************************")
-                print("**********************************************")
-                print("Block User with params: (contactId: 563) Unique Id Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(BlockUserUniqueId)")
-                print("**********************************************")
-                print("**********************************************\n\n")
+            self.myChatObject?.blockContact(params: blockUserParameters, uniqueId: { (BlockUserUniqueId) in
+                log.debug("Block User with params: (contactId: 563) Unique Id Response: \n|| \(BlockUserUniqueId)", context: "Test")
             }, completion: { (responseJSON) in
+                log.debug("Block User with params: (contactId: 563) Test Response: \n|| \(responseJSON)", context: "Test")
                 self.somethingWithDelegateAsyncResult = true
-                print("\n\n**********************************************")
-                print("Block User with params: (contactId: 563) Test Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(responseJSON)")
-                print("**********************************************")
-                print("**********************************************\n\n")
                 myExpectation.fulfill()
             })
             

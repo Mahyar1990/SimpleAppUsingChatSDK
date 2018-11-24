@@ -7,6 +7,7 @@
 //
 
 import SwiftyJSON
+import Async
 import XCTest
 @testable import Chat
 
@@ -23,14 +24,13 @@ class SpyDelegateAddContact: ChatDelegates {
     func chatDeliver(messageId: Int, ownerId: Int) {}
     func chatThreadEvents() {}
     func chatReady() {
-        guard let expectation = asyncExpectation else {
+        guard let _ = asyncExpectation else {
             XCTFail("SpyDelegateAddContact was not setup correctly. Missing XCTExpectation reference")
             return
         }
-        print("\n\n\n******************************")
-        print("Chat is Ready")
-        print("******************************\n")
-//        expectation.fulfill()
+        
+        log.debug("Test Response: \n|| Chat is Ready")
+        
     }
     func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {}
     func chatState(state: Int) {}
@@ -77,7 +77,7 @@ class AddContactsTest: XCTestCase {
     // MARK: - test with params: ["firstName": "Leornardo", "lastName": "DiCaprio", "cellphoneNumber": "0913", "email": "Leornardo@DiCaprio.com"]
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     func test_Add_Contact_With() {
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, typeCode: 1, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
         
         let spyDelegate = SpyDelegateAddContact()
         myChatObject?.delegate = spyDelegate
@@ -91,31 +91,17 @@ class AddContactsTest: XCTestCase {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
             
-            let myExpectation = self.expectation(description: "add contact")
+            let myExpectation = self.expectation(description: "Add Contact")
             let addContactsParams: JSON = ["firstName": "Leornardo",
                                            "lastName": "DiCaprio",
                                            "cellphoneNumber": "0913",
                                            "email": "Leornardo@DiCaprio.com"]
             
             self.myChatObject?.addContact(params: addContactsParams, uniqueId: { (addContactUniqueId) in
-                print("\n\n**********************************************")
-                print("**********************************************")
-                print("Add Contact with params: (firstName: Leornardo, lastName: DiCaprio, cellphoneNumber: 0913, email: Leornardo@DiCaprio.com) Unique Id Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(addContactUniqueId)")
-                print("**********************************************")
-                print("**********************************************\n\n")
+                log.debug("Add Contact with params: (firstName: Leornardo, lastName: DiCaprio, cellphoneNumber: 0913, email: Leornardo@DiCaprio.com) Unique Id Response: \n|| \(addContactUniqueId)", context: "Test")
             }, completion: { (responseJSON) in
+                log.debug("Add Contact with params: (firstName: Leornardo, lastName: DiCaprio, cellphoneNumber: 0913, email: Leornardo@DiCaprio.com) Test Response: \n|| \(responseJSON)", context: "Test")
                 self.somethingWithDelegateAsyncResult = true
-                print("\n\n**********************************************")
-                print("**********************************************")
-                print("Add Contact with params: (firstName: Leornardo, lastName: DiCaprio, cellphoneNumber: 0913, email: Leornardo@DiCaprio.com) Test Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(responseJSON)")
-                print("**********************************************")
-                print("**********************************************\n\n")
                 myExpectation.fulfill()
             })
             

@@ -7,6 +7,7 @@
 //
 
 import SwiftyJSON
+import Async
 import XCTest
 @testable import Chat
 
@@ -23,13 +24,13 @@ class SpyDelegateDeleteMessage: ChatDelegates {
     func chatDeliver(messageId: Int, ownerId: Int) {}
     func chatThreadEvents() {}
     func chatReady() {
-        guard let expectation = asyncExpectation else {
-            XCTFail("SpyDelegateGetUserInfo was not setup correctly. Missing XCTExpectation reference")
+        guard let _ = asyncExpectation else {
+            XCTFail("SpyDelegateDeleteMessage was not setup correctly. Missing XCTExpectation reference")
             return
         }
-        print("\n\n\n******************************")
-        print("Chat is Ready")
-        print("******************************\n")
+        
+        log.debug("Test Response: \n|| Chat is Ready")
+        
     }
     func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {}
     func chatState(state: Int) {}
@@ -76,7 +77,7 @@ class DeleteMessageTest: XCTestCase {
     // MARK: - test with params: [subjectId: 1133,repliedTo: 15397,content: 'empty message']
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     func test_Delete_Message_uniqueId_response() {
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, typeCode: 1, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
         
         let spyDelegate = SpyDelegateDeleteMessage()
         myChatObject?.delegate = spyDelegate
@@ -90,26 +91,14 @@ class DeleteMessageTest: XCTestCase {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
             
-            let myExpectationUniqueId = self.expectation(description: "send message uniqueId")
+            let myExpectationUniqueId = self.expectation(description: "Delete Message")
             let paramsToSend: JSON = ["subjectId": 1133,"repliedTo": 15397,"content": "empty message"]
             
             self.myChatObject?.deleteMessage(params: paramsToSend, uniqueId: { (uniqueIdResponse) in
-                print("\n\n**********************************************")
-                print("Send Message with params: [subjectId: 1133,repliedTo: 15397,content: 'empty message'] UniqueId Test Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(uniqueIdResponse)")
-                print("**********************************************")
-                print("**********************************************\n\n")
+                log.debug("Send Message with params: [subjectId: 1133,repliedTo: 15397,content: 'empty message'] UniqueId Test Response: \n|| \(uniqueIdResponse)", context: "Test")
             }, completion: { (sentResponse) in
+                log.debug("Send Message with params: [subjectId: 1133,repliedTo: 15397,content: 'empty message'] Sent Test Response: \n|| \(sentResponse)", context: "Test")
                 self.somethingWithDelegateAsyncResult = true
-                print("\n\n**********************************************")
-                print("Send Message with params: [subjectId: 1133,repliedTo: 15397,content: 'empty message'] Sent Test Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(sentResponse)")
-                print("**********************************************")
-                print("**********************************************\n\n")
                 myExpectationUniqueId.fulfill()
             })
             
@@ -127,4 +116,5 @@ class DeleteMessageTest: XCTestCase {
         }
         
     }
+
 }

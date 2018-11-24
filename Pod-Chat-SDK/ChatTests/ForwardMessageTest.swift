@@ -7,6 +7,7 @@
 //
 
 import SwiftyJSON
+import Async
 import XCTest
 @testable import Chat
 
@@ -24,12 +25,12 @@ class SpyDelegateForwardMessage: ChatDelegates {
     func chatThreadEvents() {}
     func chatReady() {
         guard let expectation = asyncExpectation else {
-            XCTFail("SpyDelegateGetUserInfo was not setup correctly. Missing XCTExpectation reference")
+            XCTFail("SpyDelegateForwardMessage was not setup correctly. Missing XCTExpectation reference")
             return
         }
-        print("\n\n\n******************************")
-        print("Chat is Ready")
-        print("******************************\n")
+        
+        log.debug("Test Response: \n|| Chat is Ready")
+        
         expectation.fulfill()
     }
     func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {}
@@ -77,7 +78,7 @@ class ForwardMessageTest: XCTestCase {
     // MARK: - test with params: ["subjectId": 1131,"content": [15395]]
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     func test_Forward_Message() {
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, typeCode: 1, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
         
         let spyDelegate = SpyDelegateForwardMessage()
         myChatObject?.delegate = spyDelegate
@@ -91,25 +92,13 @@ class ForwardMessageTest: XCTestCase {
             }
         }
         
-        let myExpectation = expectation(description: "forward message uniqueId")
+        let myExpectation = expectation(description: "Forward Message With 3Callbacks")
         let paramsToSend: JSON = ["subjectId": 1131,"content": [15395]]
         myChatObject?.forwardMessageWith3Callbacks(params: paramsToSend, uniqueIds: { (uniqueIdRespons) in
+            log.debug("Forward Message with params: [subjectId: 1131 ,content: [15395]] Test Response: \n|| \(uniqueIdRespons)", context: "Test")
             self.somethingWithDelegateAsyncResult = true
-            print("\n\n**********************************************")
-            print("Forward Message with params: [subjectId: 1131 ,content: [15395]] Test Response:")
-            print("**********************************************")
-            print("**********************************************")
-            print("\(uniqueIdRespons)")
-            print("**********************************************")
-            print("**********************************************\n\n")
             myExpectation.fulfill()
-        }, onSent: { (sentSucces) in
-//            <#code#>
-        }, onDelivere: { (deliverSuccess) in
-//            <#code#>
-        }, onSeen: { (seenSuccess) in
-//            <#code#>
-        })
+        }, onSent: { _ in }, onDelivere: { _ in }, onSeen: { _ in })
         
         waitForExpectations(timeout: 12) { error in
             if let error = error {
@@ -122,4 +111,5 @@ class ForwardMessageTest: XCTestCase {
             XCTAssertTrue(result)
         }
     }
+
 }

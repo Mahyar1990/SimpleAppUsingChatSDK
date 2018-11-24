@@ -7,6 +7,7 @@
 //
 
 import SwiftyJSON
+import Async
 import XCTest
 @testable import Chat
 
@@ -23,14 +24,13 @@ class SpyDelegateRemoveParticipants: ChatDelegates {
     func chatDeliver(messageId: Int, ownerId: Int) {}
     func chatThreadEvents() {}
     func chatReady() {
-        guard let expectation = asyncExpectation else {
-            XCTFail("SpyDelegateGetUserInfo was not setup correctly. Missing XCTExpectation reference")
+        guard let _ = asyncExpectation else {
+            XCTFail("SpyDelegateRemoveParticipants was not setup correctly. Missing XCTExpectation reference")
             return
         }
-        print("\n\n\n******************************")
-        print("Chat is Ready")
-        print("******************************\n")
-        //        expectation.fulfill()
+        
+        log.debug("Test Response: \n|| Chat is Ready")
+        
     }
     func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {}
     func chatState(state: Int) {}
@@ -78,7 +78,7 @@ class RemoveParticipantsTest: XCTestCase {
     // MARK: - test with params: ["threadId": 1323]
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     func test_Remove_Participants_With_ThreadId1323_uniqueId() {
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, typeCode: 1, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
         
         let spyDelegate = SpyDelegateRemoveParticipants()
         myChatObject?.delegate = spyDelegate
@@ -92,28 +92,15 @@ class RemoveParticipantsTest: XCTestCase {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
             
-            let myExpectation = self.expectation(description: "get threads")
+            let myExpectation = self.expectation(description: "Remove Participants")
             let removeParticipantsParameters: JSON = ["threadId": 1323, "participants": [1]]
             
             self.myChatObject?.removeParticipants(params: removeParticipantsParameters, uniqueId: { (RemoveParticipantsUniqueId) in
+                log.debug("Remove Participants with params: (threadId: 1323) Unique Id Response: \n|| \(RemoveParticipantsUniqueId)", context: "Test")
                 self.somethingWithDelegateAsyncResult = true
-                print("\n\n**********************************************")
-                print("**********************************************")
-                print("Remove Participants with params: (threadId: 1323) Unique Id Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(RemoveParticipantsUniqueId)")
-                print("**********************************************")
-                print("**********************************************\n\n")
                 myExpectation.fulfill()
             }, completion: { (responseJSON) in
-                print("\n\n**********************************************")
-                print("Remove Participants with params: (threadId: 1323) Test Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(responseJSON)")
-                print("**********************************************")
-                print("**********************************************\n\n")
+                log.debug("Remove Participants with params: (threadId: 1323) Test Response: \n|| \(responseJSON)", context: "Test")
             })
             
             
@@ -137,7 +124,7 @@ class RemoveParticipantsTest: XCTestCase {
     // MARK: - test with params: ["threadId": 1323]
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     func test_Remove_Participants_With_ThreadId1323_with2Contacts() {
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, typeCode: 1, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
         
         let spyDelegate = SpyDelegateRemoveParticipants()
         myChatObject?.delegate = spyDelegate
@@ -151,27 +138,14 @@ class RemoveParticipantsTest: XCTestCase {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
             
-            let myExpectation = self.expectation(description: "get threads")
+            let myExpectation = self.expectation(description: "Remove Participants")
             let removeParticipantsParameters: JSON = ["threadId": 1323, "participants": [1, 2]]
             
             self.myChatObject?.removeParticipants(params: removeParticipantsParameters, uniqueId: { (RemoveParticipantsUniqueId) in
-                print("\n\n**********************************************")
-                print("**********************************************")
-                print("Remove Participants with params: (threadId: 1323) Unique Id Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(RemoveParticipantsUniqueId)")
-                print("**********************************************")
-                print("**********************************************\n\n")
+                log.debug("Remove Participants with params: (threadId: 1323) Unique Id Response: \n|| \(RemoveParticipantsUniqueId)", context: "Test")
             }, completion: { (responseJSON) in
+                log.debug("Remove Participants with params: (threadId: 1323) Test Response: \n|| \(responseJSON)", context: "Test")
                 self.somethingWithDelegateAsyncResult = true
-                print("\n\n**********************************************")
-                print("Remove Participants with params: (threadId: 1323) Test Response:")
-                print("**********************************************")
-                print("**********************************************")
-                print("\(responseJSON)")
-                print("**********************************************")
-                print("**********************************************\n\n")
                 myExpectation.fulfill()
             })
             

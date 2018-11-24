@@ -52,6 +52,9 @@ extension MyViewController {
         view.addSubview(leaveThreadButton)
         view.addSubview(spamThreadButton)
         
+        view.addSubview(messageDeliverList)
+        view.addSubview(messageSeenList)
+        
         view.addSubview(logView)
         logView.addSubview(myLogCollectionView)
         
@@ -196,7 +199,17 @@ extension MyViewController {
         spamThreadButton.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
         spamThreadButton.bottomAnchor.constraint(equalTo: leaveThreadButton.bottomAnchor).isActive = true
         
-        logView.topAnchor.constraint(equalTo: leaveThreadButton.bottomAnchor, constant: 8).isActive = true
+        messageDeliverList.topAnchor.constraint(equalTo: getBlockedButton.bottomAnchor, constant: 8).isActive = true
+        messageDeliverList.leftAnchor.constraint(equalTo: getUserInfoButton.leftAnchor).isActive = true
+        messageDeliverList.rightAnchor.constraint(equalTo: getUserInfoButton.rightAnchor).isActive = true
+        messageDeliverList.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        messageSeenList.topAnchor.constraint(equalTo: messageDeliverList.topAnchor).isActive = true
+        messageSeenList.leftAnchor.constraint(equalTo: getThreadsButton.leftAnchor).isActive = true
+        messageSeenList.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
+        messageSeenList.bottomAnchor.constraint(equalTo: messageDeliverList.bottomAnchor).isActive = true
+        
+        logView.topAnchor.constraint(equalTo: messageDeliverList.bottomAnchor, constant: 8).isActive = true
         logView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true
         logView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -8).isActive = true
         logView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8).isActive = true
@@ -205,6 +218,7 @@ extension MyViewController {
         myLogCollectionView.leftAnchor.constraint(equalTo: logView.leftAnchor, constant: 8).isActive = true
         myLogCollectionView.rightAnchor.constraint(equalTo: logView.rightAnchor, constant: -8).isActive = true
         myLogCollectionView.bottomAnchor.constraint(equalTo: logView.bottomAnchor, constant: -8).isActive = true
+        
     }
     
     

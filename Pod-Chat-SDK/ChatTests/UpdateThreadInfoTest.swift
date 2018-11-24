@@ -7,6 +7,7 @@
 //
 
 import SwiftyJSON
+import Async
 import XCTest
 @testable import Chat
 
@@ -23,13 +24,13 @@ class SpyDelegateUpdateThreadInfo: ChatDelegates {
     func chatDeliver(messageId: Int, ownerId: Int) {}
     func chatThreadEvents() {}
     func chatReady() {
-        guard let expectation = asyncExpectation else {
-            XCTFail("SpyDelegateGetUserInfo was not setup correctly. Missing XCTExpectation reference")
+        guard let _ = asyncExpectation else {
+            XCTFail("SpyDelegateUpdateThreadInfo was not setup correctly. Missing XCTExpectation reference")
             return
         }
-        print("\n\n\n******************************")
-        print("Chat is Ready")
-        print("******************************\n")
+        
+        log.debug("Test Response: \n|| Chat is Ready")
+        
     }
     func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {}
     func chatState(state: Int) {}
@@ -77,7 +78,7 @@ class UpdateThreadInfoTest: XCTestCase {
     // MARK: - test with params: [subjectId: 1133,repliedTo: 15397,content: 'empty message']
     //@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
     func test_Update_Thread_Info_response() {
-        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
+        myChatObject = Chat(socketAddress: socketAddress, ssoHost: ssoHost, platformHost: platformHost, fileServer: fileServer, serverName: serverName, token: token, typeCode: 1, msgPriority: 1, msgTTL: messageTtl, httpRequestTimeout: nil, actualTimingLog: nil, wsConnectionWaitTime: Double(wsConnectionWaitTime), connectionRetryInterval: connectionRetryInterval, connectionCheckTimeout: connectionCheckTimeout, messageTtl: messageTtl, reconnectOnClose: true)
         
         let spyDelegate = SpyDelegateUpdateThreadInfo()
         myChatObject?.delegate = spyDelegate
@@ -91,7 +92,7 @@ class UpdateThreadInfoTest: XCTestCase {
                 XCTFail("waitForExpectationsWithTimeout errored: \(error)")
             }
             
-            let myExpectationUniqueId = self.expectation(description: "send message uniqueId")
+            let myExpectationUniqueId = self.expectation(description: "Update Thread Info")
             let metaData: JSON = ["id": 1101,
                                   "owner": "masoudmanson",
                                   "name": "Masoud"]
@@ -101,16 +102,10 @@ class UpdateThreadInfoTest: XCTestCase {
                                       "title": "عنوان ترد",
                                       "metadata": metaData]
             self.myChatObject?.updateThreadInfo(params: paramsToSend, uniqueId: { (updateThreadInfoUniqueId) in
-                print("***************************")
-                print("update thread info unique id is = \t \(updateThreadInfoUniqueId)")
-                print("***************************")
+                log.debug("Update thread info unique id is: \n|| \(updateThreadInfoUniqueId)", context: "Test")
             }, completion: { (response) in
+                log.debug("Update thread info Response is: \n|| \(response)", context: "Test")
                 self.somethingWithDelegateAsyncResult = true
-                print("***************************")
-                print("***************************")
-                print("\(response)")
-                print("***************************")
-                print("***************************")
                 myExpectationUniqueId.fulfill()
             })
             
@@ -128,4 +123,5 @@ class UpdateThreadInfoTest: XCTestCase {
         }
         
     }
+    
 }
