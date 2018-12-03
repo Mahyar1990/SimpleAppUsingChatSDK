@@ -567,6 +567,9 @@ extension Chat {
             
         case chatMessageVOTypes.DELIVERY.rawValue:
             log.info("Message of type 'DELIVERY' recieved", context: "Chat")
+            
+            // this functionality has beed deprecated
+            /*
             let paramsToSend: JSON = ["offset": 0,
                                       "threadId": threadId,
                                       "id": messageContent["messageId"].int ?? NSNull()]
@@ -581,6 +584,7 @@ extension Chat {
                     self.delegate?.messageEvents(type: "MESSAGE_DELIVERY", result: result)
                 }
             }
+            */
             
             var findItAt: Int?
             let threadIdObject = Chat.mapOnDeliver["\(threadId)"]
@@ -614,8 +618,8 @@ extension Chat {
                 }
                 
                 // remove items from array and update array
-                for i in 1...itemAt {
-                    let index = i - 1
+                for i in 0...(itemAt - 1) {
+                    let index = i
                     Chat.mapOnDeliver["\(threadId)"]?.remove(at: index)
                 }
                 
@@ -624,6 +628,9 @@ extension Chat {
             
         case chatMessageVOTypes.SEEN.rawValue:
             log.info("Message of type 'SEEN' recieved", context: "Chat")
+            
+            // this functionality has beed deprecated
+            /*
             let paramsToSend: JSON = ["offset": 0,
                                       "threadId": threadId,
                                       "id": messageContent["messageId"].int ?? NSNull()]
@@ -638,6 +645,7 @@ extension Chat {
                     self.delegate?.messageEvents(type: "MESSAGE_SEEN", result: result)
                 }
             }
+            */
             
             var findItAt: Int?
             let threadIdObject = Chat.mapOnSeen["\(threadId)"]
@@ -717,6 +725,8 @@ extension Chat {
                 Chat.map.removeValue(forKey: uniqueId)
             }
             
+            // this functionality has beed deprecated
+            /*
             let threadIds = messageContent["id"].intValue
             let paramsToSend: JSON = ["threadIds": threadIds]
             getThreads(params: paramsToSend, uniqueId: { _ in }) { (response) in
@@ -735,6 +745,8 @@ extension Chat {
                 }
                 
             }
+            */
+            
             break
             
         case chatMessageVOTypes.RENAME.rawValue:
@@ -751,6 +763,8 @@ extension Chat {
                 Chat.map.removeValue(forKey: uniqueId)
             }
             
+            // this functionality has beed deprecated
+            /*
             let threadIds = messageContent["id"].intValue
             let paramsToSend: JSON = ["threadIds": threadIds]
             getThreads(params: paramsToSend, uniqueId: { _ in }) { (response) in
@@ -762,6 +776,8 @@ extension Chat {
                 self.delegate?.threadEvents(type: "THREAD_ADD_PARTICIPANTS", result: result)
                 self.delegate?.threadEvents(type: "THREAD_LAST_ACTIVITY_TIME", result: result)
             }
+            */
+            
             break
             
         case chatMessageVOTypes.GET_CONTACTS.rawValue:
@@ -838,6 +854,8 @@ extension Chat {
                 }) { _ in }
                 Chat.map.removeValue(forKey: uniqueId)
                 
+                // this functionality has beed deprecated
+                /*
                 let paramsToSend: JSON = ["threadIds": [threadId]]
                 getThreads(params: paramsToSend, uniqueId: { _ in }) { (myResponse) in
                     let myResponseModel: GetThreadsModel = myResponse as! GetThreadsModel
@@ -847,6 +865,8 @@ extension Chat {
                     let result: JSON = ["thread": threads.first!]
                     self.delegate?.threadEvents(type: "THREAD_MUTE", result: result)
                 }
+                */
+                
             }
             break
             
@@ -860,6 +880,8 @@ extension Chat {
                 }) { _ in }
                 Chat.map.removeValue(forKey: uniqueId)
                 
+                // this functionality has beed deprecated
+                /*
                 let paramsToSend: JSON = ["threadIds": [threadId]]
                 getThreads(params: paramsToSend, uniqueId: { _ in }) { (myResponse) in
                     let myResponseModel: GetThreadsModel = myResponse as! GetThreadsModel
@@ -869,6 +891,8 @@ extension Chat {
                     let result: JSON = ["thread": threads.first!]
                     self.delegate?.threadEvents(type: "THREAD_UNMUTE", result: result)
                 }
+                */
+                
             }
             break
             
@@ -882,6 +906,8 @@ extension Chat {
                 }) { _ in }
                 Chat.map.removeValue(forKey: uniqueId)
                 
+                // this functionality has beed deprecated
+                /*
                 let paramsToSend: JSON = ["threadIds": messageContent["id"].intValue]
                 getThreads(params: paramsToSend, uniqueId: { _ in }) { (myResponse) in
                     let myResponseModel: GetThreadsModel = myResponse as! GetThreadsModel
@@ -891,6 +917,8 @@ extension Chat {
                     let result: JSON = ["result": thread]
                     self.delegate?.threadEvents(type: "THREAD_INFO_UPDATED", result: result)
                 }
+                */
+                
             }
             break
             
@@ -975,6 +1003,9 @@ extension Chat {
             
         case chatMessageVOTypes.LAST_SEEN_UPDATED.rawValue:
             log.info("Message of type 'LAST_SEEN_UPDATED' recieved", context: "Chat")
+            
+            // this functionality has beed deprecated
+            /*
             let paramsToSend: JSON = ["threadIds": messageContent["conversationId"].intValue]
             getThreads(params: paramsToSend, uniqueId: { _ in }) { (myResponse) in
                 let myResponseModel: GetThreadsModel = myResponse as! GetThreadsModel
@@ -989,6 +1020,8 @@ extension Chat {
                 let result2: JSON = ["thread": threads]
                 self.delegate?.threadEvents(type: "THREAD_LAST_ACTIVITY_TIME", result: result2)
             }
+            */
+            
             break
             
         case chatMessageVOTypes.GET_MESSAGE_DELEVERY_PARTICIPANTS.rawValue:
@@ -1066,30 +1099,39 @@ extension Chat {
     
     func chatMessageHandler(threadId: Int, messageContent: JSON) {
         let message = Message(threadId: threadId, pushMessageVO: messageContent)
+        
+        let parameterToSent: JSON = ["messageId":   message.id ?? NSNull(),
+                                     "participant": message.participant?.id ?? NSNull()]
+        deliver(params: parameterToSent)
+        
         if let messageParticipants = message.participant {
             delegate?.chatDeliver(messageId: message.id!, ownerId: messageParticipants.id!)
         }
         
-        let myResult: JSON = ["message": message]
+        let messageJSON = message.formatToJSON()
+        let myResult: JSON = ["message": messageJSON]
         delegate?.messageEvents(type: "MESSAGE_NEW", result: myResult)
         
-        let myThreadId: JSON = ["threadIds": threadId]
-        getThreads(params: myThreadId, uniqueId: { _ in }) { (threadsResult) in
-            let threadsResultModel: GetThreadsModel = threadsResult as! GetThreadsModel
-            let threadsResultJSON: JSON = threadsResultModel.returnDataAsJSON()
-            
-            let threads = threadsResultJSON["result"]["threads"].arrayValue
-            
-            if (messageContent["participant"]["id"].intValue != self.userInfo!["id"].intValue) {
-                let result: JSON = ["thread": threads[0].intValue,
-                                    "messageId": messageContent["id"].intValue,
-                                    "senderId": messageContent["participant"]["id"].intValue]
-                self.delegate?.threadEvents(type: "THREAD_UNREAD_COUNT_UPDATED", result: result)
-            }
-            
-            let result: JSON = ["thread": threads[0].intValue]
-            self.delegate?.threadEvents(type: "THREAD_LAST_ACTIVITY_TIME", result: result)
-        }
+        
+        // This code is deprecated
+//        let myThreadId: JSON = ["threadIds": threadId]
+//        getThreads(params: myThreadId, uniqueId: { _ in }) { (threadsResult) in
+//            let threadsResultModel: GetThreadsModel = threadsResult as! GetThreadsModel
+//            let threadsResultJSON: JSON = threadsResultModel.returnDataAsJSON()
+//
+//            let threads = threadsResultJSON["result"]["threads"].arrayValue
+//
+//            if (messageContent["participant"]["id"].intValue != self.userInfo!["id"].intValue) {
+//                let result: JSON = ["thread": threads[0].intValue,
+//                                    "messageId": messageContent["id"].intValue,
+//                                    "senderId": messageContent["participant"]["id"].intValue]
+//                self.delegate?.threadEvents(type: "THREAD_UNREAD_COUNT_UPDATED", result: result)
+//            }
+//
+//            let result: JSON = ["thread": threads[0].intValue]
+//            self.delegate?.threadEvents(type: "THREAD_LAST_ACTIVITY_TIME", result: result)
+//        }
+        
     }
     
     
@@ -1982,7 +2024,7 @@ extension Chat {
         
         uploadFileData["fileName"] = JSON(fileName)
         uploadFileData["threadId"] = JSON(uploadThreadId)
-        //        uploadFileData["fileSize"] = JSON(fileSize)
+        uploadFileData["fileSize"] = JSON(fileSize)
         uploadFileData["uniqueId"] = JSON(uploadUniqueId)
         uploadFileData["originalFileName"] = JSON(originalFileName)
         
@@ -2517,6 +2559,14 @@ extension Chat {
             sendMessageParams["typeCode"] = JSON(generalTypeCode)
         }
         
+//        if let subjectId = params["subjectId"].int {
+//            sendMessageParams["threadId"] = JSON(subjectId)
+//        }
+        
+        if let messageId = params["messageId"].int {
+            content["messageId"] = JSON(messageId)
+        }
+        
         sendMessageParams["content"] = content
         
         sendMessageWithCallback(params: sendMessageParams, callback: GetMessageDeliverList(parameters: sendMessageParams), sentCallback: nil, deliverCallback: nil, seenCallback: nil) { (messageDeliverListUniqueId) in
@@ -2551,6 +2601,10 @@ extension Chat {
             sendMessageParams["typeCode"] = JSON(generalTypeCode)
         }
         
+        if let messageId = params["messageId"].int {
+            content["messageId"] = JSON(messageId)
+        }
+        
         sendMessageParams["content"] = content
         
         sendMessageWithCallback(params: sendMessageParams, callback: GetMessageSeenList(parameters: sendMessageParams), sentCallback: nil, deliverCallback: nil, seenCallback: nil) { (messageSeenListUniqueId) in
@@ -2565,9 +2619,22 @@ extension Chat {
         if let theUserInfo = userInfo {
             if (params["ownerId"].intValue != theUserInfo["id"].intValue) {
                 let sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.DELIVERY.rawValue,
-                                               "content": params["messageId"].intValue,
-                                               "typeCode": params["typeCode"].int ?? generalTypeCode,
-                                               "pushMsgType": 3]
+                                               "content":           params["messageId"].intValue,
+                                               "typeCode":          params["typeCode"].int ?? generalTypeCode,
+                                               "pushMsgType":       3]
+                sendMessageWithCallback(params: sendMessageParams, callback: nil, sentCallback: nil, deliverCallback: nil, seenCallback: nil, uniuqueIdCallback: nil)
+            }
+        }
+    }
+    
+    
+    public func seen(params: JSON) {
+        if let theUserInfo = userInfo {
+            if (params["ownerId"].intValue != theUserInfo["id"].intValue) {
+                let sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.SEEN.rawValue,
+                                               "content":           params["messageId"].intValue,
+                                               "typeCode":          params["typeCode"].int ?? generalTypeCode,
+                                               "pushMsgType":       3]
                 sendMessageWithCallback(params: sendMessageParams, callback: nil, sentCallback: nil, deliverCallback: nil, seenCallback: nil, uniuqueIdCallback: nil)
             }
         }
@@ -2722,7 +2789,7 @@ extension Chat {
                 
                 let getHistoryModel = GetHistoryModel(messageContent: messageContent, contentCount: contentCount, count: count, offset: offset, hasError: hasError, errorMessage: errorMessage, errorCode: errorCode)
                 
-                success(getHistoryModel )
+                success(getHistoryModel)
             }
         }
     }
