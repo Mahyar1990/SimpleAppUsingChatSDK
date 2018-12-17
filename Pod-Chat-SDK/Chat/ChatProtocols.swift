@@ -24,7 +24,12 @@ protocol CallbackProtocolWith3Calls: class {
     func onSeen(uID: String, response: JSON, success: @escaping callbackTypeAlias)
 }
 
-
+protocol CallbackProtocolWith4Calls: class {
+    func onResultCallback(uID: String, response: JSON, success: @escaping callbackTypeAlias)
+    func onSent(uID: String, response: JSON, success: @escaping callbackTypeAlias)
+    func onDeliver(uID: String, response: JSON, success: @escaping callbackTypeAlias)
+    func onSeen(uID: String, response: JSON, success: @escaping callbackTypeAlias)
+}
 
 
 

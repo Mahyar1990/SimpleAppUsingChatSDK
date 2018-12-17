@@ -35,7 +35,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
 //    let ssoHost                 = "https://accounts.pod.land"
 //    let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
 //    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-//    let token                   = "243abe90bbc24132a24a9271dbc6dbf9"
+//    let token                   = "f23ad46ac08044edb00f6dc39a7e2ffc"
     
     
     // Local Addresses
@@ -638,7 +638,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
                             fileServer: fileServer,
                             serverName: serverName,
                             token: token,
-                            typeCode: 2,
+                            typeCode: "chattest",
                             msgPriority: 1,
                             msgTTL: messageTtl,
                             httpRequestTimeout: nil,
@@ -680,12 +680,12 @@ extension MyViewController {
     
     
     @objc func getThreadsButtonPressed() {
-        let metadataCriteria: JSON = ["field": "type",
-                                      "has": "BOT_",
-                                      "and": ["field": "id", "is": "1534835339446"]
-                                    ]
+//        let metadataCriteria: JSON = ["field": "type",
+//                                      "has": "BOT_",
+//                                      "and": ["field": "id", "is": "1534835339446"]
+//                                    ]
         
-        let paramsToSend: JSON = ["count": 2, "offset": 0, "metadataCriteria": metadataCriteria]
+        let paramsToSend: JSON = ["count": 3, "offset": 8/*, "metadataCriteria": metadataCriteria*/]
         
         myChatObject?.getThreads(params: paramsToSend, uniqueId: { (getThreadUniqueId) in
             print("\n get thread request uniqueId = \t \(getThreadUniqueId) \n")
@@ -738,12 +738,11 @@ extension MyViewController {
 //        let akbariPhone: JSON = ["id": "09369865820", "idType": inviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue]
         
         let xxx: JSON = ["id": "09981084527", "idType": inviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue]
-        
         let invitees: [JSON] = [xxx]
+        let paramsToSend: JSON = ["type": createThreadTypes.NORMAL.rawValue, "title": "New Group", "invitees": invitees]
         
-        let paramsToSend: JSON = ["type": createThreadTypes.PUBLIC_GROUP.rawValue, "title": "New Group", "invitees": invitees]
-        myChatObject?.createThreadAndSendMessage(params: paramsToSend, sendMessageParams: messageParamsToSend, uniqueId: { (createThreadUniqueId) in
-            print("\n create thread reqeuest uniqueId = \t \(createThreadUniqueId) \n")
+        myChatObject?.creatThreadWithMessage(params: paramsToSend, sendMessageParams: messageParamsToSend, uniqueId: { (createWithSendMessageUniqeuId) in
+            print("\n create thread reqeuest uniqueId = \t \(createWithSendMessageUniqeuId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
             let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
@@ -790,7 +789,7 @@ extension MyViewController {
     
     func sendMessage() {
         let metadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
-        let paramsToSend: JSON = ["subjectId": 1171, "content": "\(inputTextFieldToSendMessage.text ?? "empty message")", "metaData": metadata]
+        let paramsToSend: JSON = ["subjectId": 1391, "content": "\(inputTextFieldToSendMessage.text ?? "empty message")", "metaData": metadata]
         myChatObject?.sendTextMessage(params: paramsToSend, uniqueId: { (uniqueIdStr) in
             print("**************************")
             print("message uniqueId is: \(uniqueIdStr)")
@@ -1240,6 +1239,15 @@ extension MyViewController: ChatDelegates {
     
     func messageEvents(type: String, result: JSON) {
         //        print("@@MyLog(Chat): message events with \n type = \(type) \n result: \(result)")
+        
+//        print("\n\n\n****************************")
+//        print("****************************")
+//        print("****************************")
+//        print("MessageType: \(type)")
+//        print("result in JSON: \n \(result)")
+//        print("****************************")
+//        print("****************************")
+//        print("****************************\n\n\n")
     }
     
     func threadEvents(type: String, result: JSON) {
