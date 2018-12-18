@@ -102,7 +102,7 @@ extension Chat: AsyncDelegates {
                     log.verbose("get info result comes, and save userInfo: \n \(resultJSON)", context: "Chat")
                     
                     if resultJSON["hasError"].boolValue == false {
-                        self.userInfo = resultJSON["result"]["user"]
+                        self.userInfo = User(messageContent: resultJSON["result"]["user"])
                         self.chatState = true
                         self.delegate?.chatReady()
                     }

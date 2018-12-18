@@ -53,7 +53,7 @@ public class Chat {
     var deviceId: String?
     var peerId: Int?
     var oldPeerId: Int?
-    var userInfo: JSON?
+    var userInfo: User?
     
     var getHistoryCount: Int = 100
     var getUserInfoRetry = 5
@@ -1254,58 +1254,93 @@ extension Chat {
 // - MARK: Public Methods
 extension Chat {
     
+    
+    /*
+     This function will retuen peerId of the current user if it exists, else it would return 0
+     */
     public func getPeerId() -> Int {
-        return peerId!
+        if let id = peerId {
+            return id
+        } else {
+            return 0
+        }
+    }
+    
+    /*
+     This function will return the current user info if it exists, otherwise it would return nil!
+     */
+    public func getCurrentUser() -> User? {
+        if let myUserInfo = userInfo {
+            return myUserInfo
+        } else {
+            return nil
+        }
     }
     
     
-    public func getCurrentUser() -> JSON {
-        return userInfo!
-    }
     
     
     
-    
-    
-    
+    /*
+     GetUserInfo:
+     By calling this function, a request of type 23 (USER_INFO) will send throut Chat-SDK,
+     then the response will come back as callbacks to client whose calls this function.
+     
+     + Inputs:
+        this method doesn't need any input
+     
+     + Outputs:
+        It has 2 callbacks as response:
+        1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
+        2- completion:  it will returns the response that comes from server to this request.    (UserInfoModel)
+     */
     public func getUserInfo(uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to get user info", context: "Chat")
         let sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.USER_INFO.rawValue,
                                        "typeCode": generalTypeCode]
+        
         sendMessageWithCallback(params: sendMessageParams, callback: UserInfoCallback(), sentCallback: nil, deliverCallback: nil, seenCallback: nil) { (getUserInfoUniqueId) in
             uniqueId(getUserInfoUniqueId)
         }
-        sendMessageWithCallback(params: sendMessageParams, callback: UserInfoCallback(), sentCallback: nil, deliverCallback: nil, seenCallback: nil, uniuqueIdCallback: nil)
+        
         userInfoCallbackToUser = completion
     }
     
     
-    public func getContacts(params: JSON?, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
-        log.verbose("Try to request to get Contacts with this parameters: \n \(params ?? "params is empty!")", context: "Chat")
+    /*
+     GetContacts:
+     By calling this function, a request of type 13 (GET_CONTACTS) will send throut Chat-SDK,
+     then the response will come back as callbacks to client whose calls this function.
+     
+     + Inputs:
+        this function will get some optional prameters as an input, as JSON or Model (depends on the function that you would use) which are:
+        - count:    how many contact do you want to get with this request.      (Int)       : its optional, if you don't set it, it would have default value of 50
+        - offset:   offset of the contact number that start to count to show.   (Int)       : its optional, if you don't set it, it would have default value of 50
+        - name:     if you want to search on your contact, put it here.         (String)    : its optional
+        - typeCode:
+     
+     + Outputs:
+        It has 2 callbacks as response:
+        1- uniqueId: it will returns the request 'UniqueId' that will send to server.       (String)
+        2- completion: it will returns the response that comes from server to this request. (GetContactsModel)
+     */
+    public func getContacts(getContactsInput: getContactsRequestModel?, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+        log.verbose("Try to request to get Contacts with this parameters: \n \(getContactsInput ?? getContactsRequestModel(count: nil, offset: nil, name: nil, typeCode: nil))", context: "Chat")
         
         var myTypeCode: String = generalTypeCode
         var content: JSON = ["count": 50, "offset": 0]
-        if let parameters = params {
-            if let count = parameters["count"].int {
-                if count > 0 {
-                    content["count"] = JSON(count)
-                    content["size"] = JSON(count)
-                }
-            }
+        
+        if let inputs = getContactsInput {
             
-            if let offset = parameters["offset"].int {
-                if offset > 0 {
-                    content["offset"] = JSON(offset)
-                }
-            }
+            content["count"]    = JSON(inputs.count ?? 50)
+            content["size"]     = JSON(inputs.count ?? 50)
+            content["offset"]   = JSON(inputs.offset ?? 0)
             
-            if let name = parameters["name"].string {
+            if let name = inputs.name {
                 content["name"] = JSON(name)
             }
             
-            if let typeCode = parameters["typeCode"].string {
-                myTypeCode = typeCode
-            }
+            myTypeCode = inputs.typeCode ?? generalTypeCode
         }
         
         let sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.GET_CONTACTS.rawValue,
@@ -1317,6 +1352,104 @@ extension Chat {
         getContactsCallbackToUser = completion
     }
     
+    // NOTE: This method will be deprecate soon
+    // this method will do the same as tha funciton above but instead of using 'getContactsRequestModel' to get the parameters, it'll use JSON
+    public func getContacts(params: JSON?, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+        log.verbose("Try to request to get Contacts with this parameters: \n \(params ?? "params is empty!")", context: "Chat")
+
+        var myTypeCode: String = generalTypeCode
+        var content: JSON = ["count": 50, "offset": 0]
+        if let parameters = params {
+            if let count = parameters["count"].int {
+                if count > 0 {
+                    content["count"] = JSON(count)
+                    content["size"] = JSON(count)
+                }
+            }
+
+            if let offset = parameters["offset"].int {
+                if offset > 0 {
+                    content["offset"] = JSON(offset)
+                }
+            }
+
+            if let name = parameters["name"].string {
+                content["name"] = JSON(name)
+            }
+
+            if let typeCode = parameters["typeCode"].string {
+                myTypeCode = typeCode
+            }
+        }
+
+        let sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.GET_CONTACTS.rawValue,
+                                       "typeCode": myTypeCode,
+                                       "content": content]
+        sendMessageWithCallback(params: sendMessageParams, callback: GetContactsCallback(parameters: sendMessageParams), sentCallback: nil, deliverCallback: nil, seenCallback: nil) { (getContactUniqueId) in
+            uniqueId(getContactUniqueId)
+        }
+        getContactsCallbackToUser = completion
+    }
+    
+    
+    /*
+     GetThreads:
+     By calling this function, a request of type 14 (GET_THREADS) will send throut Chat-SDK,
+     then the response will come back as callbacks to client whose calls this function.
+     
+     + Inputs:
+     this function will get some optional prameters as an input, as JSON or Model (depends on the function that you would use) which are:
+     - count:    how many contact do you want to get with this request.      (Int)       : its optional, if you don't set it, it would have default value of 50
+     - offset:   offset of the contact number that start to count to show.   (Int)       : its optional, if you don't set it, it would have default value of 50
+     - name:     if you want to search on your contact, put it here.         (String)    : its optional
+     - typeCode:
+     
+     + Outputs:
+     It has 2 callbacks as response:
+     1- uniqueId: it will returns the request 'UniqueId' that will send to server.       (String)
+     2- completion: it will returns the response that comes from server to this request. (GetThreadsModel)
+     */
+    public func getThreads(getContactsInput: getThreadsRequestModel?, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+        log.verbose("Try to request to get threads with this parameters: \n \(getThreadsRequestModel(count: nil, offset: nil, name: nil, new: nil, threadIds: nil, typeCode: nil, metadataCriteria: nil))", context: "Chat")
+        
+        var myTypeCode: String = generalTypeCode
+        var content: JSON = ["count": 50, "offset": 0]
+        
+        if let inputs = getContactsInput {
+            
+            content["count"]    = JSON(inputs.count ?? 50)
+            content["offset"]    = JSON(inputs.offset ?? 0)
+            
+            if let name = inputs.name {
+                content["name"] = JSON(name)
+            }
+            
+            if let new = inputs.new {
+                content["new"] = JSON(new)
+            }
+            
+            if let threadIds = inputs.threadIds {
+                content["threadIds"] = JSON(threadIds)
+            }
+            
+            if let metadataCriteria = inputs.metadataCriteria {
+                content["metadataCriteria"] = JSON(metadataCriteria)
+            }
+            
+            myTypeCode = inputs.typeCode ?? generalTypeCode
+            
+        }
+        
+        let sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.GET_THREADS.rawValue,
+                                       "content": content,
+                                       "typeCode": myTypeCode]
+        
+        sendMessageWithCallback(params: sendMessageParams, callback: GetThreadsCallbacks(parameters: sendMessageParams), sentCallback: nil, deliverCallback: nil, seenCallback: nil) { (getThreadUniqueId) in
+            uniqueId(getThreadUniqueId)
+        }
+        threadsCallbackToUser = completion
+        
+    }
     
     public func getThreads(params: JSON?, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to get threads with this parameters: \n \(params ?? "params is empty!")", context: "Chat")
@@ -2733,11 +2866,12 @@ extension Chat {
     
     public func deliver(params: JSON) {
         if let theUserInfo = userInfo {
-            if (params["ownerId"].intValue != theUserInfo["id"].intValue) {
+            let userInfoJSON = theUserInfo.formatToJSON()
+            if (params["ownerId"].intValue != userInfoJSON["id"].intValue) {
                 let sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.DELIVERY.rawValue,
-                                               "content":           params["messageId"].intValue,
-                                               "typeCode":          params["typeCode"].string ?? generalTypeCode,
-                                               "pushMsgType":       3]
+                                               "content": params["messageId"].intValue,
+                                               "typeCode": params["typeCode"].int ?? generalTypeCode,
+                                               "pushMsgType": 3]
                 sendMessageWithCallback(params: sendMessageParams, callback: nil, sentCallback: nil, deliverCallback: nil, seenCallback: nil, uniuqueIdCallback: nil)
             }
         }
@@ -2746,7 +2880,8 @@ extension Chat {
     
     public func seen(params: JSON) {
         if let theUserInfo = userInfo {
-            if (params["ownerId"].intValue != theUserInfo["id"].intValue) {
+            let userInfoJSON = theUserInfo.formatToJSON()
+            if (params["ownerId"].intValue != userInfoJSON["id"].intValue) {
                 let sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.SEEN.rawValue,
                                                "content":           params["messageId"].intValue,
                                                "typeCode":          params["typeCode"].string ?? generalTypeCode,
