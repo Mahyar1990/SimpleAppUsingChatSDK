@@ -28,34 +28,34 @@ open class LogWithSwiftyBeaver {
         
         // setup format of loging to Xcode Console
         let consoleFormatString: String = """
-
+\n
 ________________________________________________________________________________________________
 ||--------------------------------------------------------------------------------------------||
 || $C$L                                                                                  ||
 ||  _____________________________________________________________________                     ||
-|| |     time     | line | class.function\t\t\t\t\t| thread
+|| |     time     |  line  | class.function\t\t\t\t\t| thread
 || | $U |  $l  | $N.$F\t\t| $T
 ||  ---------------------------------------------------------------------                     ||
 || | Message:                                                                                 ||
-|| | $M$J
+|| | $M
+|| | 
 ||  ---------------------------------------------------------------------                     ||
 || | Additional information:                                                                  ||
 || | $X
 ||  ---------------------------------------------------------------------                     ||
 ||____________________________________________________________________________________________||
-------------------------------------------------------------------------------------------------
-
+------------------------------------------------------------------------------------------------\n
 """
         console.format = consoleFormatString
         
-        /*
+        
          // set global minLevel (verbose, info, debug, warning, error)
-         console.minLevel = .error
-         */
+         console.minLevel = .debug
+        
         
         /*
          // set Path Filter to a certain class
-         let filter1 = Filters.Path.contains("UnicornViewController",minLevel: .debug)
+         let filter1 = Filters.Path.contains("Chat", minLevel: .debug)
          console.addFilter(filter1)
          */
         

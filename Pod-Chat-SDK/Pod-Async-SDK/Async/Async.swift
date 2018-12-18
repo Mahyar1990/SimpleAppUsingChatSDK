@@ -238,17 +238,23 @@ extension Async {
                     handlePingMessage(message: msg)
                 case asyncMessageType.SERVER_REGISTER.rawValue:
                     handleServerRegisterMessage(message: msg)
+                    
                 case asyncMessageType.DEVICE_REGISTER.rawValue:
                     handleDeviceRegisterMessage(message: msg)
+                    
                 case asyncMessageType.MESSAGE.rawValue:
                     delegate?.asyncReceiveMessage(params: msg)
+                    
                 case asyncMessageType.MESSAGE_ACK_NEEDED.rawValue, asyncMessageType.MESSAGE_SENDER_ACK_NEEDED.rawValue:
                     handleSendACK(messageContent: msg)
                     delegate?.asyncReceiveMessage(params: msg)
+                    
                 case asyncMessageType.ACK.rawValue:
                     delegate?.asyncReceiveMessage(params: msg)
+                    
                 case asyncMessageType.ERROR_MESSAGE.rawValue:
                     delegate?.asyncError(errorCode: 4002, errorMessage: "Async Error!", errorEvent: msg)
+                    
                 default:
                     return
                 }
@@ -320,7 +326,7 @@ extension Async {
             sendDataFromQueueToSocekt()
             delegate?.asyncReady()
         } else {
-            log.info("Device has Registered successfully", context: "Async")
+            log.verbose("Device has Registered successfully", context: "Async")
             
             registerServer()
         }
@@ -341,7 +347,7 @@ extension Async {
                 socketState = socketStateType.OPEN
                 delegate?.asyncStateChanged(socketState: socketState.rawValue, timeUntilReconnect: 0, deviceRegister: isDeviceRegister, serverRegister: isServerRegister, peerId: peerId)
                 
-                log.info("Server has Registered successfully", context: "Async")
+                log.verbose("Server has Registered successfully", context: "Async")
                 
                 delegate?.asyncReady()
                 sendDataFromQueueToSocekt()
@@ -364,7 +370,7 @@ extension Async {
         let msgId = messageContent["id"].int ?? -1
         let content: JSON = ["messageId": msgId]
         let msgIdStr = "\(content)"
-        log.info("try to send Ack message with id: \(msgIdStr)", context: "Async")
+        log.verbose("try to send Ack message with id: \(msgIdStr)", context: "Async")
         
         pushSendData(type: asyncMessageType.ACK.rawValue, content: msgIdStr)
     }
@@ -389,7 +395,7 @@ extension Async {
      here, we have PeerId, and the next step is to Register Device
      */
     func registerDevice() {
-        log.info("make Device Register Message", context: "Async")
+        log.verbose("make Device Register Message", context: "Async")
         
         var content: JSON = []
         if (peerId == 0) {
@@ -408,7 +414,7 @@ extension Async {
      and the next step is to Register Server
     */
     func registerServer() {
-        log.info("make Server Register Message", context: "Async")
+        log.verbose("make Server Register Message", context: "Async")
         
         let content: JSON = ["name": serverName]
         let contentStr = "\(content)"
@@ -477,7 +483,7 @@ extension Async {
             let strWithSpace = strWithReturn.replacingOccurrences(of: "Ⓢ", with: " ")
             let strWithTab = strWithSpace.replacingOccurrences(of: "Ⓣ", with: "\t")
             
-            log.info("this message sends through socket: \n \(strWithTab)", context: "Async")
+            log.verbose("this message sends through socket: \n \(strWithTab)", context: "Async")
             
             socket?.write(string: strWithTab)
         }
@@ -489,7 +495,7 @@ extension Async {
      (this will contain messges on a queue)
      */
     func sendDataToQueue(type: Int, content: String) {
-        log.info("send data to queue", context: "Async")
+        log.verbose("send data to queue", context: "Async")
         
         let obj = ["type": type, "content": content] as [String : Any]
         pushSendDataArr.append(obj)

@@ -30,22 +30,22 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     */
     
     // SandBox Addresses:
-    let socketAddress           = "wss://chat-sandbox.pod.land/ws"
-    let serverName              = "chat-server"
-    let ssoHost                 = "https://accounts.pod.land"
-    let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
-    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "e684346c6c6847679d87c8ea9896c2aa"
+//    let socketAddress           = "wss://chat-sandbox.pod.land/ws"
+//    let serverName              = "chat-server"
+//    let ssoHost                 = "https://accounts.pod.land"
+//    let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
+//    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
+//    let token                   = "f23ad46ac08044edb00f6dc39a7e2ffc"
     
     
     // Local Addresses
-//    let socketAddress           = "ws://172.16.106.26:8003/ws"
-//    let serverName              = "chat-server"
-//    let ssoHost                 = "http://172.16.110.76"
-//    let platformHost            = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} Platform Core Address
-//    let fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
+    let socketAddress           = "ws://172.16.106.26:8003/ws"
+    let serverName              = "chat-server"
+    let ssoHost                 = "http://172.16.110.76"
+    let platformHost            = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} Platform Core Address
+    let fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
 //    let token                   = "62e07ed1de2d48ab93575bd873f6a51d"
-//    let token                   = "7a18deb4a4b64339a81056089f5e5922"    // ialexi
+    let token                   = "7a18deb4a4b64339a81056089f5e5922"    // ialexi
 //    let token                   = "6421ecebd40b4d09923bcf6379663d87"    // iFelfeli
 //    let token                   = "6421ecebd40b4d09923bcf6379663d87"
 //    let token = "fbd4ecedb898426394646e65c6b1d5d1" //  {**REQUIRED**} SSO Token JiJi
@@ -638,7 +638,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
                             fileServer: fileServer,
                             serverName: serverName,
                             token: token,
-                            typeCode: 2,
+                            typeCode: "chattest",
                             msgPriority: 1,
                             msgTTL: messageTtl,
                             httpRequestTimeout: nil,
@@ -680,7 +680,13 @@ extension MyViewController {
     
     
     @objc func getThreadsButtonPressed() {
-        let paramsToSend: JSON = ["count": 3, "offset": 0]
+//        let metadataCriteria: JSON = ["field": "type",
+//                                      "has": "BOT_",
+//                                      "and": ["field": "id", "is": "1534835339446"]
+//                                    ]
+        
+        let paramsToSend: JSON = ["count": 3, "offset": 8/*, "metadataCriteria": metadataCriteria*/]
+        
         myChatObject?.getThreads(params: paramsToSend, uniqueId: { (getThreadUniqueId) in
             print("\n get thread request uniqueId = \t \(getThreadUniqueId) \n")
         }, completion: { (myResponse) in
@@ -693,7 +699,7 @@ extension MyViewController {
     
     
     @objc func getHistoryButtonPressed() {
-        let paramsToSend: JSON = ["threadId": 1101, "count": 1, "offset": 0]
+        let paramsToSend: JSON = ["threadId": 1328, "count": 1, "offset": 0]
         myChatObject?.getHistory(params: paramsToSend, uniqueId: { (getHistoryUniqueId) in
             print("\n get history request uniqueId = \t \(getHistoryUniqueId) \n")
         }, completion: { (myResponse) in
@@ -729,13 +735,14 @@ extension MyViewController {
 //        let mahyar: JSON = ["id": "521", "idType": inviteeVOidTypes.TO_BE_USER_SSO_ID.rawValue]
 //        let mahyarPhone: JSON = ["id": "09358590677", "idType": inviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue]
 //        let akbariId: JSON = ["id": "1321", "idType": inviteeVOidTypes.TO_BE_USER_SSO_ID.rawValue]
-        let akbariPhone: JSON = ["id": "09369865820", "idType": inviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue]
+//        let akbariPhone: JSON = ["id": "09369865820", "idType": inviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue]
         
-        let invitees: [JSON] = [akbariPhone]
+        let xxx: JSON = ["id": "09981084527", "idType": inviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue]
+        let invitees: [JSON] = [xxx]
+        let paramsToSend: JSON = ["type": createThreadTypes.NORMAL.rawValue, "title": "New Group", "invitees": invitees]
         
-        let paramsToSend: JSON = ["type": createThreadTypes.NORMAL.rawValue, "title": "Me & Akbari", "invitees": invitees]
-        myChatObject?.createThreadAndSendMessage(params: paramsToSend, sendMessageParams: messageParamsToSend, uniqueId: { (createThreadUniqueId) in
-            print("\n create thread reqeuest uniqueId = \t \(createThreadUniqueId) \n")
+        myChatObject?.creatThreadWithMessage(params: paramsToSend, sendMessageParams: messageParamsToSend, uniqueId: { (createWithSendMessageUniqeuId) in
+            print("\n create thread reqeuest uniqueId = \t \(createWithSendMessageUniqeuId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
             let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
@@ -782,7 +789,7 @@ extension MyViewController {
     
     func sendMessage() {
         let metadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
-        let paramsToSend: JSON = ["subjectId": 1330, "content": "\(inputTextFieldToSendMessage.text ?? "empty message")", "metaData": metadata]
+        let paramsToSend: JSON = ["subjectId": 1391, "content": "\(inputTextFieldToSendMessage.text ?? "empty message")", "metaData": metadata]
         myChatObject?.sendTextMessage(params: paramsToSend, uniqueId: { (uniqueIdStr) in
             print("**************************")
             print("message uniqueId is: \(uniqueIdStr)")
@@ -809,7 +816,7 @@ extension MyViewController {
             print("\n edit message request uniqueId = \t \(editMessageUniqueId) \n")
         }, completion: { (successResponse) in
             print("**************************")
-            print("message is edited successfully: \(successResponse)")
+            print("message is e   dited successfully: \(successResponse)")
             print("**************************")
         })
     }
@@ -1164,22 +1171,26 @@ extension MyViewController {
     
     
     @objc func messageDeliverListButtonPressed() {
-        let paramsToSend: JSON = ["threadId": 1329]
+        let paramsToSend: JSON = ["messageId": 16791, "subjectId": 1330]
         myChatObject?.messageDeliveryList(params: paramsToSend, uniqueId: { (messageDeliverListUniqueId) in
             print("\n Message Deliver list request uniqueId = \t \(messageDeliverListUniqueId) \n")
         }, completion: { (myResponse) in
             print("\n this is my Message Deliver list response:")
-            print("\(myResponse) \n")
+            let responseModel: GetThreadParticipantsModel = myResponse as! GetThreadParticipantsModel
+            let responseJSON: JSON = responseModel.returnDataAsJSON()
+            print("\(responseJSON) \n")
         })
     }
     
     @objc func messageSeenListButtonPressed() {
-        let paramsToSend: JSON = ["threadId": 1329]
+        let paramsToSend: JSON = ["messageId": 16791]
         myChatObject?.messageSeenList(params: paramsToSend, uniqueId: { (messageSeenListUniqueId) in
             print("\n Message Seen list request uniqueId = \t \(messageSeenListUniqueId) \n")
         }, completion: { (myResponse) in
             print("\n this is my Message Seen list response:")
-            print("\(myResponse) \n")
+            let responseModel: GetThreadParticipantsModel = myResponse as! GetThreadParticipantsModel
+            let responseJSON: JSON = responseModel.returnDataAsJSON()
+            print("\(responseJSON) \n")
         })
     }
     
@@ -1228,6 +1239,15 @@ extension MyViewController: ChatDelegates {
     
     func messageEvents(type: String, result: JSON) {
         //        print("@@MyLog(Chat): message events with \n type = \(type) \n result: \(result)")
+        
+//        print("\n\n\n****************************")
+//        print("****************************")
+//        print("****************************")
+//        print("MessageType: \(type)")
+//        print("result in JSON: \n \(result)")
+//        print("****************************")
+//        print("****************************")
+//        print("****************************\n\n\n")
     }
     
     func threadEvents(type: String, result: JSON) {
