@@ -412,7 +412,6 @@ open class SendTextMessageRequestModel {
     
 }
 
-
 open class EditTextMessageRequestModel {
     
     public let subjectId:           Int
@@ -439,10 +438,54 @@ open class EditTextMessageRequestModel {
     
 }
 
+open class ReplyTextMessageRequestModel {
+    
+    public let subjectId:           Int
+    public let content:             String
+    public let repliedTo:           Int
+    public let uniqueId:            String?
+    public let metaData:            JSON?
+    public let typeCode:            String?
+    
+    init(subjectId:         Int,
+         content:           String,
+         repliedTo:         Int,
+         uniqueId:          String?,
+         typeCode:          String?,
+         metaData:          JSON?) {
+        
+        self.subjectId          = subjectId
+        self.content            = content
+        self.repliedTo          = repliedTo
+        self.uniqueId           = uniqueId
+        self.typeCode           = typeCode
+        self.metaData           = metaData
+    }
+    
+}
 
-
-
-
+open class ForwardMessageRequestModel {
+    
+    public let subjectId:           Int
+    public let messageIds:          [Int]
+    public let repliedTo:           Int?
+    public let metaData:            JSON?
+    public let typeCode:            String?
+    
+    init(subjectId:         Int,
+         messageIds:        [Int],
+         repliedTo:         Int?,
+         typeCode:          String?,
+         metaData:          JSON?) {
+        
+        self.subjectId          = subjectId
+        self.messageIds         = messageIds
+        self.repliedTo          = repliedTo
+        self.typeCode           = typeCode
+        self.metaData           = metaData
+    }
+    
+}
 
 
 

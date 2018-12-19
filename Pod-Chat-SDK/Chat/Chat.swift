@@ -3060,7 +3060,7 @@ extension Chat {
     
     /*
      EditTextMessage:
-     send a text to somebody.
+     edit text of a messae.
      
      By calling this function, a request of type 28 (EDIT_MESSAGE) will send throut Chat-SDK,
      then the response will come back as callbacks to client whose calls this function.
@@ -3148,7 +3148,62 @@ extension Chat {
     }
     
     
+    /*
+     ReplyTextMessage:
+     send reply message to a messsage.
+     
+     By calling this function, a request of type 28 (EDIT_MESSAGE) will send throut Chat-SDK,
+     then the response will come back as callbacks to client whose calls this function.
+     
+     + Inputs:
+        this function will get some optional prameters as an input, as JSON or Model (depends on the function that you would use) which are:
+        - subjectId:    id of the message that you want to remove some participant it.    (Int)
+        - content:      array of participants in the thread to remove them.
+        - repliedTo:
+        - uniqueId:
+        - typeCode:
+        - systemMetadata:
+        - metaData:
+     
+     + Outputs:
+        It has 4 callbacks as response:
+        1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
+        2- onSent:
+        3- onDelivere:
+        4- onSeen:
+     */
+    public func replyMessage(replyMessageInput: ReplyTextMessageRequestModel, uniqueId: @escaping (String) -> (), onSent: @escaping callbackTypeAlias, onDelivere: @escaping callbackTypeAlias, onSeen: @escaping callbackTypeAlias) {
+        log.verbose("Try to reply Message with this parameters: \n \(replyMessageInput)", context: "Chat")
+        
+        let messageTxtContent = makeCustomTextToSend(textMessage: replyMessageInput.content)
+        let content: JSON = ["content": messageTxtContent]
+        var sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.MESSAGE.rawValue,
+                                       "pushMsgType": 4,
+                                       "repliedTo": replyMessageInput.repliedTo,
+                                       "content": content,
+                                       "typeCode": replyMessageInput.typeCode ?? generalTypeCode]
+        
+        if let uniqueId = replyMessageInput.uniqueId {
+            sendMessageParams["uniqueId"] = JSON(uniqueId)
+        }
+        
+        if let metaData = replyMessageInput.metaData {
+            let metaDataStr = "\(metaData)"
+            sendMessageParams["metaData"] = JSON(metaDataStr)
+        }
+        
+        sendMessageWithCallback(params: sendMessageParams, callback: nil, sentCallback: SendMessageCallbacks(), deliverCallback: SendMessageCallbacks(), seenCallback: SendMessageCallbacks()) { (theUniqueId) in
+            uniqueId(theUniqueId)
+        }
+        
+        sendCallbackToUserOnSent = onSent
+        sendCallbackToUserOnDeliver = onDelivere
+        sendCallbackToUserOnSeen = onSeen
+        
+    }
     
+    // NOTE: This method will be deprecate soon
+    // this method will do the same as tha funciton above but instead of using 'getThreadsRequestModel' to get the parameters, it'll use JSON
     public func replyMessageWith3Callbacks(params: JSON, uniqueId: @escaping (String) -> (), onSent: @escaping callbackTypeAlias, onDelivere: @escaping callbackTypeAlias, onSeen: @escaping callbackTypeAlias) {
         log.verbose("Try to reply Message with this parameters: \n \(params)", context: "Chat")
         
@@ -3185,8 +3240,69 @@ extension Chat {
     }
     
     
+    /*
+     ForwardTextMessage:
+     forwar some messages to a thread.
+     
+     By calling this function, a request of type 28 (EDIT_MESSAGE) will send throut Chat-SDK,
+     then the response will come back as callbacks to client whose calls this function.
+     
+     + Inputs:
+     this function will get some optional prameters as an input, as JSON or Model (depends on the function that you would use) which are:
+     - subjectId:       id of the thread that you want to send messages.    (Int)
+     - messageIds:      array of message ids to forward them.
+     - repliedTo:
+     - typeCode:
+     - metaData:
+     
+     + Outputs:
+     It has 4 callbacks as response:
+     1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
+     2- onSent:
+     3- onDelivere:
+     4- onSeen:
+     */
+    public func forwardMessage(forwardMessageInput: ForwardMessageRequestModel, uniqueIds: @escaping (String) -> (), onSent: @escaping callbackTypeAlias, onDelivere: @escaping callbackTypeAlias, onSeen: @escaping callbackTypeAlias) {
+        log.verbose("Try to Forward with this parameters: \n \(forwardMessageInput)", context: "Chat")
+        
+        let messageIdsList: [Int] = forwardMessageInput.messageIds
+        var uniqueIdsList: [String] = []
+        
+        var sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.FORWARD_MESSAGE.rawValue,
+                                       "pushMsgType": 4,
+                                       "content": "\(messageIdsList)",
+                                       "typeCode": forwardMessageInput.typeCode ?? generalTypeCode]
+        
+        if let repliedTo = forwardMessageInput.repliedTo {
+            sendMessageParams["repliedTo"] = JSON(repliedTo)
+        }
+        
+        if let metaData = forwardMessageInput.metaData {
+            let metaDataStr = "\(metaData)"
+            sendMessageParams["metaData"] = JSON(metaDataStr)
+        }
+        
+        let messageIdsListCount = messageIdsList.count
+        for _ in 0...(messageIdsListCount - 1) {
+            let uID = generateUUID()
+            uniqueIdsList.append(uID)
+            
+            sendMessageParams["uniqueId"] = JSON("\(uniqueIdsList)")
+            
+            sendMessageWithCallback(params: sendMessageParams, callback: nil, sentCallback: SendMessageCallbacks(), deliverCallback: SendMessageCallbacks(), seenCallback: SendMessageCallbacks()) { (theUniqueId) in
+                uniqueIds(theUniqueId)
+            }
+            
+            sendCallbackToUserOnSent = onSent
+            sendCallbackToUserOnDeliver = onDelivere
+            sendCallbackToUserOnSeen = onSeen
+            
+        }
+        
+    }
     
     public func forwardMessageWith3Callbacks(params: JSON, uniqueIds: @escaping (String) -> (), onSent: @escaping callbackTypeAlias, onDelivere: @escaping callbackTypeAlias, onSeen: @escaping callbackTypeAlias) {
+        log.verbose("Try to Forward with this parameters: \n \(params)", context: "Chat")
         /*
          subjectId(destination):    Int
          content:                   "[Arr]"
@@ -3219,21 +3335,15 @@ extension Chat {
             uniqueIdsList.append(uID)
             
             sendMessageParams["uniqueId"] = JSON("\(uniqueIdsList)")
-            
-            sendMessageWithCallback(params: sendMessageParams, callback: nil, sentCallback: SendMessageCallbacks(), deliverCallback: SendMessageCallbacks(), seenCallback: SendMessageCallbacks()) { (theUniqueId) in
-                uniqueIds(theUniqueId)
-            }
-            
-            sendCallbackToUserOnSent = onSent
-            sendCallbackToUserOnDeliver = onDelivere
-            sendCallbackToUserOnSeen = onSeen
-            
         }
         
+        sendMessageWithCallback(params: sendMessageParams, callback: nil, sentCallback: SendMessageCallbacks(), deliverCallback: SendMessageCallbacks(), seenCallback: SendMessageCallbacks()) { (theUniqueId) in
+            uniqueIds(theUniqueId)
+        }
         
-        
-        
-        
+        sendCallbackToUserOnSent = onSent
+        sendCallbackToUserOnDeliver = onDelivere
+        sendCallbackToUserOnSeen = onSeen
         
         //        for _ in messageIdsList {
         //            let content: JSON = ["content": "\(messageIdsList)"]
