@@ -1328,7 +1328,7 @@ extension Chat {
         1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
         2- completion:  it will returns the response that comes from server to this request.    (GetContactsModel)
      */
-    public func getContacts(getContactsInput: getContactsRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+    public func getContacts(getContactsInput: GetContactsRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to get Contacts with this parameters: \n \(getContactsInput)", context: "Chat")
         
         var content: JSON = []
@@ -1351,7 +1351,7 @@ extension Chat {
     }
     
     // NOTE: This method will be deprecate soon
-    // this method will do the same as tha funciton above but instead of using 'getContactsRequestModel' to get the parameters, it'll use JSON
+    // this method will do the same as tha funciton above but instead of using 'GetContactsRequestModel' to get the parameters, it'll use JSON
     public func getContacts(params: JSON?, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to get Contacts with this parameters: \n \(params ?? "params is empty!")", context: "Chat")
 
@@ -1409,7 +1409,7 @@ extension Chat {
         1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
         2- completion:  it will returns the response that comes from server to this request.    (ContactModel)
      */
-    public func addContact(addContactsInput: addContactsRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+    public func addContact(addContactsInput: AddContactsRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to add contact with this parameters: \n \(addContactsInput)", context: "Chat")
         
         var data: Parameters = [:]
@@ -1435,7 +1435,7 @@ extension Chat {
     }
     
     // NOTE: This method will be deprecate soon
-    // this method will do the same as tha funciton above but instead of using 'addContactsRequestModel' to get the parameters, it'll use JSON
+    // this method will do the same as tha funciton above but instead of using 'AddContactsRequestModel' to get the parameters, it'll use JSON
     public func addContact(params: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to add contact with this parameters: \n \(params)", context: "Chat")
         
@@ -1494,7 +1494,7 @@ extension Chat {
         1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
         2- completion:  it will returns the response that comes from server to this request.    (ContactModel)
      */
-    public func updateContact(updateContactsInput: updateContactsRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+    public func updateContact(updateContactsInput: UpdateContactsRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to update contact with this parameters: \n \(updateContactsInput)", context: "Chat")
         
         var data: Parameters = [:]
@@ -1521,7 +1521,7 @@ extension Chat {
     }
     
     // NOTE: This method will be deprecate soon
-    // this method will do the same as tha funciton above but instead of using 'addContactsRequestModel' to get the parameters, it'll use JSON
+    // this method will do the same as tha funciton above but instead of using 'UpdateContactsRequestModel' to get the parameters, it'll use JSON
     public func updateContact(params: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to update contact with this parameters: \n \(params)", context: "Chat")
         
@@ -1589,7 +1589,7 @@ extension Chat {
         1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
         2- completion:  it will returns the response that comes from server to this request.    (RemoveContactModel)
      */
-    public func removeContact(removeContactsInput: removeContactsRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+    public func removeContact(removeContactsInput: RemoveContactsRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to remove contact with this parameters: \n \(removeContactsInput)", context: "Chat")
         
         var data: Parameters = [:]
@@ -1612,7 +1612,7 @@ extension Chat {
     }
     
     // NOTE: This method will be deprecate soon
-    // this method will do the same as tha funciton above but instead of using 'addContactsRequestModel' to get the parameters, it'll use JSON
+    // this method will do the same as tha funciton above but instead of using 'RemoveContactsRequestModel' to get the parameters, it'll use JSON
     public func removeContact(params: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to remove contact with this parameters: \n \(params)", context: "Chat")
         
@@ -1656,7 +1656,7 @@ extension Chat {
         1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
         2- completion:  it will returns the response that comes from server to this request.    (BlockedContactModel)
      */
-    public func blockContact(blockContactsInput: blockContactsRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+    public func blockContact(blockContactsInput: BlockContactsRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to block user with this parameters: \n \(blockContactsInput)", context: "Chat")
         
         var sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.BLOCK.rawValue,
@@ -1674,7 +1674,7 @@ extension Chat {
     }
     
     // NOTE: This method will be deprecate soon
-    // this method will do the same as tha funciton above but instead of using 'addContactsRequestModel' to get the parameters, it'll use JSON
+    // this method will do the same as tha funciton above but instead of using 'BlockContactsRequestModel' to get the parameters, it'll use JSON
     public func blockContact(params: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to block user with this parameters: \n \(params)", context: "Chat")
         
@@ -1714,7 +1714,7 @@ extension Chat {
         1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
         2- completion:  it will returns the response that comes from server to this request.    (GetBlockedContactListModel)
      */
-    public func getBlockedContacts(getBlockedContactsInput: getBlockedContactListRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+    public func getBlockedContacts(getBlockedContactsInput: GetBlockedContactListRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to get block users with this parameters: \n \(getBlockedContactsInput)", context: "Chat")
         
         var content: JSON = []
@@ -1733,7 +1733,7 @@ extension Chat {
     }
     
     // NOTE: This method will be deprecate soon
-    // this method will do the same as tha funciton above but instead of using 'addContactsRequestModel' to get the parameters, it'll use JSON
+    // this method will do the same as tha funciton above but instead of using 'GetBlockedContactListRequestModel' to get the parameters, it'll use JSON
     public func getBlockedContacts(params: JSON?, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to get block users with this parameters: \n \(params ?? "there isn't any parameter")", context: "Chat")
         
@@ -1788,7 +1788,7 @@ extension Chat {
         1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
         2- completion:  it will returns the response that comes from server to this request.    (BlockedContactModel)
      */
-    public func unblockContact(unblockContactsInput: unblockContactsRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+    public func unblockContact(unblockContactsInput: UnblockContactsRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to unblock user with this parameters: \n \(unblockContactsInput)", context: "Chat")
         
         let sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.UNBLOCK.rawValue,
@@ -1803,7 +1803,7 @@ extension Chat {
     }
     
     // NOTE: This method will be deprecate soon
-    // this method will do the same as tha funciton above but instead of using 'addContactsRequestModel' to get the parameters, it'll use JSON
+    // this method will do the same as tha funciton above but instead of using 'UnblockContactsRequestModel' to get the parameters, it'll use JSON
     public func unblockContact(params: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to unblock user with this parameters: \n \(params)", context: "Chat")
         
@@ -1843,7 +1843,7 @@ extension Chat {
         1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
         2- completion:  it will returns the response that comes from server to this request.    (ContactModel)
      */
-    public func searchContacts(searchContactsInput: searchContactsRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+    public func searchContacts(searchContactsInput: SearchContactsRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to search contact with this parameters: \n \(searchContactsInput)", context: "Chat")
         
         var data: Parameters = [:]
@@ -1884,7 +1884,7 @@ extension Chat {
     }
     
     // NOTE: This method will be deprecate soon
-    // this method will do the same as tha funciton above but instead of using 'addContactsRequestModel' to get the parameters, it'll use JSON
+    // this method will do the same as tha funciton above but instead of using 'SearchContactsRequestModel' to get the parameters, it'll use JSON
     public func searchContacts(params: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to search contact with this parameters: \n \(params)", context: "Chat")
         
@@ -2023,7 +2023,7 @@ extension Chat {
         1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
         2- completion:  it will returns the response that comes from server to this request.    (GetThreadsModel)
      */
-    public func getThreads(getContactsInput: getThreadsRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+    public func getThreads(getContactsInput: GetThreadsRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to get threads with this parameters: \n \(getContactsInput)", context: "Chat")
         
         var content: JSON = []
@@ -2059,7 +2059,7 @@ extension Chat {
     }
     
     // NOTE: This method will be deprecate soon
-    // this method will do the same as tha funciton above but instead of using 'getThreadsRequestModel' to get the parameters, it'll use JSON
+    // this method will do the same as tha funciton above but instead of using 'GetThreadsRequestModel' to get the parameters, it'll use JSON
     public func getThreads(params: JSON?, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to get threads with this parameters: \n \(params ?? "params is empty!")", context: "Chat")
         
@@ -2139,7 +2139,7 @@ extension Chat {
         1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
         2- completion:  it will returns the response that comes from server to this request.    (GetHistoryModel)
      */
-    public func getHistory(getHistoryInput: getHistoryRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+    public func getHistory(getHistoryInput: GetHistoryRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to get history with this parameters: \n \(getHistoryInput)", context: "Chat")
         
         var content: JSON = []
@@ -2179,7 +2179,7 @@ extension Chat {
     }
     
     // NOTE: This method will be deprecate soon
-    // this method will do the same as tha funciton above but instead of using 'getThreadsRequestModel' to get the parameters, it'll use JSON
+    // this method will do the same as tha funciton above but instead of using 'GetHistoryRequestModel' to get the parameters, it'll use JSON
     public func getHistory(params: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to get history with this parameters: \n \(params)", context: "Chat")
         
@@ -2254,7 +2254,7 @@ extension Chat {
         1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
         2- completion:  it will returns the response that comes from server to this request.    (CreateThreadModel)
      */
-    public func createThread(createThreadInput: createThreadRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+    public func createThread(createThreadInput: CreateThreadRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to create thread participants with this parameters: \n \(createThreadInput)", context: "Chat")
         
         var content: JSON = [:]
@@ -2286,7 +2286,7 @@ extension Chat {
     }
     
     // NOTE: This method will be deprecate soon
-    // this method will do the same as tha funciton above but instead of using 'getThreadsRequestModel' to get the parameters, it'll use JSON
+    // this method will do the same as tha funciton above but instead of using 'CreateThreadRequestModel' to get the parameters, it'll use JSON
     public func createThread(params: JSON?, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to create thread participants with this parameters: \n \(params ?? "params is empty")", context: "Chat")
         
@@ -2357,7 +2357,7 @@ extension Chat {
      4- onDelivere:
      5- onSeen:
      */
-    public func creatThreadWithMessage(creatThreadWithMessageInput: creatThreadWithMessageRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias, onSent: @escaping callbackTypeAlias, onDelivere: @escaping callbackTypeAlias, onSeen: @escaping callbackTypeAlias) {
+    public func creatThreadWithMessage(creatThreadWithMessageInput: CreateThreadWithMessageRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias, onSent: @escaping callbackTypeAlias, onDelivere: @escaping callbackTypeAlias, onSeen: @escaping callbackTypeAlias) {
         log.verbose("Try to request to create thread and Send Message participants with this parameters: \n \(creatThreadWithMessageInput)", context: "Chat")
         
         let myUniqueId = generateUUID()
@@ -2411,7 +2411,7 @@ extension Chat {
     }
     
     // NOTE: This method will be deprecate soon
-    // this method will do the same as tha funciton above but instead of using 'getThreadsRequestModel' to get the parameters, it'll use JSON
+    // this method will do the same as tha funciton above but instead of using 'CreateThreadWithMessageRequestModel' to get the parameters, it'll use JSON
     public func creatThreadWithMessage(params: JSON?, sendMessageParams: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias, onSent: @escaping callbackTypeAlias, onDelivere: @escaping callbackTypeAlias, onSeen: @escaping callbackTypeAlias) {
         log.verbose("Try to request to create thread and Send Message participants with this parameters: \n \(params ?? "params is empty")", context: "Chat")
         
@@ -2515,7 +2515,7 @@ extension Chat {
         1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
         2- completion:  it will returns the response that comes from server to this request.    (??)
      */
-    public func muteThread(muteThreadInput: muteAndUnmuteThreadRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+    public func muteThread(muteThreadInput: MuteAndUnmuteThreadRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to mute threads with this parameters: \n \(muteThreadInput)", context: "Chat")
         
         let sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.MUTE_THREAD.rawValue,
@@ -2530,7 +2530,7 @@ extension Chat {
     }
     
     // NOTE: This method will be deprecate soon
-    // this method will do the same as tha funciton above but instead of using 'getThreadsRequestModel' to get the parameters, it'll use JSON
+    // this method will do the same as tha funciton above but instead of using 'MuteAndUnmuteThreadRequestModel' to get the parameters, it'll use JSON
     public func muteThread(params: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to mute threads with this parameters: \n \(params)", context: "Chat")
         
@@ -2562,7 +2562,7 @@ extension Chat {
         1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
         2- completion:  it will returns the response that comes from server to this request.    (??)
      */
-    public func unmuteThread(unmuteThreadInput: muteAndUnmuteThreadRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+    public func unmuteThread(unmuteThreadInput: MuteAndUnmuteThreadRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to unmute threads with this parameters: \n \(unmuteThreadInput)", context: "Chat")
         
         let sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.UNMUTE_THREAD.rawValue,
@@ -2576,7 +2576,7 @@ extension Chat {
     }
     
     // NOTE: This method will be deprecate soon
-    // this method will do the same as tha funciton above but instead of using 'getThreadsRequestModel' to get the parameters, it'll use JSON
+    // this method will do the same as tha funciton above but instead of using 'MuteAndUnmuteThreadRequestModel' to get the parameters, it'll use JSON
     public func unmuteThread(params: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to unmute threads with this parameters: \n \(params)", context: "Chat")
         
@@ -2613,7 +2613,7 @@ extension Chat {
         1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
         2- completion:  it will returns the response that comes from server to this request.    (GetThreadParticipantsModel)
      */
-    public func getThreadParticipants(getThreadParticipantsInput: getThreadParticipantsRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+    public func getThreadParticipants(getThreadParticipantsInput: GetThreadParticipantsRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to get thread participants with this parameters: \n \(getThreadParticipantsInput)", context: "Chat")
         
 //        var subjectId: Int = 0
@@ -2646,7 +2646,7 @@ extension Chat {
     }
     
     // NOTE: This method will be deprecate soon
-    // this method will do the same as tha funciton above but instead of using 'getThreadsRequestModel' to get the parameters, it'll use JSON
+    // this method will do the same as tha funciton above but instead of using 'GetThreadParticipantsRequestModel' to get the parameters, it'll use JSON
     public func getThreadParticipants(params: JSON?, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to get thread participants with this parameters: \n \(params ?? "params is empty")", context: "Chat")
         
@@ -2744,7 +2744,7 @@ extension Chat {
     }
     
     // NOTE: This method will be deprecate soon
-    // this method will do the same as tha funciton above but instead of using 'getThreadsRequestModel' to get the parameters, it'll use JSON
+    // this method will do the same as tha funciton above but instead of using 'AddParticipantsRequestModel' to get the parameters, it'll use JSON
     public func addParticipants(params: JSON?, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to add participants with this parameters: \n \(params ?? "params is empty")", context: "Chat")
         
@@ -2824,7 +2824,7 @@ extension Chat {
     }
     
     // NOTE: This method will be deprecate soon
-    // this method will do the same as tha funciton above but instead of using 'getThreadsRequestModel' to get the parameters, it'll use JSON
+    // this method will do the same as tha funciton above but instead of using 'RemoveParticipantsRequestModel' to get the parameters, it'll use JSON
     public func removeParticipants(params: JSON?, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to remove participants with this parameters: \n \(params ?? "params is empty")", context: "Chat")
         
@@ -2903,7 +2903,7 @@ extension Chat {
     }
     
     // NOTE: This method will be deprecate soon
-    // this method will do the same as tha funciton above but instead of using 'getThreadsRequestModel' to get the parameters, it'll use JSON
+    // this method will do the same as tha funciton above but instead of using 'LeaveThreadRequestModel' to get the parameters, it'll use JSON
     public func leaveThread(params: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to leave thread with this parameters: \n \(params)", context: "Chat")
         
@@ -3016,7 +3016,7 @@ extension Chat {
     }
     
     // NOTE: This method will be deprecate soon
-    // this method will do the same as tha funciton above but instead of using 'getThreadsRequestModel' to get the parameters, it'll use JSON
+    // this method will do the same as tha funciton above but instead of using 'SendTextMessageRequestModel' to get the parameters, it'll use JSON
     public func sendTextMessage(params: JSON, uniqueId: @escaping (String) -> (), onSent: @escaping callbackTypeAlias, onDelivere: @escaping callbackTypeAlias, onSeen: @escaping callbackTypeAlias) {
         log.verbose("Try to send Message with this parameters: \n \(params)", context: "Chat")
         
@@ -3115,7 +3115,7 @@ extension Chat {
     }
     
     // NOTE: This method will be deprecate soon
-    // this method will do the same as tha funciton above but instead of using 'getThreadsRequestModel' to get the parameters, it'll use JSON
+    // this method will do the same as tha funciton above but instead of using 'EditTextMessageRequestModel' to get the parameters, it'll use JSON
     public func editMessage(params: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to edit message with this parameters: \n \(params)", context: "Chat")
         
@@ -3152,7 +3152,7 @@ extension Chat {
      ReplyTextMessage:
      send reply message to a messsage.
      
-     By calling this function, a request of type 28 (EDIT_MESSAGE) will send throut Chat-SDK,
+     By calling this function, a request of type 2 (FORWARD_MESSAGE) will send throut Chat-SDK,
      then the response will come back as callbacks to client whose calls this function.
      
      + Inputs:
@@ -3203,7 +3203,7 @@ extension Chat {
     }
     
     // NOTE: This method will be deprecate soon
-    // this method will do the same as tha funciton above but instead of using 'getThreadsRequestModel' to get the parameters, it'll use JSON
+    // this method will do the same as tha funciton above but instead of using 'ReplyTextMessageRequestModel' to get the parameters, it'll use JSON
     public func replyMessageWith3Callbacks(params: JSON, uniqueId: @escaping (String) -> (), onSent: @escaping callbackTypeAlias, onDelivere: @escaping callbackTypeAlias, onSeen: @escaping callbackTypeAlias) {
         log.verbose("Try to reply Message with this parameters: \n \(params)", context: "Chat")
         
@@ -3244,7 +3244,7 @@ extension Chat {
      ForwardTextMessage:
      forwar some messages to a thread.
      
-     By calling this function, a request of type 28 (EDIT_MESSAGE) will send throut Chat-SDK,
+     By calling this function, a request of type 22 (FORWARD_MESSAGE) will send throut Chat-SDK,
      then the response will come back as callbacks to client whose calls this function.
      
      + Inputs:
@@ -3301,6 +3301,8 @@ extension Chat {
         
     }
     
+    // NOTE: This method will be deprecate soon
+    // this method will do the same as tha funciton above but instead of using 'ForwardMessageRequestModel' to get the parameters, it'll use JSON
     public func forwardMessageWith3Callbacks(params: JSON, uniqueIds: @escaping (String) -> (), onSent: @escaping callbackTypeAlias, onDelivere: @escaping callbackTypeAlias, onSeen: @escaping callbackTypeAlias) {
         log.verbose("Try to Forward with this parameters: \n \(params)", context: "Chat")
         /*
@@ -3376,8 +3378,170 @@ extension Chat {
     }
     
     
+    /*
+     SendFileMessage:
+     send some file and also send some message too with it.
+     
+     By calling this function, first an HTTP request of type (GET_IMAGE or GET_FILE), and then send message request of type 2 (MESSAGE) will send throut Chat-SDK,
+     then the response will come back as callbacks to client whose calls this function.
+     
+     + Inputs:
+        this function will get some optional prameters as an input, as JSON or Model (depends on the function that you would use) which are:
+        - fileName:    name of the file (if there was any)
+        - imageName:   name of the image (if there was any)
+        - xC:
+        - yC:
+        - hC:
+        - wC:
+        - threadId:
+        - subjectId:
+        - repliedTo:
+        - content:
+        - metaData:
+        - typeCode:
+     
+     + Outputs:
+        It has 4 callbacks as response:
+        1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
+        2- onSent:
+        3- onDelivered:
+        4- onSeen:
+     */
+    public func sendFileMessage(sendFileMessageInput: SendFileMessageRequestModel, uniqueId: @escaping (String) -> (), uploadProgress: @escaping (Float) -> (), onSent: @escaping callbackTypeAlias, onDelivered: @escaping callbackTypeAlias, onSeen: @escaping callbackTypeAlias) {
+        log.verbose("Try to Send File adn Message with this parameters: \n \(sendFileMessageInput)", context: "Chat")
+        
+        var fileName:       String  = ""
+        var fileType:       String  = ""
+        var fileSize:       Int     = 0
+        var fileExtension:  String  = ""
+        
+        if let myFileName = sendFileMessageInput.fileName {
+            fileName = myFileName
+        } else if let myImageName = sendFileMessageInput.imageName {
+            fileName = myImageName
+        }
+        
+        let uploadUniqueId: String = generateUUID()
+        
+        var metaData: JSON = []
+        metaData["file"]["originalName"] = JSON(fileName)
+        metaData["file"]["mimeType"] = JSON(fileType)
+        metaData["file"]["size"] = JSON(fileSize)
+        
+        var paramsToSendToUpload: JSON = ["uniqueId": uploadUniqueId, "originalFileName": fileName]
+        
+        if let xC = sendFileMessageInput.xC {
+            paramsToSendToUpload["xC"] = JSON(xC)
+        }
+        if let yC = sendFileMessageInput.yC {
+            paramsToSendToUpload["yC"] = JSON(yC)
+        }
+        if let hC = sendFileMessageInput.hC {
+            paramsToSendToUpload["hC"] = JSON(hC)
+        }
+        if let wC = sendFileMessageInput.wC {
+            paramsToSendToUpload["wC"] = JSON(wC)
+        }
+        if let fileName = sendFileMessageInput.fileName {
+            paramsToSendToUpload["fileName"] = JSON(fileName)
+        } else {
+            paramsToSendToUpload["fileName"] = JSON(uploadUniqueId)
+        }
+        if let threadId = sendFileMessageInput.threadId {
+            paramsToSendToUpload["threadId"] = JSON(threadId)
+        }
+        
+        let messageUniqueId = generateUUID()
+        uniqueId(messageUniqueId)
+        
+        var paramsToSendToSendMessage: JSON = ["uniqueId": messageUniqueId,
+                                               "typeCode": sendFileMessageInput.typeCode ?? generalTypeCode]
+        
+        if let subjectId = sendFileMessageInput.subjectId {
+            paramsToSendToSendMessage["subjectId"] = JSON(subjectId)
+        }
+        if let repliedTo = sendFileMessageInput.repliedTo {
+            paramsToSendToSendMessage["repliedTo"] = JSON(repliedTo)
+        }
+        if let content = sendFileMessageInput.content {
+            paramsToSendToSendMessage["content"] = JSON("\(content)")
+        }
+        if let systemMetadata = sendFileMessageInput.metaData {
+            paramsToSendToSendMessage["systemMetadata"] = JSON("\(systemMetadata)")
+        }
+        
+        
+        if let image = sendFileMessageInput.imageToSend {
+            uploadImage(params: paramsToSendToUpload, dataToSend: image, uniqueId: { _ in }, progress: { (progress) in
+                uploadProgress(progress)
+            }) { (response) in
+                
+                let myResponse: UploadImageModel = response as! UploadImageModel
+                let link = "\(self.SERVICE_ADDRESSES.FILESERVER_ADDRESS)\(SERVICES_PATH.GET_IMAGE.rawValue)?imageId=\(myResponse.uploadImage.id ?? 0)&hashCode=\(myResponse.uploadImage.hashCode ?? "")"
+                metaData["file"]["link"]            = JSON(link)
+                metaData["file"]["id"]              = JSON(myResponse.uploadImage.id ?? 0)
+                metaData["file"]["name"]            = JSON(myResponse.uploadImage.name ?? "")
+                metaData["file"]["height"]          = JSON(myResponse.uploadImage.height ?? 0)
+                metaData["file"]["width"]           = JSON(myResponse.uploadImage.width ?? 0)
+                metaData["file"]["actualHeight"]    = JSON(myResponse.uploadImage.actualHeight ?? 0)
+                metaData["file"]["actualWidth"]     = JSON(myResponse.uploadImage.actualWidth ?? 0)
+                metaData["file"]["hashCode"]        = JSON(myResponse.uploadImage.hashCode ?? "")
+                
+                paramsToSendToSendMessage["metaData"] = JSON("\(metaData)")
+                
+                sendMessageWith(paramsToSendToSendMessage: paramsToSendToSendMessage)
+            }
+        } else if let file = sendFileMessageInput.fileToSend {
+            uploadFile(params: paramsToSendToUpload, dataToSend: file, uniqueId: { _ in }, progress: { (progress) in
+                uploadProgress(progress)
+            }) { (response) in
+                
+                let myResponse: UploadFileModel = response as! UploadFileModel
+                let link = "\(self.SERVICE_ADDRESSES.FILESERVER_ADDRESS)\(SERVICES_PATH.GET_FILE.rawValue)?fileId=\(myResponse.uploadFile.id ?? 0)&hashCode=\(myResponse.uploadFile.hashCode ?? "")"
+                metaData["file"]["link"]            = JSON(link)
+                metaData["file"]["id"]              = JSON(myResponse.uploadFile.id ?? 0)
+                metaData["file"]["name"]            = JSON(myResponse.uploadFile.name ?? "")
+                metaData["file"]["hashCode"]        = JSON(myResponse.uploadFile.hashCode ?? "")
+                
+                paramsToSendToSendMessage["metaData"] = JSON("\(metaData)")
+                
+                sendMessageWith(paramsToSendToSendMessage: paramsToSendToSendMessage)
+            }
+        }
+        
+        // if there was no data to send, then returns an error to user
+        if (sendFileMessageInput.imageToSend == nil) && (sendFileMessageInput.fileToSend == nil) {
+            delegate?.chatError(errorCode: 6302, errorMessage: CHAT_ERRORS.err6302.rawValue, errorResult: nil)
+        }
+        
+        
+        // this will call when all data were uploaded and it will sends the textMessage
+        func sendMessageWith(paramsToSendToSendMessage: JSON) {
+            
+            let sendMessageParamModel = SendTextMessageRequestModel(threadId:       paramsToSendToSendMessage["threadId"].intValue,
+                                                                    content:        paramsToSendToSendMessage["content"].stringValue,
+                                                                    repliedTo:      paramsToSendToSendMessage["repliedTo"].int,
+                                                                    uniqueId:       paramsToSendToSendMessage["uniqueId"].string,
+                                                                    typeCode:       paramsToSendToSendMessage["typeCode"].string,
+                                                                    systemMetadata: paramsToSendToSendMessage["systemMetadata"],
+                                                                    metaData:       paramsToSendToSendMessage["metaData"])
+            
+            self.sendTextMessage(sendTextMessageInput: sendMessageParamModel, uniqueId: { _ in }, onSent: { (sent) in
+                onSent(sent)
+            }, onDelivere: { (delivered) in
+                onDelivered(delivered)
+            }, onSeen: { (seen) in
+                onSeen(seen)
+            })
+            
+        }
+        
+    }
     
+    // NOTE: This method will be deprecate soon
+    // this method will do the same as tha funciton above but instead of using 'SendFileMessageRequestModel' to get the parameters, it'll use JSON
     public func sendFileMessage(textMessagParams: JSON, fileParams: JSON, imageToSend: Data?, fileToSend: Data?, uniqueId: @escaping (String) -> (), uploadProgress: @escaping (Float) -> (), onSent: @escaping callbackTypeAlias, onDelivered: @escaping callbackTypeAlias, onSeen: @escaping callbackTypeAlias) {
+        log.verbose("Try to Send File adn Message with this parameters: \n \(textMessagParams)", context: "Chat")
         
         var fileName:       String  = ""
         var fileType:       String  = ""
@@ -3500,6 +3664,52 @@ extension Chat {
     }
     
     
+    
+    /*
+     DeleteMessage:
+     delete specific message by getting message id.
+     
+     By calling this function, a request of type 29 (DELETE_MESSAGE) will send throut Chat-SDK,
+     then the response will come back as callbacks to client whose calls this function.
+     
+     + Inputs:
+        this function will get some optional prameters as an input, as JSON or Model (depends on the function that you would use) which are:
+        - subjectId:       id of the thread that you want to send messages.    (Int)
+        - deleteForAll:
+        - uniqueId:
+        - typeCode:
+     
+     + Outputs:
+        It has 2 callbacks as response:
+        1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
+        2- completion:
+     */
+    public func deleteMessage(deleteMessageInput: DeleteMessageRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+        log.verbose("Try to request to edit message with this parameters: \n \(deleteMessageInput)", context: "Chat")
+        
+        let content: JSON = ["deleteForAll": "\(deleteMessageInput.deleteForAll)"]
+        var sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.DELETE_MESSAGE.rawValue,
+                                       "typeCode": deleteMessageInput.typeCode ?? generalTypeCode,
+                                       "pushMsgType": 4,
+                                       "content": content]
+        
+        if let threadId = deleteMessageInput.subjectId {
+            sendMessageParams["subjectId"] = JSON(threadId)
+        }
+        
+        if let uniqueId = deleteMessageInput.uniqueId {
+            sendMessageParams["uniqueId"] = JSON(uniqueId)
+        }
+        
+        sendMessageWithCallback(params: sendMessageParams, callback: DeleteMessageCallbacks(parameters: sendMessageParams), sentCallback: nil, deliverCallback: nil, seenCallback: nil) { (deleteMessageUniqueId) in
+            uniqueId(deleteMessageUniqueId)
+        }
+        deleteMessageCallbackToUser = completion
+        
+    }
+    
+    // NOTE: This method will be deprecate soon
+    // this method will do the same as tha funciton above but instead of using 'DeleteMessageRequestModel' to get the parameters, it'll use JSON
     public func deleteMessage(params: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to edit message with this parameters: \n \(params)", context: "Chat")
         
@@ -3509,6 +3719,7 @@ extension Chat {
                                        "typeCode": params["typeCode"].string ?? generalTypeCode,
                                        "pushMsgType": 4,
                                        "content": content]
+        
         if let threadId = params["subjectId"].int {
             sendMessageParams["subjectId"] = JSON(threadId)
         }
@@ -3526,8 +3737,129 @@ extension Chat {
     
     // MARK: - File Management
     
+    /*
+     UploadImage:
+     upload some image.
+     
+     By calling this function, HTTP request of type (UPLOAD_IMAGE) will send throut Chat-SDK,
+     then the response will come back as callbacks to client whose calls this function.
+     
+     + Inputs:
+        this function will get some optional prameters as an input, as JSON or Model (depends on the function that you would use) which are:
+        - fileExtension:
+        - fileName:   name of the image
+        - fileSize:
+        - threadId:
+        - uniqueId:
+        - originalFileName:
+        - xC:
+        - yC:
+        - hC:
+        - wC:
+     
+     + Outputs:
+     It has 4 callbacks as response:
+     1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
+     2- completion:
+     */
+    public func uploadImage(uploadImageInput: UploadImageRequestModel, uniqueId: @escaping (String) -> (), progress: @escaping (Float) -> (), completion: @escaping callbackTypeAlias) {
+        log.verbose("Try to upload image with this parameters: \n \(uploadImageInput)", context: "Chat")
+        
+        var fileName:           String  = ""
+        //        var fileType:           String  = ""
+        //        var fileSize:           Int     = 0
+        var fileExtension:      String  = ""
+        
+        var uploadFileData: JSON = []
+        
+        if let myFileExtension = uploadImageInput.fileExtension {
+            fileExtension = myFileExtension
+        }
+        
+        if let myFileName = uploadImageInput.fileName {
+            fileName = myFileName
+        } else {
+            let myFileName = "\(generateUUID()).\(fileExtension)"
+            fileName = myFileName
+        }
+        
+        if let myFileSize = uploadImageInput.fileSize {
+            uploadFileData["fileSize"] = JSON(myFileSize)
+        }
+        
+        if let threadId = uploadImageInput.threadId {
+            uploadFileData["threadId"] = JSON(threadId)
+        }
+        
+        if let myUniqueId = uploadImageInput.uniqueId {
+            uploadFileData["uniqueId"] = JSON(myUniqueId)
+            uniqueId(myUniqueId)
+        } else {
+            let myUniqueId = generateUUID()
+            uploadFileData["uniqueId"] = JSON(myUniqueId)
+            uniqueId(myUniqueId)
+        }
+        
+        if let myOriginalFileName = uploadImageInput.originalFileName {
+            uploadFileData["originalFileName"] = JSON(myOriginalFileName)
+        }
+        
+        uploadFileData["fileName"] = JSON(fileName)
+        
+        if let xC = uploadImageInput.xC {
+            uploadFileData["xC"] = JSON(xC)
+        }
+        
+        if let yC = uploadImageInput.yC {
+            uploadFileData["yC"] = JSON(yC)
+        }
+        
+        if let hC = uploadImageInput.hC {
+            uploadFileData["hC"] = JSON(hC)
+        }
+        
+        if let wC = uploadImageInput.wC {
+            uploadFileData["wC"] = JSON(wC)
+        }
+        
+        /*
+         *  + data:
+         *      -image:             String
+         *      -fileName:          String
+         *      -fileSize:          Int
+         *      -threadId:          Int
+         *      -uniqueId:          String
+         *      -originalFileName:  String
+         */
+        
+        let url = "\(SERVICE_ADDRESSES.FILESERVER_ADDRESS)\(SERVICES_PATH.UPLOAD_IMAGE.rawValue)"
+        let method:     HTTPMethod  = HTTPMethod.post
+        let headers:    HTTPHeaders = ["_token_": token, "_token_issuer_": "1", "Content-type": "multipart/form-data"]
+        let parameters: Parameters = ["fileName": fileName]
+        
+        httpRequest(from: url, withMethod: method, withHeaders: headers, withParameters: parameters, dataToSend: uploadImageInput.dataToSend, isImage: true, isFile: false, completion: { (response) in
+            
+            let myResponse: JSON = response as! JSON
+            let hasError        = myResponse["hasError"].boolValue
+            let errorMessage    = myResponse["errorMessage"].stringValue
+            let errorCode       = myResponse["errorCode"].intValue
+            
+            if (!hasError) {
+                let resultData = myResponse["result"]
+                let uploadImageModel = UploadImageModel(messageContent: resultData, hasError: hasError, errorMessage: errorMessage, errorCode: errorCode)
+                
+                completion(uploadImageModel)
+            }
+        }) { (myProgress) in
+            progress(myProgress)
+        }
+        
+    }
     
+    // NOTE: This method will be deprecate soon
+    // this method will do the same as tha funciton above but instead of using 'UploadImageRequestModel' to get the parameters, it'll use JSON
     public func uploadImage(params: JSON, dataToSend: Data, uniqueId: @escaping (String) -> (), progress: @escaping (Float) -> (), completion: @escaping callbackTypeAlias) {
+        log.verbose("Try to upload image with this parameters: \n \(params)", context: "Chat")
         
         var fileName:           String  = ""
         //        var fileType:           String  = ""
@@ -3621,8 +3953,120 @@ extension Chat {
     }
     
     
+    /*
+     UploadFile:
+     upload some file.
+     
+     By calling this function, HTTP request of type (UPLOAD_FILE) will send throut Chat-SDK,
+     then the response will come back as callbacks to client whose calls this function.
+     
+     + Inputs:
+     this function will get some optional prameters as an input, as JSON or Model (depends on the function that you would use) which are:
+        - fileExtension:
+        - fileName:   name of the image
+        - fileSize:
+        - threadId:
+        - uniqueId:
+        - originalFileName:
+     
+     + Outputs:
+        It has 4 callbacks as response:
+        1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
+        2- completion:
+     */
+    public func uploadFile(uploadFileInput: UploadFileRequestModel, uniqueId: @escaping (String) -> (), progress: @escaping (Float) -> (), completion: @escaping callbackTypeAlias) {
+        log.verbose("Try to upload file with this parameters: \n \(uploadFileInput)", context: "Chat")
+        
+        var fileName:           String  = ""
+        //        var fileType:           String  = ""
+        var fileSize:           Int     = 0
+        var fileExtension:      String  = ""
+        
+        var uploadThreadId:     Int     = 0
+        var uploadUniqueId:     String  = ""
+        var originalFileName:   String  = ""
+        
+        var uploadFileData: JSON = []
+        
+        if let myFileExtension = uploadFileInput.fileExtension {
+            fileExtension = myFileExtension
+        }
+        
+        if let myFileName = uploadFileInput.fileName {
+            fileName = myFileName
+        } else {
+            let myFileName = "\(generateUUID()).\(fileExtension)"
+            fileName = myFileName
+        }
+        
+        if let myFileSize = uploadFileInput.fileSize {
+            fileSize = myFileSize
+        }
+        
+        if let threadId = uploadFileInput.threadId {
+            uploadThreadId = threadId
+        }
+        
+        if let myUniqueId = uploadFileInput.uniqueId {
+            uploadUniqueId = myUniqueId
+        } else {
+            let myUniqueId = generateUUID()
+            uploadUniqueId = myUniqueId
+        }
+        
+        if let myOriginalFileName = uploadFileInput.originalFileName {
+            originalFileName = myOriginalFileName
+        } else {
+            originalFileName = fileName
+        }
+        
+        uploadFileData["fileName"] = JSON(fileName)
+        uploadFileData["threadId"] = JSON(uploadThreadId)
+        uploadFileData["fileSize"] = JSON(fileSize)
+        uploadFileData["uniqueId"] = JSON(uploadUniqueId)
+        uploadFileData["originalFileName"] = JSON(originalFileName)
+        
+        uniqueId(uploadUniqueId)
+        
+        /*
+         *  + data:
+         *      -file:              String
+         *      -fileName:          String
+         *      -fileSize:          Int
+         *      -threadId:          Int
+         *      -uniqueId:          String
+         *      -originalFileName:  String
+         */
+        
+        let url = "\(SERVICE_ADDRESSES.FILESERVER_ADDRESS)\(SERVICES_PATH.UPLOAD_FILE.rawValue)"
+        let method:     HTTPMethod  = HTTPMethod.post
+        let headers:    HTTPHeaders = ["_token_": token, "_token_issuer_": "1", "Content-type": "multipart/form-data"]
+        let parameters: Parameters = ["fileName": fileName]
+        
+        httpRequest(from: url, withMethod: method, withHeaders: headers, withParameters: parameters, dataToSend: uploadFileInput.dataToSend, isImage: false, isFile: true, completion: { (response) in
+            
+            let myResponse: JSON = response as! JSON
+            
+            let hasError        = myResponse["hasError"].boolValue
+            let errorMessage    = myResponse["errorMessage"].stringValue
+            let errorCode       = myResponse["errorCode"].intValue
+            
+            if (!hasError) {
+                let resultData = myResponse["result"]
+                let uploadFileModel = UploadFileModel(messageContent: resultData, hasError: hasError, errorMessage: errorMessage, errorCode: errorCode)
+                
+                completion(uploadFileModel)
+            }
+        }) { (myProgress) in
+            progress(myProgress)
+        }
+        
+    }
     
+    // NOTE: This method will be deprecate soon
+    // this method will do the same as tha funciton above but instead of using 'UploadFileRequestModel' to get the parameters, it'll use JSON
     public func uploadFile(params: JSON, dataToSend: Data, uniqueId: @escaping (String) -> (), progress: @escaping (Float) -> (), completion: @escaping callbackTypeAlias) {
+        log.verbose("Try to upload file with this parameters: \n \(params)", context: "Chat")
         
         var fileName:           String  = ""
         //        var fileType:           String  = ""

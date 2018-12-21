@@ -10,7 +10,7 @@ import Foundation
 import SwiftyJSON
 
 
-open class getContactsRequestModel {
+open class GetContactsRequestModel {
     
     public let count:       Int?
     public let offset:      Int?
@@ -30,7 +30,7 @@ open class getContactsRequestModel {
     
 }
 
-open class addContactsRequestModel {
+open class AddContactsRequestModel {
     
     public let firstName:       String?
     public let lastName:        String?
@@ -50,7 +50,7 @@ open class addContactsRequestModel {
     
 }
 
-open class updateContactsRequestModel {
+open class UpdateContactsRequestModel {
     
     public let id:              Int
     public let firstName:       String
@@ -73,7 +73,7 @@ open class updateContactsRequestModel {
     
 }
 
-open class removeContactsRequestModel {
+open class RemoveContactsRequestModel {
     
     public let id:  Int
     
@@ -83,7 +83,7 @@ open class removeContactsRequestModel {
     
 }
 
-open class blockContactsRequestModel {
+open class BlockContactsRequestModel {
     
     public let contactId:   Int
     public let typeCode:    String?
@@ -95,7 +95,7 @@ open class blockContactsRequestModel {
     
 }
 
-open class getBlockedContactListRequestModel {
+open class GetBlockedContactListRequestModel {
     
     public let count:       Int?
     public let offset:      Int?
@@ -112,7 +112,7 @@ open class getBlockedContactListRequestModel {
     
 }
 
-open class unblockContactsRequestModel {
+open class UnblockContactsRequestModel {
     
     public let blockId:     Int
     public let typeCode:    String?
@@ -124,7 +124,7 @@ open class unblockContactsRequestModel {
     
 }
 
-open class searchContactsRequestModel {
+open class SearchContactsRequestModel {
     
     public let firstName:       String?
     public let lastName:        String?
@@ -163,7 +163,7 @@ open class searchContactsRequestModel {
 
 
 
-open class getThreadsRequestModel {
+open class GetThreadsRequestModel {
     
     public let count:               Int?
     public let offset:              Int?
@@ -192,7 +192,7 @@ open class getThreadsRequestModel {
     
 }
 
-open class getHistoryRequestModel {
+open class GetHistoryRequestModel {
     
     public let threadId:            Int
     public let count:               Int?
@@ -227,7 +227,7 @@ open class getHistoryRequestModel {
     
 }
 
-open class createThreadRequestModel {
+open class CreateThreadRequestModel {
 
     public let title:               String
     public let type:                String?
@@ -247,7 +247,7 @@ open class createThreadRequestModel {
 
 }
 
-open class creatThreadWithMessageRequestModel {
+open class CreateThreadWithMessageRequestModel {
     
     public let threadTitle:         String
     public let threadType:          String?
@@ -281,7 +281,7 @@ open class creatThreadWithMessageRequestModel {
     
 }
 
-open class muteAndUnmuteThreadRequestModel {
+open class MuteAndUnmuteThreadRequestModel {
     
     public let subjectId:   Int
     public let typeCode:    String?
@@ -293,7 +293,7 @@ open class muteAndUnmuteThreadRequestModel {
     
 }
 
-open class getThreadParticipantsRequestModel {
+open class GetThreadParticipantsRequestModel {
     
     public let threadId:            Int
     public let count:               Int?
@@ -487,11 +487,149 @@ open class ForwardMessageRequestModel {
     
 }
 
+open class SendFileMessageRequestModel {
+    
+    public let fileName:    String?
+    public let imageName:   String?
+    public let xC:          String?
+    public let yC:          String?
+    public let hC:          String?
+    public let wC:          String?
+    public let threadId:    Int?
+    
+    public let subjectId:   Int?
+    public let repliedTo:   Int?
+    public let content:     String?
+    public let metaData:    JSON?
+    public let typeCode:    String?
+    
+    public let imageToSend: Data?
+    public let fileToSend: Data?
+    
+    init(fileName:      String?,
+         imageName:     String?,
+         xC:            String?,
+         yC:            String?,
+         hC:            String?,
+         wC:            String?,
+         threadId:      Int?,
+         subjectId:     Int?,
+         repliedTo:     Int?,
+         content:       String?,
+         metaData:      JSON?,
+         typeCode:      String?,
+         imageToSend:   Data?,
+         fileToSend:    Data?) {
+        
+        self.fileName       = fileName
+        self.imageName      = imageName
+        self.xC             = xC
+        self.yC             = yC
+        self.hC             = yC
+        self.wC             = yC
+        self.threadId       = threadId
+        
+        self.subjectId      = subjectId
+        self.repliedTo      = repliedTo
+        self.content        = content
+        self.metaData       = metaData
+        self.typeCode       = typeCode
+        
+        self.imageToSend    = imageToSend
+        self.fileToSend     = fileToSend
+    }
+    
+}
 
+open class DeleteMessageRequestModel {
+    
+    public let subjectId:           Int?
+    public let deleteForAll:        JSON
+    public let uniqueId:            String?
+    public let typeCode:            String?
+    
+    init(subjectId:         Int?,
+         deleteForAll:      JSON,
+         uniqueId:          String?,
+         typeCode:          String?) {
+        
+        self.subjectId          = subjectId
+        self.deleteForAll       = deleteForAll
+        self.uniqueId           = uniqueId
+        self.typeCode           = typeCode
+    }
+    
+}
 
+open class UploadImageRequestModel {
+    
+    public let fileExtension:       String?
+    public let fileName:            String?
+    public let fileSize:            Int?
+    public let threadId:            Int?
+    public let uniqueId:            String?
+    public let originalFileName:    String?
+    public let xC:                  Int?
+    public let yC:                  Int?
+    public let hC:                  Int?
+    public let wC:                  Int?
+    public let dataToSend:          Data
+    
+    init(fileExtension:     String?,
+         fileName:          String,
+         fileSize:          Int?,
+         threadId:          Int,
+         uniqueId:          String?,
+         originalFileName:  String?,
+         xC:                Int?,
+         yC:                Int?,
+         hC:                Int?,
+         wC:                Int?,
+         dataToSend:        Data) {
+        
+        self.fileExtension      = fileExtension
+        self.fileName           = fileName
+        self.fileSize           = fileSize
+        self.threadId           = threadId
+        self.uniqueId           = uniqueId
+        self.originalFileName   = originalFileName
+        self.xC                 = xC
+        self.yC                 = yC
+        self.hC                 = hC
+        self.wC                 = wC
+        self.dataToSend         = dataToSend
+    }
+    
+}
 
-
-
+open class UploadFileRequestModel {
+    
+    public let fileExtension:       String?
+    public let fileName:            String?
+    public let fileSize:            Int?
+    public let threadId:            Int?
+    public let uniqueId:            String?
+    public let originalFileName:    String?
+    public let dataToSend:          Data
+    
+    init(fileExtension:     String?,
+         fileName:          String,
+         fileSize:          Int?,
+         threadId:          Int,
+         uniqueId:          String?,
+         originalFileName:  String?,
+         dataToSend:        Data) {
+        
+        self.fileExtension      = fileExtension
+        self.fileName           = fileName
+        self.fileSize           = fileSize
+        self.threadId           = threadId
+        self.uniqueId           = uniqueId
+        self.originalFileName   = originalFileName
+        self.dataToSend         = dataToSend
+    }
+    
+}
 
 
 
