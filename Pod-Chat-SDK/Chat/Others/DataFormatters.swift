@@ -631,8 +631,83 @@ open class UploadFileRequestModel {
     
 }
 
+open class UpdateThreadInfoRequestModel {
+    
+    public let subjectId:   Int?
+    public let image:       String?
+    public let description: String?
+    public let title:       String?
+    public let metadata:    JSON?
+    public let typeCode:    String?
+    
+    init(subjectId:     Int?,
+         image:         String,
+         description:   String?,
+         title:         String,
+         metadata:      JSON?,
+         typeCode:      String?) {
+        
+        self.subjectId      = subjectId
+        self.image          = image
+        self.description    = description
+        self.title          = title
+        self.metadata       = metadata
+        self.typeCode       = typeCode
+    }
+    
+}
+
+open class SpamPvThreadRequestModel {
+    
+    public let threadId:   Int?
+    public let typeCode:    String?
+    
+    init(threadId:      Int?,
+         typeCode:      String?) {
+        
+        self.threadId       = threadId
+        self.typeCode       = typeCode
+    }
+    
+}
+
+open class MessageDeliverySeenListRequestModel {
+    
+    public let count:       Int?
+    public let offset:      Int?
+    public let typeCode:    String?
+    public let messageId:   Int?
+    
+    init(count:     Int?,
+         offset:    Int?,
+         typeCode:  String?,
+         messageId: Int?) {
+        
+        self.count      = count
+        self.offset     = offset
+        self.typeCode   = typeCode
+        self.messageId  = messageId
+    }
+    
+}
 
 
+open class DeliverSeenRequestModel {
+    
+    public let messageId:   Int
+    public let ownerId:     Int
+    public let typeCode:    String?
+    
+    init(messageId: Int,
+         ownerId:   Int,
+         typeCode:  String?) {
+        
+        self.messageId  = messageId
+        self.ownerId    = ownerId
+        self.typeCode   = typeCode
+    }
+    
+}
 
 
 

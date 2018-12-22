@@ -3970,7 +3970,7 @@ extension Chat {
         - originalFileName:
      
      + Outputs:
-        It has 4 callbacks as response:
+        It has 2 callbacks as response:
         1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
         2- completion:
      */
@@ -4159,7 +4159,70 @@ extension Chat {
     
     
     
+    /*
+     UpdateThreadInfo:
+     update information about a thread.
+     
+     By calling this function, a request of type 30 (UPDATE_THREAD_INFO) will send throut Chat-SDK,
+     then the response will come back as callbacks to client whose calls this function.
+     
+     + Inputs:
+     this function will get some optional prameters as an input, as JSON or Model (depends on the function that you would use) which are:
+     - subjectId:
+     - image:
+     - description:
+     - title:
+     - metadata:
+     - typeCode:
+     
+     + Outputs:
+     It has 2 callbacks as response:
+     1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
+     2- completion:
+     */
+    public func updateThreadInfo(updateThreadInfoInput: UpdateThreadInfoRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+        log.verbose("Try to request to update thread info with this parameters: \n \(updateThreadInfoInput)", context: "Chat")
+        
+        var sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.UPDATE_THREAD_INFO.rawValue,
+                                       "typeCode": updateThreadInfoInput.typeCode ?? generalTypeCode]
+        
+        if let threadId = updateThreadInfoInput.subjectId {
+            sendMessageParams["threadId"] = JSON(threadId)
+            sendMessageParams["subjectId"] = JSON(threadId)
+            
+        } else {
+            delegate?.chatError(errorCode: 999, errorMessage: "Thread ID is required for Updating thread info!", errorResult: nil)
+        }
+        
+        var content: JSON = [:]
+        
+        if let image = updateThreadInfoInput.image {
+            content["image"] = JSON(image)
+        }
+        
+        if let description = updateThreadInfoInput.description {
+            content["description"] = JSON(description)
+        }
+        
+        if let name = updateThreadInfoInput.title {
+            content["name"] = JSON(name)
+        }
+        
+        if let metadata = updateThreadInfoInput.metadata {
+            let metadataStr = "\(metadata)"
+            content["metadata"] = JSON(metadataStr)
+        }
+        
+        sendMessageParams["content"] = JSON("\(content)")
+        
+        sendMessageWithCallback(params: sendMessageParams, callback: UpdateThreadInfoCallback(), sentCallback: nil, deliverCallback: nil, seenCallback: nil) { (updateThreadInfoUniqueId) in
+            uniqueId(updateThreadInfoUniqueId)
+        }
+        updateThreadInfoCallbackToUser = completion
+    }
     
+    // NOTE: This method will be deprecate soon
+    // this method will do the same as tha funciton above but instead of using 'UpdateThreadInfoRequestModel' to get the parameters, it'll use JSON
     public func updateThreadInfo(params: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to update thread info with this parameters: \n \(params)", context: "Chat")
         
@@ -4205,10 +4268,43 @@ extension Chat {
     }
     
     
+    /*
+     SpamPVThread:
+     spam a thread.
+     
+     By calling this function, a request of type 41 (SPAM_PV_THREAD) will send throut Chat-SDK,
+     then the response will come back as callbacks to client whose calls this function.
+     
+     + Inputs:
+     this function will get some optional prameters as an input, as JSON or Model (depends on the function that you would use) which are:
+     - subjectId:
+     - typeCode:
+     
+     + Outputs:
+     It has 2 callbacks as response:
+     1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
+     2- completion:
+     */
+    public func spamPvThread(spamPvThreadInput: SpamPvThreadRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+        log.verbose("Try to request to spam thread with this parameters: \n \(spamPvThreadInput)", context: "Chat")
+        
+        var sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.SPAM_PV_THREAD.rawValue,
+                                       "typeCode": spamPvThreadInput.typeCode ?? generalTypeCode]
+        
+        if let subjectId = spamPvThreadInput.threadId {
+            sendMessageParams["subjectId"] = JSON(subjectId)
+        }
+        
+        sendMessageWithCallback(params: sendMessageParams, callback: SpamPvThread(), sentCallback: nil, deliverCallback: nil, seenCallback: nil) { (spamUniqueId) in
+            uniqueId(spamUniqueId)
+        }
+        spamPvThreadCallbackToUser = completion
+    }
     
-    
-    
+    // NOTE: This method will be deprecate soon
+    // this method will do the same as tha funciton above but instead of using 'SpamPvThreadRequestModel' to get the parameters, it'll use JSON
     public func spamPvThread(params: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+        log.verbose("Try to request to spam thread with this parameters: \n \(params)", context: "Chat")
         
         var sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.SPAM_PV_THREAD.rawValue,
                                        "typeCode": params["typeCode"].string ?? generalTypeCode]
@@ -4224,6 +4320,48 @@ extension Chat {
     }
     
     
+    /*
+     MessageDeliveryList:
+     list of participants that send deliver for some message id.
+     
+     By calling this function, a request of type 32 (GET_MESSAGE_DELEVERY_PARTICIPANTS) will send throut Chat-SDK,
+     then the response will come back as callbacks to client whose calls this function.
+     
+     + Inputs:
+     this function will get some optional prameters as an input, as JSON or Model (depends on the function that you would use) which are:
+     - subjectId:
+     - typeCode:
+     
+     + Outputs:
+     It has 2 callbacks as response:
+     1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
+     2- completion:
+     */
+    public func messageDeliveryList(messageDeliveryListInput: MessageDeliverySeenListRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+        log.verbose("Try to request to get message deliver participants with this parameters: \n \(messageDeliveryListInput)", context: "Chat")
+        
+        var sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.GET_MESSAGE_DELEVERY_PARTICIPANTS.rawValue]
+        
+        var content: JSON = [:]
+        content["count"] = JSON(messageDeliveryListInput.count ?? 50)
+        content["offset"] = JSON(messageDeliveryListInput.offset ?? 0)
+        content["typeCode"] = JSON(messageDeliveryListInput.typeCode ?? generalTypeCode)
+        
+        if let messageId = messageDeliveryListInput.messageId {
+            content["messageId"] = JSON(messageId)
+        }
+        
+        sendMessageParams["content"] = content
+        
+        sendMessageWithCallback(params: sendMessageParams, callback: GetMessageDeliverList(parameters: sendMessageParams), sentCallback: nil, deliverCallback: nil, seenCallback: nil) { (messageDeliverListUniqueId) in
+            uniqueId(messageDeliverListUniqueId)
+        }
+        getMessageDeliverListCallbackToUser = completion
+        
+    }
+    
+    // NOTE: This method will be deprecate soon
+    // this method will do the same as tha funciton above but instead of using 'MessageDeliverySeenListRequestModel' to get the parameters, it'll use JSON
     public func messageDeliveryList(params: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to get message deliver participants with this parameters: \n \(params)", context: "Chat")
         
@@ -4266,6 +4404,48 @@ extension Chat {
     }
     
     
+    /*
+     MessageSeenList:
+     list of participants that send seen for some message id.
+     
+     By calling this function, a request of type 33 (GET_MESSAGE_SEEN_PARTICIPANTS) will send throut Chat-SDK,
+     then the response will come back as callbacks to client whose calls this function.
+     
+     + Inputs:
+     this function will get some optional prameters as an input, as JSON or Model (depends on the function that you would use) which are:
+     - subjectId:
+     - typeCode:
+     
+     + Outputs:
+     It has 2 callbacks as response:
+     1- uniqueId:    it will returns the request 'UniqueId' that will send to server.        (String)
+     2- completion:
+     */
+    public func messageSeenList(messageSeenListInput: MessageDeliverySeenListRequestModel, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
+        log.verbose("Try to request to get message seen participants with this parameters: \n \(messageSeenListInput)", context: "Chat")
+        
+        var sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.GET_MESSAGE_SEEN_PARTICIPANTS.rawValue]
+        
+        var content: JSON = [:]
+        content["count"] = JSON(messageSeenListInput.count ?? 50)
+        content["offset"] = JSON(messageSeenListInput.offset ?? 0)
+        content["typeCode"] = JSON(messageSeenListInput.typeCode ?? generalTypeCode)
+        
+        if let messageId = messageSeenListInput.messageId {
+            content["messageId"] = JSON(messageId)
+        }
+        
+        sendMessageParams["content"] = content
+        
+        sendMessageWithCallback(params: sendMessageParams, callback: GetMessageSeenList(parameters: sendMessageParams), sentCallback: nil, deliverCallback: nil, seenCallback: nil) { (messageSeenListUniqueId) in
+            uniqueId(messageSeenListUniqueId)
+        }
+        getMessageSeenListCallbackToUser = completion
+        
+    }
+    
+    // NOTE: This method will be deprecate soon
+    // this method will do the same as tha funciton above but instead of using 'MessageDeliverySeenListRequestModel' to get the parameters, it'll use JSON
     public func messageSeenList(params: JSON, uniqueId: @escaping (String) -> (), completion: @escaping callbackTypeAlias) {
         log.verbose("Try to request to get message seen participants with this parameters: \n \(params)", context: "Chat")
         
@@ -4305,21 +4485,91 @@ extension Chat {
     }
     
     
+    /*
+     Deliver:
+     send deliver for some message.
+     
+     By calling this function, a request of type 4 (DELIVERY) will send throut Chat-SDK,
+     then the response will come back as callbacks to client whose calls this function.
+     
+     + Inputs:
+     this function will get some optional prameters as an input, as JSON or Model (depends on the function that you would use) which are:
+     - messageId:
+     - ownerId:
+     - typeCode:
+     
+     + Outputs:
+        this function has no output!
+     */
+    public func deliver(deliverInput: DeliverSeenRequestModel) {
+        log.verbose("Try to send deliver message for a message id with this parameters: \n \(deliverInput)", context: "Chat")
+        
+        if let theUserInfo = userInfo {
+            let userInfoJSON = theUserInfo.formatToJSON()
+            if (deliverInput.ownerId != userInfoJSON["id"].intValue) {
+                let sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.DELIVERY.rawValue,
+                                               "content":           deliverInput.messageId,
+                                               "typeCode":          deliverInput.typeCode ?? generalTypeCode,
+                                               "pushMsgType":       3]
+                sendMessageWithCallback(params: sendMessageParams, callback: nil, sentCallback: nil, deliverCallback: nil, seenCallback: nil, uniuqueIdCallback: nil)
+            }
+        }
+    }
+    
+    // NOTE: This method will be deprecate soon
+    // this method will do the same as tha funciton above but instead of using 'DeliverSeenRequestModel' to get the parameters, it'll use JSON
     public func deliver(params: JSON) {
+        log.verbose("Try to send deliver message for a message id with this parameters: \n \(params)", context: "Chat")
+        
         if let theUserInfo = userInfo {
             let userInfoJSON = theUserInfo.formatToJSON()
             if (params["ownerId"].intValue != userInfoJSON["id"].intValue) {
                 let sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.DELIVERY.rawValue,
-                                               "content": params["messageId"].intValue,
-                                               "typeCode": params["typeCode"].int ?? generalTypeCode,
-                                               "pushMsgType": 3]
+                                               "content":           params["messageId"].intValue,
+                                               "typeCode":          params["typeCode"].int ?? generalTypeCode,
+                                               "pushMsgType":       3]
                 sendMessageWithCallback(params: sendMessageParams, callback: nil, sentCallback: nil, deliverCallback: nil, seenCallback: nil, uniuqueIdCallback: nil)
             }
         }
     }
     
     
+    /*
+     Seen:
+     send seen for some message.
+     
+     By calling this function, a request of type 5 (SEEN) will send throut Chat-SDK,
+     then the response will come back as callbacks to client whose calls this function.
+     
+     + Inputs:
+     this function will get some optional prameters as an input, as JSON or Model (depends on the function that you would use) which are:
+     - messageId:
+     - ownerId:
+     - typeCode:
+     
+     + Outputs:
+     this function has no output!
+     */
+    public func seen(seenInput: DeliverSeenRequestModel) {
+        log.verbose("Try to send deliver message for a message id with this parameters: \n \(seenInput)", context: "Chat")
+        
+        if let theUserInfo = userInfo {
+            let userInfoJSON = theUserInfo.formatToJSON()
+            if (seenInput.ownerId != userInfoJSON["id"].intValue) {
+                let sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.SEEN.rawValue,
+                                               "content":           seenInput.messageId,
+                                               "typeCode":          seenInput.typeCode ?? generalTypeCode,
+                                               "pushMsgType":       3]
+                sendMessageWithCallback(params: sendMessageParams, callback: nil, sentCallback: nil, deliverCallback: nil, seenCallback: nil, uniuqueIdCallback: nil)
+            }
+        }
+    }
+    
+    // NOTE: This method will be deprecate soon
+    // this method will do the same as tha funciton above but instead of using 'DeliverSeenRequestModel' to get the parameters, it'll use JSON
     public func seen(params: JSON) {
+        log.verbose("Try to send deliver message for a message id with this parameters: \n \(params)", context: "Chat")
+        
         if let theUserInfo = userInfo {
             let userInfoJSON = theUserInfo.formatToJSON()
             if (params["ownerId"].intValue != userInfoJSON["id"].intValue) {
@@ -4333,28 +4583,31 @@ extension Chat {
     }
     
     
+    // this function will generate a UUID to use in your request if needed (specially for uniqueId)
+    // and it will return the UUID as String
     public func generateUUID() -> String {
         let myUUID = NSUUID().uuidString
         return myUUID
     }
     
     
+    // log out from async
     public func logOut() {
         asyncClient?.asyncLogOut()
     }
     
-    
+    // this function will return Chate State as JSON
     public func getChatState() -> JSON {
         return chatFullStateObject
     }
     
-    
+    // if your socket connection is disconnected you can reconnect it by calling this function
     public func reconnect() {
         asyncClient?.asyncReconnectSocket()
     }
     
-    
-    public func setTocken(newToken: String) {
+    // this function will get a String and it will put it on 'token' variable, to use on your requests!
+    public func setToken(newToken: String) {
         token = newToken
     }
     
