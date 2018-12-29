@@ -1342,7 +1342,7 @@ extension Chat {
         }
             
         let sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.GET_CONTACTS.rawValue,
-                                       "typeCode": getContactsInput.typeCode ?? generalTypeCode,
+//                                       "typeCode": getContactsInput.typeCode ?? generalTypeCode,
                                        "content": content]
         sendMessageWithCallback(params: sendMessageParams, callback: GetContactsCallback(parameters: sendMessageParams), sentCallback: nil, deliverCallback: nil, seenCallback: nil) { (getContactUniqueId) in
             uniqueId(getContactUniqueId)
@@ -1374,10 +1374,12 @@ extension Chat {
             if let name = parameters["name"].string {
                 content["name"] = JSON(name)
             }
-
+            
             if let typeCode = parameters["typeCode"].string {
                 myTypeCode = typeCode
             }
+            
+//            content["typeCode"] = JSON(myTypeCode)
         }
 
         let sendMessageParams: JSON = ["chatMessageVOType": chatMessageVOTypes.GET_CONTACTS.rawValue,
