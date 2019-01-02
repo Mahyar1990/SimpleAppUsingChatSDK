@@ -8,7 +8,7 @@
 
 import UIKit
 import SwiftyJSON
-import Chat
+import FanapPodChatSDK
 
 
 
@@ -30,22 +30,22 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     */
     
     // SandBox Addresses:
-//    let socketAddress           = "wss://chat-sandbox.pod.land/ws"
-//    let serverName              = "chat-server"
-//    let ssoHost                 = "https://accounts.pod.land"
-//    let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
-//    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-//    let token                   = "f23ad46ac08044edb00f6dc39a7e2ffc"
+    let socketAddress           = "wss://chat-sandbox.pod.land/ws"
+    let serverName              = "chat-server"
+    let ssoHost                 = "https://accounts.pod.land"
+    let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
+    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
+    let token                   = "f74124e389934b83ac201586bffd0a7c"
     
     
     // Local Addresses
-    let socketAddress           = "ws://172.16.106.26:8003/ws"
-    let serverName              = "chat-server"
-    let ssoHost                 = "http://172.16.110.76"
-    let platformHost            = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} Platform Core Address
-    let fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
+//    let socketAddress           = "ws://172.16.106.26:8003/ws"
+//    let serverName              = "chat-server"
+//    let ssoHost                 = "http://172.16.110.76"
+//    let platformHost            = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} Platform Core Address
+//    let fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
 //    let token                   = "62e07ed1de2d48ab93575bd873f6a51d"
-    let token                   = "7a18deb4a4b64339a81056089f5e5922"    // ialexi
+//    let token                   = "7a18deb4a4b64339a81056089f5e5922"    // ialexi
 //    let token                   = "6421ecebd40b4d09923bcf6379663d87"    // iFelfeli
 //    let token                   = "6421ecebd40b4d09923bcf6379663d87"
 //    let token = "fbd4ecedb898426394646e65c6b1d5d1" //  {**REQUIRED**} SSO Token JiJi
@@ -596,6 +596,42 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         return mb
     }()
     
+    let getImage: UIButton = {
+        let mb = UIButton()
+        mb.translatesAutoresizingMaskIntoConstraints = false
+        mb.setTitle("Get Image...", for: UIControlState.normal)
+        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
+        mb.layer.cornerRadius = 5
+        mb.layer.borderWidth = 2
+        mb.layer.borderColor = UIColor.clear.cgColor
+        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
+        mb.layer.shadowOpacity = 2
+        mb.layer.shadowRadius = 1
+        mb.layer.shadowOffset = CGSize(width: 0, height: 3)
+        mb.titleLabel?.numberOfLines = 1
+        mb.titleLabel?.adjustsFontSizeToFitWidth = true
+        mb.addTarget(self, action: #selector(getImgeButtonPressed), for: UIControlEvents.touchUpInside)
+        return mb
+    }()
+    
+    let getFile: UIButton = {
+        let mb = UIButton()
+        mb.translatesAutoresizingMaskIntoConstraints = false
+        mb.setTitle("Get File...", for: UIControlState.normal)
+        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
+        mb.layer.cornerRadius = 5
+        mb.layer.borderWidth = 2
+        mb.layer.borderColor = UIColor.clear.cgColor
+        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
+        mb.layer.shadowOpacity = 2
+        mb.layer.shadowRadius = 1
+        mb.layer.shadowOffset = CGSize(width: 0, height: 3)
+        mb.titleLabel?.numberOfLines = 1
+        mb.titleLabel?.adjustsFontSizeToFitWidth = true
+        mb.addTarget(self, action: #selector(getFileButtonPressed), for: UIControlEvents.touchUpInside)
+        return mb
+    }()
+    
     let logView: UIView = {
         let mv = UIView()
         mv.translatesAutoresizingMaskIntoConstraints = false
@@ -638,7 +674,10 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
                             fileServer: fileServer,
                             serverName: serverName,
                             token: token,
+                            mapApiKey: nil,
+                            mapServer: "https://api.neshan.org/v1",
                             typeCode: "chattest",
+                            enableCache: true,
                             msgPriority: 1,
                             msgTTL: messageTtl,
                             httpRequestTimeout: nil,
@@ -673,8 +712,12 @@ extension MyViewController {
         }, completion: { (myResponse) in
             let myResponseModel: UserInfoModel = myResponse as! UserInfoModel
             let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
-            print("\n this is my get user info response:")
+            print("\n this is my get user info response from Server:")
             print("\(myResponseJSON) \n")
+        }, cacheResponse: { (userInfoResponse) in
+            print("\n this is my get user info response from Cache:")
+            let responseJSON = userInfoResponse.returnDataAsJSON()
+            print("\(responseJSON)")
         })
     }
     
@@ -684,30 +727,59 @@ extension MyViewController {
 //                                      "has": "BOT_",
 //                                      "and": ["field": "id", "is": "1534835339446"]
 //                                    ]
+//        let paramsToSend: JSON = ["count": 3, "offset": 8/*, "metadataCriteria": metadataCriteria*/]
+//        myChatObject?.getThreads(params: paramsToSend, uniqueId: { (getThreadUniqueId) in
+//            print("\n get thread request uniqueId = \t \(getThreadUniqueId) \n")
+//        }, completion: { (myResponse) in
+//            let myResponseModel: GetThreadsModel = myResponse as! GetThreadsModel
+//            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+//            print("\n this is my get thread response:")
+//            print("\(myResponseJSON) \n")
+//        })
         
-        let paramsToSend: JSON = ["count": 3, "offset": 8/*, "metadataCriteria": metadataCriteria*/]
         
-        myChatObject?.getThreads(params: paramsToSend, uniqueId: { (getThreadUniqueId) in
+        let inputModel = GetThreadsRequestModel(count: 3, offset: 0, name: nil, new: nil, threadIds: nil, typeCode: nil, metadataCriteria: nil)
+        myChatObject?.getThreads(getThreadsInput: inputModel, uniqueId: { (getThreadUniqueId) in
             print("\n get thread request uniqueId = \t \(getThreadUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: GetThreadsModel = myResponse as! GetThreadsModel
             let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
-            print("\n this is my get thread response:")
+            print("\n this is my get thread response from Server:")
             print("\(myResponseJSON) \n")
+        }, cacheResponse: { (threadResponse) in
+            print("\n this is my get thread response from Cache:")
+            let responseJSON = threadResponse.returnDataAsJSON()
+            print("\(responseJSON)")
         })
+        
     }
     
     
     @objc func getHistoryButtonPressed() {
-        let paramsToSend: JSON = ["threadId": 1328, "count": 1, "offset": 0]
-        myChatObject?.getHistory(params: paramsToSend, uniqueId: { (getHistoryUniqueId) in
+//        let paramsToSend: JSON = ["threadId": 1328, "count": 1, "offset": 0]
+//        myChatObject?.getHistory(params: paramsToSend, uniqueId: { (getHistoryUniqueId) in
+//            print("\n get history request uniqueId = \t \(getHistoryUniqueId) \n")
+//        }, completion: { (myResponse) in
+//            let myResponseModel: GetHistoryModel = myResponse as! GetHistoryModel
+//            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+//            print("\n this is my get history response:")
+//            print("\(myResponseJSON) \n")
+//        })
+        
+        let inputModel = GetHistoryRequestModel(threadId: 1328, count: 1, offset: 0, firstMessageId: nil, lastMessageId: nil, order: nil, query: nil, typeCode: nil, metadataCriteria: nil)
+        myChatObject?.getHistory(getHistoryInput: inputModel, uniqueId: { (getHistoryUniqueId) in
             print("\n get history request uniqueId = \t \(getHistoryUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: GetHistoryModel = myResponse as! GetHistoryModel
             let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
-            print("\n this is my get history response:")
+            print("\n this is my get history response from Server:")
             print("\(myResponseJSON) \n")
+        }, cacheResponse: { (historyResponse) in
+            print("\n this is my get history response from Cache:")
+            let responseJSON = historyResponse.returnDataAsJSON()
+            print("\(responseJSON)")
         })
+        
     }
     
     
@@ -766,15 +838,31 @@ extension MyViewController {
     
     
     @objc func getContactsButtonPressed() {
-        let paramsToSend: JSON = ["count": 2, "offset": 0]
-        myChatObject?.getContacts(params: paramsToSend, uniqueId: { (getContactUniqueId) in
+//        let paramsToSend: JSON = ["count": 2, "offset": 0]
+//        myChatObject?.getContacts(params: paramsToSend, uniqueId: { (getContactUniqueId) in
+//            print("\n get contact request uniqueId = \t \(getContactUniqueId) \n")
+//        }, completion: { (myResponse) in
+//            let myResponseModel: GetContactsModel = myResponse as! GetContactsModel
+//            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+//            print("\n this is my get contacts response:")
+//            print("\(myResponseJSON) \n")
+//        })
+        
+        
+        let inputModel = GetContactsRequestModel(count: 2, offset: 0, name: nil, typeCode: nil)
+        myChatObject?.getContacts(getContactsInput: inputModel, uniqueId: { (getContactUniqueId) in
             print("\n get contact request uniqueId = \t \(getContactUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: GetContactsModel = myResponse as! GetContactsModel
             let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
-            print("\n this is my get contacts response:")
+            print("\n this is my get contacts response from Server:")
             print("\(myResponseJSON) \n")
+        }, cacheResponse: { (contactResponse) in
+            print("\n this is my get contact response from Cache:")
+            let responseJSON = contactResponse.returnDataAsJSON()
+            print("\(responseJSON)")
         })
+        
     }
     
     
@@ -965,8 +1053,24 @@ extension MyViewController {
     @objc func uploadFileButtonPressed() {
         let image = UIImage(named: "pic")
         if let data = UIImageJPEGRepresentation(image!, 1) {
-            let myParams: JSON = ["fileName": "newPic"]
-            myChatObject?.uploadFile(params: myParams, dataToSend: data, uniqueId: { (uploadFileUniqueId) in
+//            let myParams: JSON = ["fileName": "newPic"]
+//            myChatObject?.uploadFile(params: myParams, dataToSend: data, uniqueId: { (uploadFileUniqueId) in
+//                print("********************************")
+//                print("UploadFileUniqueId is = \(uploadFileUniqueId)")
+//                print("********************************")
+//            }, progress: { (progress) in
+//                print("Upload File progress is = \(progress)")
+//            }, completion: { (response) in
+//                print("********************************")
+//                print("Response from Upload File:")
+//                let responseModel: UploadFileModel = response as! UploadFileModel
+//                let responseJSON: JSON = responseModel.returnDataAsJSON()
+//                print("\(responseJSON)")
+//                print("********************************")
+//            })
+            
+            let inputModel = UploadFileRequestModel(fileExtension: nil, fileName: "newPic", fileSize: nil, threadId: nil, uniqueId: nil, originalFileName: nil, dataToSend: data)
+            myChatObject?.uploadFile(uploadFileInput: inputModel, uniqueId: { (uploadFileUniqueId) in
                 print("********************************")
                 print("UploadFileUniqueId is = \(uploadFileUniqueId)")
                 print("********************************")
@@ -1193,6 +1297,52 @@ extension MyViewController {
             print("\(responseJSON) \n")
         })
     }
+    
+    
+    @objc func getImgeButtonPressed() {
+        
+        let inputModel = GetImageRequestModel(actual: nil, downloadable: nil, hashCode: "", height: nil, imageId: 1111111111, width: nil)
+        myChatObject?.getImage(getImageInput: inputModel, uniqueId: { (getImageUniqueId) in
+            print("getImage UniqueId = \(getImageUniqueId)")
+        }, progress: { (myDownloadProgress) in
+            print("downloadProcess = \(myDownloadProgress)")
+        }, completion: { (response) in
+            print("This is my GetImage Response from Server")
+            let responseModel = response as! UploadImageModel
+            let rsponseJSON = responseModel.returnDataAsJSON()
+            print("\(rsponseJSON)")
+        }, cacheResponse: { (cacheResponse) in
+            print("This is my GetImage Response from Cache")
+            let responseModel = cacheResponse as! UploadImageModel
+            let rsponseJSON = responseModel.returnDataAsJSON()
+            print("\(rsponseJSON)")
+        })
+        
+    }
+    
+    @objc func getFileButtonPressed() {
+        
+        let inputModel = GetFileRequestModel(downloadable: nil, fileId: 1111111111, hashCode: "")
+        myChatObject?.getFile(getFileInput: inputModel, uniqueId: { (getFileUniqueId) in
+            print("getFile UniqueId = \(getFileUniqueId)")
+        }, progress: { (myDownloadProgress) in
+            print("downloadProcess = \(myDownloadProgress)")
+        }, completion: { (response) in
+            print("This is my GetFile Response from Server")
+            let responseModel = response as! UploadImageModel
+            let rsponseJSON = responseModel.returnDataAsJSON()
+            print("\(rsponseJSON)")
+        }, cacheResponse: { (cacheResponse) in
+            print("This is my GetFile Response from Cache")
+            let responseModel = cacheResponse as! UploadFileModel
+            let rsponseJSON = responseModel.returnDataAsJSON()
+            print("\(rsponseJSON)")
+        })
+        
+    }
+    
+    
+    
     
 }
 
