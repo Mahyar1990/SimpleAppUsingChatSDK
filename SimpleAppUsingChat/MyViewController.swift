@@ -35,7 +35,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "f74124e389934b83ac201586bffd0a7c"
+    let token                   = "4aa92ff502014fc4a916b363d3c91a97"
     
     
     // Local Addresses
@@ -632,6 +632,78 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         return mb
     }()
     
+    let mapReverse: UIButton = {
+        let mb = UIButton()
+        mb.translatesAutoresizingMaskIntoConstraints = false
+        mb.setTitle("Map Reverse...", for: UIControlState.normal)
+        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
+        mb.layer.cornerRadius = 5
+        mb.layer.borderWidth = 2
+        mb.layer.borderColor = UIColor.clear.cgColor
+        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
+        mb.layer.shadowOpacity = 2
+        mb.layer.shadowRadius = 1
+        mb.layer.shadowOffset = CGSize(width: 0, height: 3)
+        mb.titleLabel?.numberOfLines = 1
+        mb.titleLabel?.adjustsFontSizeToFitWidth = true
+        mb.addTarget(self, action: #selector(mapReverseButtonPressed), for: UIControlEvents.touchUpInside)
+        return mb
+    }()
+    
+    let mapSearch: UIButton = {
+        let mb = UIButton()
+        mb.translatesAutoresizingMaskIntoConstraints = false
+        mb.setTitle("Map Search...", for: UIControlState.normal)
+        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
+        mb.layer.cornerRadius = 5
+        mb.layer.borderWidth = 2
+        mb.layer.borderColor = UIColor.clear.cgColor
+        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
+        mb.layer.shadowOpacity = 2
+        mb.layer.shadowRadius = 1
+        mb.layer.shadowOffset = CGSize(width: 0, height: 3)
+        mb.titleLabel?.numberOfLines = 1
+        mb.titleLabel?.adjustsFontSizeToFitWidth = true
+        mb.addTarget(self, action: #selector(mapSearchButtonPressed), for: UIControlEvents.touchUpInside)
+        return mb
+    }()
+    
+    let mapRouting: UIButton = {
+        let mb = UIButton()
+        mb.translatesAutoresizingMaskIntoConstraints = false
+        mb.setTitle("Map Routing...", for: UIControlState.normal)
+        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
+        mb.layer.cornerRadius = 5
+        mb.layer.borderWidth = 2
+        mb.layer.borderColor = UIColor.clear.cgColor
+        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
+        mb.layer.shadowOpacity = 2
+        mb.layer.shadowRadius = 1
+        mb.layer.shadowOffset = CGSize(width: 0, height: 3)
+        mb.titleLabel?.numberOfLines = 1
+        mb.titleLabel?.adjustsFontSizeToFitWidth = true
+        mb.addTarget(self, action: #selector(mapRoutingButtonPressed), for: UIControlEvents.touchUpInside)
+        return mb
+    }()
+    
+    let mapStaticImage: UIButton = {
+        let mb = UIButton()
+        mb.translatesAutoresizingMaskIntoConstraints = false
+        mb.setTitle("Map Static Image...", for: UIControlState.normal)
+        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
+        mb.layer.cornerRadius = 5
+        mb.layer.borderWidth = 2
+        mb.layer.borderColor = UIColor.clear.cgColor
+        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
+        mb.layer.shadowOpacity = 2
+        mb.layer.shadowRadius = 1
+        mb.layer.shadowOffset = CGSize(width: 0, height: 3)
+        mb.titleLabel?.numberOfLines = 1
+        mb.titleLabel?.adjustsFontSizeToFitWidth = true
+        mb.addTarget(self, action: #selector(mapStaticImageButtonPressed), for: UIControlEvents.touchUpInside)
+        return mb
+    }()
+    
     let logView: UIView = {
         let mv = UIView()
         mv.translatesAutoresizingMaskIntoConstraints = false
@@ -738,7 +810,7 @@ extension MyViewController {
 //        })
         
         
-        let inputModel = GetThreadsRequestModel(count: 3, offset: 0, name: nil, new: nil, threadIds: nil, typeCode: nil, metadataCriteria: nil)
+        let inputModel = GetThreadsRequestModel(count: 3, offset: 0, name: "Thread", new: nil, threadIds: nil, typeCode: nil, metadataCriteria: nil)
         myChatObject?.getThreads(getThreadsInput: inputModel, uniqueId: { (getThreadUniqueId) in
             print("\n get thread request uniqueId = \t \(getThreadUniqueId) \n")
         }, completion: { (myResponse) in
@@ -766,7 +838,7 @@ extension MyViewController {
 //            print("\(myResponseJSON) \n")
 //        })
         
-        let inputModel = GetHistoryRequestModel(threadId: 1328, count: 1, offset: 0, firstMessageId: nil, lastMessageId: nil, order: nil, query: nil, typeCode: nil, metadataCriteria: nil)
+        let inputModel = GetHistoryRequestModel(threadId: 5842, count: 1, offset: 0, firstMessageId: nil, lastMessageId: nil, order: nil, query: nil, typeCode: nil, metadataCriteria: nil)
         myChatObject?.getHistory(getHistoryInput: inputModel, uniqueId: { (getHistoryUniqueId) in
             print("\n get history request uniqueId = \t \(getHistoryUniqueId) \n")
         }, completion: { (myResponse) in
@@ -849,7 +921,7 @@ extension MyViewController {
 //        })
         
         
-        let inputModel = GetContactsRequestModel(count: 2, offset: 0, name: nil, typeCode: nil)
+        let inputModel = GetContactsRequestModel(count: 50, offset: 0, name: nil, typeCode: nil)
         myChatObject?.getContacts(getContactsInput: inputModel, uniqueId: { (getContactUniqueId) in
             print("\n get contact request uniqueId = \t \(getContactUniqueId) \n")
         }, completion: { (myResponse) in
@@ -1190,17 +1262,41 @@ extension MyViewController {
     
     
     @objc func searchContactsButtonPressed() {
-        let paramsToSend: JSON = ["firstName": "Mas"]
-        myChatObject?.searchContacts(params: paramsToSend, uniqueId: { (searchContactsUniqueId) in
+//        let paramsToSend: JSON = ["firstName": "Mas"]
+//        myChatObject?.searchContacts(params: paramsToSend, uniqueId: { (searchContactsUniqueId) in
+//            print("\n search contacts request uniqueId = \t\(searchContactsUniqueId)")
+//        }, completion: { (myResponse) in
+//            print("***********************")
+//            let myResponseModel: ContactModel = myResponse as! ContactModel
+//            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+//            print("\n this is my search contacts response:")
+//            print("\(myResponseJSON) \n")
+//            print("***********************")
+//        })
+        
+        let inputModel = SearchContactsRequestModel(firstName: nil,
+                                                    lastName: nil,
+                                                    cellphoneNumber: "09368640180",
+                                                    email: "",
+                                                    id: nil,
+                                                    size: nil,
+                                                    offset: nil,
+                                                    uniqueId: nil)
+        myChatObject?.searchContacts(searchContactsInput: inputModel, uniqueId: { (searchContactsUniqueId) in
             print("\n search contacts request uniqueId = \t\(searchContactsUniqueId)")
         }, completion: { (myResponse) in
             print("***********************")
             let myResponseModel: ContactModel = myResponse as! ContactModel
             let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
-            print("\n this is my search contacts response:")
+            print("\n this is my search contacts response from Server:")
             print("\(myResponseJSON) \n")
             print("***********************")
+        }, cacheResponse: { (searchContactResponse) in
+            print("\n this is my search contact response from Cache:")
+            let responseJSON = searchContactResponse.returnDataAsJSON()
+            print("\(responseJSON)")
         })
+        
     }
     
     
@@ -1301,7 +1397,7 @@ extension MyViewController {
     
     @objc func getImgeButtonPressed() {
         
-        let inputModel = GetImageRequestModel(actual: nil, downloadable: nil, hashCode: "", height: nil, imageId: 1111111111, width: nil)
+        let inputModel = GetImageRequestModel(actual: nil, downloadable: nil, hashCode: "1681e9e6009-0.3921679128527612", height: nil, imageId: 52146, width: nil)
         myChatObject?.getImage(getImageInput: inputModel, uniqueId: { (getImageUniqueId) in
             print("getImage UniqueId = \(getImageUniqueId)")
         }, progress: { (myDownloadProgress) in
@@ -1342,6 +1438,46 @@ extension MyViewController {
     }
     
     
+    @objc func mapReverseButtonPressed() {
+        let inputModel = MapReverseRequestModel(lat: 36.310886959563085, lng: 59.53563741408013)
+        myChatObject?.mapReverse(mapReverseInput: inputModel, uniqueId: { (mapReverseUniqueId) in
+            print("Map Reverse UniqueId request = \(mapReverseUniqueId)")
+        }, completion: { (theResponse) in
+            let res = theResponse as! MapReverseModel
+            print("Map Reverse Response: \n\(res.returnDataAsJSON())")
+        })
+    }
+    
+    @objc func mapSearchButtonPressed() {
+        let inputModel = MapSearchRequestModel(lat: 36.310886959563085, lng: 59.53563741408013, term: "س")
+        myChatObject?.mapSearch(mapSearchInput: inputModel, uniqueId: { (mapSearchUniqueId) in
+            print("Map Search UniqueId request = \(mapSearchUniqueId)")
+        }, completion: { (theResponse) in
+            let res = theResponse as! MapSearchModel
+            print("Map Reverse Response: \n\(res.returnDataAsJSON())")
+        })
+    }
+    
+    @objc func mapRoutingButtonPressed() {
+        let inputModel = MapRoutingRequestModel(originLat: 36.28984398444424, originLng: 59.59045107288, destinationLat: 36.310886959563085, destinationLng: 59.53563741408013, alternative: true)
+        myChatObject?.mapRouting(mapRoutingInput: inputModel, uniqueId: { (mapRoutingUniqueId) in
+            print("Map Routing UniqueId request = \(mapRoutingUniqueId)")
+        }, completion: { (theResponse) in
+            let res = theResponse as! MapRoutingModel
+            print("Map Reverse Response: \n\(res.returnDataAsJSON())")
+        })
+    }
+    
+    @objc func mapStaticImageButtonPressed() {
+        let inputModel = MapStaticImageRequestModel(type: "standard-night", zoom: 15, centerLat: 36.310886959563085, centerLng: 59.53563741408013, width: 800, height: 500)
+        myChatObject?.mapStaticImage(mapStaticImageInput: inputModel, uniqueId: { (mapStaticImageUniqueId) in
+            print("Map Static Image UniqueId request = \(mapStaticImageUniqueId)")
+        }, progress: { (myProgress) in
+            print("progress downloaded: \(myProgress)")
+        }, completion: { (theResponse) in
+            print("Image Downloaded Successfully")
+        })
+    }
     
     
 }

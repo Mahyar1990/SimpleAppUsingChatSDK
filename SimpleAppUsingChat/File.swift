@@ -58,6 +58,11 @@ extension MyViewController {
         view.addSubview(getImage)
         view.addSubview(getFile)
         
+        view.addSubview(mapReverse)
+        view.addSubview(mapSearch)
+        view.addSubview(mapRouting)
+        view.addSubview(mapStaticImage)
+        
         view.addSubview(logView)
         logView.addSubview(myLogCollectionView)
         
@@ -222,7 +227,27 @@ extension MyViewController {
         getFile.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
         getFile.bottomAnchor.constraint(equalTo: getImage.bottomAnchor).isActive = true
         
-        logView.topAnchor.constraint(equalTo: getImage.bottomAnchor, constant: 8).isActive = true
+        mapReverse.topAnchor.constraint(equalTo: getImage.bottomAnchor).isActive = true
+        mapReverse.leftAnchor.constraint(equalTo: getUserInfoButton.leftAnchor).isActive = true
+        mapReverse.rightAnchor.constraint(equalTo: getUserInfoButton.rightAnchor).isActive = true
+        mapReverse.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        mapSearch.topAnchor.constraint(equalTo: mapReverse.topAnchor).isActive = true
+        mapSearch.leftAnchor.constraint(equalTo: getThreadsButton.leftAnchor).isActive = true
+        mapSearch.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
+        mapSearch.bottomAnchor.constraint(equalTo: mapReverse.bottomAnchor).isActive = true
+        
+        mapRouting.topAnchor.constraint(equalTo: mapReverse.bottomAnchor).isActive = true
+        mapRouting.leftAnchor.constraint(equalTo: getUserInfoButton.leftAnchor).isActive = true
+        mapRouting.rightAnchor.constraint(equalTo: getUserInfoButton.rightAnchor).isActive = true
+        mapRouting.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        mapStaticImage.topAnchor.constraint(equalTo: mapRouting.topAnchor).isActive = true
+        mapStaticImage.leftAnchor.constraint(equalTo: getThreadsButton.leftAnchor).isActive = true
+        mapStaticImage.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
+        mapStaticImage.bottomAnchor.constraint(equalTo: mapRouting.bottomAnchor).isActive = true
+        
+        logView.topAnchor.constraint(equalTo: mapRouting.bottomAnchor, constant: 8).isActive = true
         logView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true
         logView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -8).isActive = true
         logView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8).isActive = true
