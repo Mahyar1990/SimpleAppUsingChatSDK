@@ -35,7 +35,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "4aa92ff502014fc4a916b363d3c91a97"
+    let token                   = "afb303b8678346b5a05f33816756d631`"
     
     
     // Local Addresses
@@ -838,7 +838,7 @@ extension MyViewController {
 //            print("\(myResponseJSON) \n")
 //        })
         
-        let inputModel = GetHistoryRequestModel(threadId: 5842, count: 1, offset: 0, firstMessageId: nil, lastMessageId: nil, order: nil, query: nil, typeCode: nil, metadataCriteria: nil)
+        let inputModel = GetHistoryRequestModel(threadId: 1328, count: 1, offset: 0, firstMessageId: nil, lastMessageId: nil, order: nil, query: nil, typeCode: nil, metadataCriteria: nil)
         myChatObject?.getHistory(getHistoryInput: inputModel, uniqueId: { (getHistoryUniqueId) in
             print("\n get history request uniqueId = \t \(getHistoryUniqueId) \n")
         }, completion: { (myResponse) in
@@ -1397,42 +1397,42 @@ extension MyViewController {
     
     @objc func getImgeButtonPressed() {
         
-        let inputModel = GetImageRequestModel(actual: nil, downloadable: nil, hashCode: "1681e9e6009-0.3921679128527612", height: nil, imageId: 52146, width: nil)
+//        let inputModel = GetImageRequestModel(actual: nil, downloadable: nil, hashCode: "16822cbb454-0.1323003203052482", height: nil, imageId: 52164, width: nil)
+        let inputModel = GetImageRequestModel(actual: nil, downloadable: nil, hashCode: "16803a16292-0.15831373791354997", height: nil, imageId: 52004, width: nil)
+//        let inputModel = GetImageRequestModel(actual: nil, downloadable: nil, hashCode: "1681e9e6009-0.3921679128527612", height: nil, imageId: 52146, width: nil)
         myChatObject?.getImage(getImageInput: inputModel, uniqueId: { (getImageUniqueId) in
             print("getImage UniqueId = \(getImageUniqueId)")
         }, progress: { (myDownloadProgress) in
             print("downloadProcess = \(myDownloadProgress)")
-        }, completion: { (response) in
+        }, completion: { (data, responseModel) in
             print("This is my GetImage Response from Server")
-            let responseModel = response as! UploadImageModel
             let rsponseJSON = responseModel.returnDataAsJSON()
             print("\(rsponseJSON)")
-        }, cacheResponse: { (cacheResponse) in
+        }, cacheResponse: { (cacheResponse, filePath) in
             print("This is my GetImage Response from Cache")
-            let responseModel = cacheResponse as! UploadImageModel
-            let rsponseJSON = responseModel.returnDataAsJSON()
-            print("\(rsponseJSON)")
+            let rsponseJSON = cacheResponse.returnDataAsJSON()
+            print("response = \(rsponseJSON)")
+            print("filePath = \(filePath)")
         })
         
     }
     
     @objc func getFileButtonPressed() {
         
-        let inputModel = GetFileRequestModel(downloadable: nil, fileId: 1111111111, hashCode: "")
+        let inputModel = GetFileRequestModel(downloadable: true, fileId: 52171, hashCode: "168232d744d-0.9990232707506134")
         myChatObject?.getFile(getFileInput: inputModel, uniqueId: { (getFileUniqueId) in
             print("getFile UniqueId = \(getFileUniqueId)")
         }, progress: { (myDownloadProgress) in
             print("downloadProcess = \(myDownloadProgress)")
-        }, completion: { (response) in
+        }, completion: { (data, response) in
             print("This is my GetFile Response from Server")
-            let responseModel = response as! UploadImageModel
-            let rsponseJSON = responseModel.returnDataAsJSON()
+            let rsponseJSON = response.returnDataAsJSON()
             print("\(rsponseJSON)")
-        }, cacheResponse: { (cacheResponse) in
+        }, cacheResponse: { (cacheResponse, filePath) in
             print("This is my GetFile Response from Cache")
-            let responseModel = cacheResponse as! UploadFileModel
-            let rsponseJSON = responseModel.returnDataAsJSON()
-            print("\(rsponseJSON)")
+            let rsponseJSON = cacheResponse.returnDataAsJSON()
+            print("response = \(rsponseJSON)")
+            print("filePath = \(filePath)")
         })
         
     }
