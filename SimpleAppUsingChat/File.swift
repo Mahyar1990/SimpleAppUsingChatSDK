@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Chat
+import FanapPodChatSDK
 import SwiftyJSON
 
 

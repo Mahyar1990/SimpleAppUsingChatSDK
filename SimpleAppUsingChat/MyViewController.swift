@@ -35,7 +35,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "afb303b8678346b5a05f33816756d631`"
+    let token                   = "fb609ed176bc4c7796f00cabfa39d92f"
     
     
     // Local Addresses
@@ -838,7 +838,7 @@ extension MyViewController {
 //            print("\(myResponseJSON) \n")
 //        })
         
-        let inputModel = GetHistoryRequestModel(threadId: 1328, count: 1, offset: 0, firstMessageId: nil, lastMessageId: nil, order: nil, query: nil, typeCode: nil, metadataCriteria: nil)
+        let inputModel = GetHistoryRequestModel(threadId: 1328, count: 5, offset: 0, firstMessageId: nil, lastMessageId: nil, order: nil, query: "mahyar", typeCode: nil, metadataCriteria: nil)
         myChatObject?.getHistory(getHistoryInput: inputModel, uniqueId: { (getHistoryUniqueId) in
             print("\n get history request uniqueId = \t \(getHistoryUniqueId) \n")
         }, completion: { (myResponse) in
@@ -856,15 +856,31 @@ extension MyViewController {
     
     
     @objc func getThreadParticipantsButtonPressed() {
-        let paramsToSend: JSON = ["count": 3, "offset": 0, "threadId": 1101]
-        myChatObject?.getThreadParticipants(params: paramsToSend, uniqueId: { (getThreadParticipantUniqueId) in
-            print("\n get thread participant request unique id = \t \(getThreadParticipantUniqueId) \t")
+//        let paramsToSend: JSON = ["count": 3, "offset": 0, "threadId": 1101]
+//        myChatObject?.getThreadParticipants(params: paramsToSend, uniqueId: { (getThreadParticipantUniqueId) in
+//            print("\n get thread participant request unique id = \t \(getThreadParticipantUniqueId) \t")
+//        }, completion: { (myResponse) in
+//            let myResponseModel: GetThreadParticipantsModel = myResponse as! GetThreadParticipantsModel
+//            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+//            print("\n this is my get thread participants response:")
+//            print("\(myResponseJSON) \n")
+//        })
+        
+        let inputModel = GetThreadParticipantsRequestModel(threadId: 1101, count: 3, offset: 0, firstMessageId: nil, lastMessageId: nil, name: nil, typeCode: nil)
+        myChatObject?.getThreadParticipants(getThreadParticipantsInput: inputModel, uniqueId: { (getThreadParticipantUniqueId) in
+            print("\n get thread participant request unique id = \t \(getThreadParticipantUniqueId)")
         }, completion: { (myResponse) in
             let myResponseModel: GetThreadParticipantsModel = myResponse as! GetThreadParticipantsModel
             let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
-            print("\n this is my get thread participants response:")
+            print("\n this is my get thread participants response from Server:")
+            print("\(myResponseJSON) \n")
+        }, cacheResponse: { (myCacheResponse) in
+            let myResponseJSON: JSON = myCacheResponse.returnDataAsJSON()
+            print("\n this is my get thread participants response from Cache:")
             print("\(myResponseJSON) \n")
         })
+        
+        
     }
     
     
@@ -1049,8 +1065,7 @@ extension MyViewController {
     
     
     @objc func addParticipantsButtonPressed() {
-        let paramsToSend: JSON = ["threadId": 1330, "contacts": [2202, 952, 1281, 2306]]
-        
+        let paramsToSend: JSON = ["threadId": 1101, "contacts": [2202, 952, 1281, 2306]]
         myChatObject?.addParticipants(params: paramsToSend, uniqueId: { (addParticipantsUniqueId) in
             print("\n add participant request uniqueId = \t \(addParticipantsUniqueId) \n")
         }, completion: { (myResponse) in
@@ -1059,6 +1074,17 @@ extension MyViewController {
             let responseJSON: JSON = response.returnDataAsJSON()
             print("\(responseJSON) \n")
         })
+        
+//        let inputModel = AddParticipantsRequestModel(threadId: 1330, contacts: [2202, 952, 1281, 2306], uniqueId: nil, typeCode: nil)
+//        myChatObject?.addParticipants(addParticipantsInput: inputModel, uniqueId: { (addParticipantsUniqueId) in
+//            print("\n add participant request uniqueId = \t \(addParticipantsUniqueId) \n")
+//        }, completion: { (myResponse) in
+//            print("\n this is my add participants response:")
+//            let response: AddParticipantModel = myResponse as! AddParticipantModel
+//            let responseJSON: JSON = response.returnDataAsJSON()
+//            print("\(responseJSON) \n")
+//        })
+        
     }
     
     
@@ -1077,10 +1103,21 @@ extension MyViewController {
     
     
     @objc func addContactButtonPressed() {
-        let params: JSON = ["firstName": "Mehdi",
-                            "lastName": "Akbarian",
-                            "cellphoneNumber": "09368640180"]
-        myChatObject?.addContact(params: params, uniqueId: { (addContactUniqueId) in
+        
+//        let params: JSON = ["firstName": "Mehdi2",
+//                            "lastName": "Akbarian2",
+//                            "cellphoneNumber": "093686401802"]
+//        myChatObject?.addContact(params: params, uniqueId: { (addContactUniqueId) in
+//            print("\n add Contact request uniqueId = \t \(addContactUniqueId) \n")
+//        }, completion: { (myResponse) in
+//            let myResponseModel: ContactModel = myResponse as! ContactModel
+//            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+//            print("\n this is my add contacts response:")
+//            print("\(myResponseJSON)")
+//        })
+        
+        let inputModel = AddContactsRequestModel(firstName: "Sina", lastName: "Javaheri", cellphoneNumber: "09354045350", email: nil)
+        myChatObject?.addContact(addContactsInput: inputModel, uniqueId: { (addContactUniqueId) in
             print("\n add Contact request uniqueId = \t \(addContactUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: ContactModel = myResponse as! ContactModel
