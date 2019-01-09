@@ -35,7 +35,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "fb609ed176bc4c7796f00cabfa39d92f"
+    let token                   = "64086373a46d4aabbc3838b1b0b86fc2"
     
     
     // Local Addresses
@@ -955,8 +955,8 @@ extension MyViewController {
     
     
     @objc func sendMessageToSocketPressed() {
-        sendMessage()
-        //        editMessage()
+//        sendMessage()
+                editMessage()
         //        replyMessage()
         //        forwardMessage()
 //        deleteMessage()
@@ -965,7 +965,7 @@ extension MyViewController {
     
     func sendMessage() {
         let metadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
-        let paramsToSend: JSON = ["subjectId": 1391, "content": "\(inputTextFieldToSendMessage.text ?? "empty message")", "metaData": metadata]
+        let paramsToSend: JSON = ["subjectId": 1101, "content": "\(inputTextFieldToSendMessage.text ?? "empty message")", "metaData": metadata]
         myChatObject?.sendTextMessage(params: paramsToSend, uniqueId: { (uniqueIdStr) in
             print("**************************")
             print("message uniqueId is: \(uniqueIdStr)")
@@ -987,12 +987,12 @@ extension MyViewController {
     
     
     func editMessage() {
-        let cont: JSON = ["subjectId": 15395, "content": "\(inputTextFieldToSendMessage.text ?? "empty message")"]
+        let cont: JSON = ["subjectId": 9881, "content": "\(inputTextFieldToSendMessage.text ?? "empty message")"]
         myChatObject?.editMessage(params: cont, uniqueId: { (editMessageUniqueId) in
             print("\n edit message request uniqueId = \t \(editMessageUniqueId) \n")
         }, completion: { (successResponse) in
             print("**************************")
-            print("message is e   dited successfully: \(successResponse)")
+            print("message is edited successfully: \(successResponse)")
             print("**************************")
         })
     }
