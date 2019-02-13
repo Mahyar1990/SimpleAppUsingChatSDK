@@ -35,8 +35,8 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "64086373a46d4aabbc3838b1b0b86fc2"
-    
+    let token                   = "6a618bd3aaf44782aff78197cb415ade"
+
     
     // Local Addresses
 //    let socketAddress           = "ws://172.16.106.26:8003/ws"
@@ -44,7 +44,6 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
 //    let ssoHost                 = "http://172.16.110.76"
 //    let platformHost            = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} Platform Core Address
 //    let fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
-//    let token                   = "62e07ed1de2d48ab93575bd873f6a51d"
 //    let token                   = "7a18deb4a4b64339a81056089f5e5922"    // ialexi
 //    let token                   = "6421ecebd40b4d09923bcf6379663d87"    // iFelfeli
 //    let token                   = "6421ecebd40b4d09923bcf6379663d87"
@@ -748,8 +747,9 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
                             token: token,
                             mapApiKey: nil,
                             mapServer: "https://api.neshan.org/v1",
-                            typeCode: "chattest",
+                            typeCode: "default",
                             enableCache: true,
+                            cacheTimeStampInSec: nil,
                             msgPriority: 1,
                             msgTTL: messageTtl,
                             httpRequestTimeout: nil,
@@ -782,9 +782,9 @@ extension MyViewController {
         myChatObject?.getUserInfo(uniqueId: { (getUserInfoUniqueId) in
             print("\n get user info request uniqueId = \t \(getUserInfoUniqueId) \n")
         }, completion: { (myResponse) in
+            print("\n this is my get user info response from Server:")
             let myResponseModel: UserInfoModel = myResponse as! UserInfoModel
             let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
-            print("\n this is my get user info response from Server:")
             print("\(myResponseJSON) \n")
         }, cacheResponse: { (userInfoResponse) in
             print("\n this is my get user info response from Cache:")
@@ -809,8 +809,7 @@ extension MyViewController {
 //            print("\(myResponseJSON) \n")
 //        })
         
-        
-        let inputModel = GetThreadsRequestModel(count: 3, offset: 0, name: "Thread", new: nil, threadIds: nil, typeCode: nil, metadataCriteria: nil)
+        let inputModel = GetThreadsRequestModel(count: 9, coreUserId: nil, metadataCriteria: nil, name: nil, new: nil, offset: 0, threadIds: nil, typeCode: nil)
         myChatObject?.getThreads(getThreadsInput: inputModel, uniqueId: { (getThreadUniqueId) in
             print("\n get thread request uniqueId = \t \(getThreadUniqueId) \n")
         }, completion: { (myResponse) in
@@ -837,8 +836,8 @@ extension MyViewController {
 //            print("\n this is my get history response:")
 //            print("\(myResponseJSON) \n")
 //        })
-        
-        let inputModel = GetHistoryRequestModel(threadId: 1328, count: 5, offset: 0, firstMessageId: nil, lastMessageId: nil, order: nil, query: "mahyar", typeCode: nil, metadataCriteria: nil)
+
+        let inputModel = GetHistoryRequestModel(count: 2, firstMessageId: nil, fromTime: nil/*1541856621893000000*/, lastMessageId: nil, messageId: nil, metadataCriteria: nil, offset: nil, order: nil, query: nil, threadId: 1328, toTime: nil/*1541856821893000000*/, typeCode: nil, uniqueId: nil)
         myChatObject?.getHistory(getHistoryInput: inputModel, uniqueId: { (getHistoryUniqueId) in
             print("\n get history request uniqueId = \t \(getHistoryUniqueId) \n")
         }, completion: { (myResponse) in
@@ -866,7 +865,7 @@ extension MyViewController {
 //            print("\(myResponseJSON) \n")
 //        })
         
-        let inputModel = GetThreadParticipantsRequestModel(threadId: 1101, count: 3, offset: 0, firstMessageId: nil, lastMessageId: nil, name: nil, typeCode: nil)
+        let inputModel = GetThreadParticipantsRequestModel(count: 5, firstMessageId: nil, lastMessageId: nil, name: nil, offset: 0, threadId: 1330/*1101*/, typeCode: nil)
         myChatObject?.getThreadParticipants(getThreadParticipantsInput: inputModel, uniqueId: { (getThreadParticipantUniqueId) in
             print("\n get thread participant request unique id = \t \(getThreadParticipantUniqueId)")
         }, completion: { (myResponse) in
@@ -886,8 +885,8 @@ extension MyViewController {
     
     @objc func createThreadButtonPressed() {
         
-        let messageMetadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
-        let messageParamsToSend: JSON = ["content": "\(inputTextFieldToSendMessage.text ?? "empty message")", "metaData": messageMetadata]
+//        let messageMetadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
+//        let messageParamsToSend: JSON = ["content": "\(inputTextFieldToSendMessage.text ?? "empty message")", "metaData": messageMetadata]
         
 //        let user1: JSON = ["id": "2202", "idType": inviteeVOidTypes.TO_BE_USER_CONTACT_ID.rawValue]
 //        let user2: JSON = ["id": "121", "idType": inviteeVOidTypes.TO_BE_USER_SSO_ID.rawValue]
@@ -897,11 +896,44 @@ extension MyViewController {
 //        let akbariId: JSON = ["id": "1321", "idType": inviteeVOidTypes.TO_BE_USER_SSO_ID.rawValue]
 //        let akbariPhone: JSON = ["id": "09369865820", "idType": inviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue]
         
-        let xxx: JSON = ["id": "09981084527", "idType": inviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue]
-        let invitees: [JSON] = [xxx]
-        let paramsToSend: JSON = ["type": createThreadTypes.NORMAL.rawValue, "title": "New Group", "invitees": invitees]
+//        let xxx: JSON = ["id": "099810s84527", "idType": InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue]
+//        let invitees: [JSON] = [xxx]
+//        let paramsToSend: JSON = ["type": ThreadTypes.NORMAL.rawValue, "title": "New Group", "invitees": invitees]
+//
+//        myChatObject?.creatThreadWithMessage(params: paramsToSend, sendMessageParams: messageParamsToSend, uniqueId: { (createWithSendMessageUniqeuId) in
+//            print("\n create thread reqeuest uniqueId = \t \(createWithSendMessageUniqeuId) \n")
+//        }, completion: { (myResponse) in
+//            let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
+//            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+//            print("\n this is my create thread response:")
+//            print("\(myResponseJSON) \n")
+//        }, onSent: { (isSent) in
+//            print("**************************")
+//            print("the message is sent = \(isSent)")
+//            print("**************************")
+//        }, onDelivere: { (isDeliver) in
+//            print("**************************")
+//            print("the message is delivered: '\(isDeliver)'")
+//            print("**************************")
+//        }, onSeen: { (isSeen) in
+//            print("**************************")
+//            print("the message with is Seen: '\(isSeen)'")
+//            print("**************************")
+//        })
         
-        myChatObject?.creatThreadWithMessage(params: paramsToSend, sendMessageParams: messageParamsToSend, uniqueId: { (createWithSendMessageUniqeuId) in
+        
+//        let inviteeArray: [Invitee] = [Invitee(id: "09981084527", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue)")]
+//        let inputModel = CreateThreadRequestModel(description: nil, image: nil, invitees: inviteeArray, metadata: nil, title: "New Group", type: ThreadTypes.NORMAL.rawValue, uniqueId: nil)
+//        myChatObject?.createThread(createThreadInput: inputModel, uniqueId: { (createThreadUniqeuId) in
+//            print("\n create thread reqeuest uniqueId = \t \(createThreadUniqeuId) \n")
+//        }, completion: { (myResponse) in
+//            let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
+//        })
+        
+        
+        let inviteeArray: [Invitee] = [Invitee(id: "09981084527", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue)")]
+        let inputModel = CreateThreadWithMessageRequestModel(threadDescription: nil, threadImage: nil, threadInvitees: inviteeArray, threadMetadata: nil, threadTitle: "New Group", threadType: "\(ThreadTypes.NORMAL.rawValue)", uniqueId: nil, messageContent: "This is the text of the message", messageMetaDataId: 2341234123, messageMetaDataType: "BOT_MESSAGE", messageMetaDataOwner: "Mahyar")
+        myChatObject?.creatThreadWithMessage(creatThreadWithMessageInput: inputModel, uniqueId: { (createWithSendMessageUniqeuId) in
             print("\n create thread reqeuest uniqueId = \t \(createWithSendMessageUniqeuId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
@@ -909,17 +941,11 @@ extension MyViewController {
             print("\n this is my create thread response:")
             print("\(myResponseJSON) \n")
         }, onSent: { (isSent) in
-            print("**************************")
             print("the message is sent = \(isSent)")
-            print("**************************")
         }, onDelivere: { (isDeliver) in
-            print("**************************")
             print("the message is delivered: '\(isDeliver)'")
-            print("**************************")
         }, onSeen: { (isSeen) in
-            print("**************************")
             print("the message with is Seen: '\(isSeen)'")
-            print("**************************")
         })
         
     }
@@ -936,8 +962,7 @@ extension MyViewController {
 //            print("\(myResponseJSON) \n")
 //        })
         
-        
-        let inputModel = GetContactsRequestModel(count: 50, offset: 0, name: nil, typeCode: nil)
+        let inputModel = GetContactsRequestModel(count: 5, name: nil, offset: 0, typeCode: nil)
         myChatObject?.getContacts(getContactsInput: inputModel, uniqueId: { (getContactUniqueId) in
             print("\n get contact request uniqueId = \t \(getContactUniqueId) \n")
         }, completion: { (myResponse) in
@@ -955,128 +980,171 @@ extension MyViewController {
     
     
     @objc func sendMessageToSocketPressed() {
-//        sendMessage()
-                editMessage()
-        //        replyMessage()
-        //        forwardMessage()
+        sendMessage()
+//        editMessage()
+//        replyMessage()
+//        forwardMessage()
 //        deleteMessage()
     }
     
     
     func sendMessage() {
         let metadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
-        let paramsToSend: JSON = ["subjectId": 1101, "content": "\(inputTextFieldToSendMessage.text ?? "empty message")", "metaData": metadata]
-        myChatObject?.sendTextMessage(params: paramsToSend, uniqueId: { (uniqueIdStr) in
-            print("**************************")
+//        let paramsToSend: JSON = ["subjectId": 1328, "content": "\(inputTextFieldToSendMessage.text ?? "empty message")", "metaData": metadata]
+//        myChatObject?.sendTextMessage(params: paramsToSend, uniqueId: { (uniqueIdStr) in
+//            print("**************************")
+//            print("message uniqueId is: \(uniqueIdStr)")
+//            print("**************************")
+//        }, onSent: { (isSent) in
+//            print("**************************")
+//            print("the message is sent = \(isSent)")
+//            print("**************************")
+//        }, onDelivere: { (isDeliver)  in
+//            print("**************************")
+//            print("the message is delivered: '\(isDeliver)'")
+//            print("**************************")
+//        }, onSeen: { (isSeen) in
+//            print("**************************")
+//            print("the message with is Seen: '\(isSeen)'")
+//            print("**************************")
+//        })
+        
+        
+        let inputModel = SendTextMessageRequestModel(content: "\(inputTextFieldToSendMessage.text ?? "empty message")", metaData: metadata, repliedTo: nil, systemMetadata: nil, threadId: 1202, typeCode: nil, uniqueId: nil)
+        myChatObject?.sendTextMessage(sendTextMessageInput: inputModel, uniqueId: { (uniqueIdStr) in
             print("message uniqueId is: \(uniqueIdStr)")
-            print("**************************")
         }, onSent: { (isSent) in
-            print("**************************")
             print("the message is sent = \(isSent)")
-            print("**************************")
-        }, onDelivere: { (isDeliver)  in
-            print("**************************")
+        }, onDelivere: { (isDeliver) in
             print("the message is delivered: '\(isDeliver)'")
-            print("**************************")
         }, onSeen: { (isSeen) in
-            print("**************************")
             print("the message with is Seen: '\(isSeen)'")
-            print("**************************")
         })
+        
     }
     
     
     func editMessage() {
-        let cont: JSON = ["subjectId": 9881, "content": "\(inputTextFieldToSendMessage.text ?? "empty message")"]
-        myChatObject?.editMessage(params: cont, uniqueId: { (editMessageUniqueId) in
+//        let cont: JSON = ["subjectId": 10799, "content": "\(inputTextFieldToSendMessage.text ?? "empty message")"]
+//        myChatObject?.editMessage(params: cont, uniqueId: { (editMessageUniqueId) in
+//            print("\n edit message request uniqueId = \t \(editMessageUniqueId) \n")
+//        }, completion: { (successResponse) in
+//            print("**************************")
+//            print("message is edited successfully: \(successResponse)")
+//            print("**************************")
+//        })
+        
+        let inputModel = EditTextMessageRequestModel(content: "text message", metaData: nil, repliedTo: nil, subjectId: 10799, typeCode: nil, uniqueId: nil)
+        myChatObject?.editMessage(editMessageInput: inputModel, uniqueId: { (editMessageUniqueId) in
             print("\n edit message request uniqueId = \t \(editMessageUniqueId) \n")
         }, completion: { (successResponse) in
-            print("**************************")
             print("message is edited successfully: \(successResponse)")
-            print("**************************")
         })
+        
     }
     
     
     func replyMessage() {
-        let paramsToSend: JSON = ["subjectId": 1133,"repliedTo": 15397,"content": "\(inputTextFieldToSendMessage.text ?? "empty message")"]
-        myChatObject?.replyMessageWith3Callbacks(params: paramsToSend, uniqueId: { (uniqueIdStr) in
-            print("**************************")
-            print("**************************")
+//        let paramsToSend: JSON = ["subjectId": 1133,"repliedTo": 15397,"content": "\(inputTextFieldToSendMessage.text ?? "empty message")"]
+//        myChatObject?.replyMessageWith3Callbacks(params: paramsToSend, uniqueId: { (uniqueIdStr) in
+//            print("**************************")
+//            print("**************************")
+//            print("message uniqueId is: \(uniqueIdStr)")
+//            print("**************************")
+//            print("**************************")
+//        }, onSent: { (isSent) in
+//            print("**************************")
+//            print("**************************")
+//            print("the message is sent = \(isSent)")
+//            print("**************************")
+//            print("**************************")
+//        }, onDelivere: { (isDeliver)  in
+//            print("**************************")
+//            print("**************************")
+//            print("the message is delivered: '\(isDeliver)'")
+//            print("**************************")
+//            print("**************************")
+//        }, onSeen: { (isSeen) in
+//            print("**************************")
+//            print("the message with is Seen: '\(isSeen)'")
+//            print("**************************")
+//        })
+        
+        let inputModel = ReplyTextMessageRequestModel(content: "text message", metaData: nil, repliedTo: 15397, subjectId: 1133, typeCode: nil, uniqueId: nil)
+        myChatObject?.replyMessage(replyMessageInput: inputModel, uniqueId: { (uniqueIdStr) in
             print("message uniqueId is: \(uniqueIdStr)")
-            print("**************************")
-            print("**************************")
         }, onSent: { (isSent) in
-            print("**************************")
-            print("**************************")
             print("the message is sent = \(isSent)")
-            print("**************************")
-            print("**************************")
-        }, onDelivere: { (isDeliver)  in
-            print("**************************")
-            print("**************************")
+        }, onDelivere: { (isDeliver) in
             print("the message is delivered: '\(isDeliver)'")
-            print("**************************")
-            print("**************************")
         }, onSeen: { (isSeen) in
-            print("**************************")
             print("the message with is Seen: '\(isSeen)'")
-            print("**************************")
         })
+        
     }
     
     
     func forwardMessage() {
-        let paramsToSend: JSON = ["subjectId": 1133,"content": [15395]]
-        myChatObject?.forwardMessageWith3Callbacks(params: paramsToSend, uniqueIds: { (uniqueIdArr) in
-            print("**************************")
-            print("**************************")
+//        let paramsToSend: JSON = ["subjectId": 1133,"content": [15395]]
+//        myChatObject?.forwardMessageWith3Callbacks(params: paramsToSend, uniqueIds: { (uniqueIdArr) in
+//            print("**************************")
+//            print("**************************")
+//            print("message uniqueId is: \(uniqueIdArr)")
+//            print("**************************")
+//            print("**************************")
+//        }, onSent: { (isSent) in
+//            print("**************************")
+//            print("**************************")
+//            print("the message is sent = \(isSent)")
+//            print("**************************")
+//            print("**************************")
+//        }, onDelivere: { (isDeliver)  in
+//            print("**************************")
+//            print("**************************")
+//            print("the message is delivered: '\(isDeliver)'")
+//            print("**************************")
+//            print("**************************")
+//        }, onSeen: { (isSeen) in
+//            print("**************************")
+//            print("the message with is Seen: '\(isSeen)'")
+//            print("**************************")
+//        })
+        
+        let inputModel = ForwardMessageRequestModel(messageIds: [15395], metaData: nil, repliedTo: nil, subjectId: 1133, typeCode: nil)
+        myChatObject?.forwardMessage(forwardMessageInput: inputModel, uniqueIds: { (uniqueIdArr) in
             print("message uniqueId is: \(uniqueIdArr)")
-            print("**************************")
-            print("**************************")
         }, onSent: { (isSent) in
-            print("**************************")
-            print("**************************")
             print("the message is sent = \(isSent)")
-            print("**************************")
-            print("**************************")
-        }, onDelivere: { (isDeliver)  in
-            print("**************************")
-            print("**************************")
+        }, onDelivere: { (isDeliver) in
             print("the message is delivered: '\(isDeliver)'")
-            print("**************************")
-            print("**************************")
         }, onSeen: { (isSeen) in
-            print("**************************")
             print("the message with is Seen: '\(isSeen)'")
-            print("**************************")
         })
+        
     }
     
     
     func deleteMessage() {
-        let paramsToSend: JSON = ["subjectId": 15676]
-        myChatObject?.deleteMessage(params: paramsToSend, uniqueId: { (deleteMEssageUniqueId) in
-            print("Delete Message Unique ID")
+//        let paramsToSend: JSON = ["subjectId": 10799]
+//        myChatObject?.deleteMessage(params: paramsToSend, uniqueId: { (deleteMEssageUniqueId) in
+//            print("Delete Message Unique ID = \(deleteMEssageUniqueId)")
+//        }, completion: { (response) in
+//            print("delete Message response: \n \(response)")
+//        })
+        
+        let inputModel = DeleteMessageRequestModel(deleteForAll: nil, subjectId: 10799, typeCode: nil, uniqueId: nil)
+        myChatObject?.deleteMessage(deleteMessageInput: inputModel, uniqueId: { (deleteMEssageUniqueId) in
+            print("Delete Message Unique ID = \(deleteMEssageUniqueId)")
         }, completion: { (response) in
             print("delete Message response: \n \(response)")
         })
+        
     }
     
     
     @objc func addParticipantsButtonPressed() {
-        let paramsToSend: JSON = ["threadId": 1101, "contacts": [2202, 952, 1281, 2306]]
-        myChatObject?.addParticipants(params: paramsToSend, uniqueId: { (addParticipantsUniqueId) in
-            print("\n add participant request uniqueId = \t \(addParticipantsUniqueId) \n")
-        }, completion: { (myResponse) in
-            print("\n this is my add participants response:")
-            let response: AddParticipantModel = myResponse as! AddParticipantModel
-            let responseJSON: JSON = response.returnDataAsJSON()
-            print("\(responseJSON) \n")
-        })
-        
-//        let inputModel = AddParticipantsRequestModel(threadId: 1330, contacts: [2202, 952, 1281, 2306], uniqueId: nil, typeCode: nil)
-//        myChatObject?.addParticipants(addParticipantsInput: inputModel, uniqueId: { (addParticipantsUniqueId) in
+//        let paramsToSend: JSON = ["threadId": 1330/*1101*/, "contacts": [2202, 952, 1281, 2306]]
+//        myChatObject?.addParticipants(params: paramsToSend, uniqueId: { (addParticipantsUniqueId) in
 //            print("\n add participant request uniqueId = \t \(addParticipantsUniqueId) \n")
 //        }, completion: { (myResponse) in
 //            print("\n this is my add participants response:")
@@ -1085,13 +1153,33 @@ extension MyViewController {
 //            print("\(responseJSON) \n")
 //        })
         
+        let inputModel = AddParticipantsRequestModel(contacts: [2202, 952, 1281, 2306], threadId: 1330, typeCode: nil, uniqueId: nil)
+        myChatObject?.addParticipants(addParticipantsInput: inputModel, uniqueId: { (addParticipantsUniqueId) in
+            print("\n add participant request uniqueId = \t \(addParticipantsUniqueId) \n")
+        }, completion: { (myResponse) in
+            print("\n this is my add participants response:")
+            let response: AddParticipantModel = myResponse as! AddParticipantModel
+            let responseJSON: JSON = response.returnDataAsJSON()
+            print("\(responseJSON) \n")
+        })
+        
     }
     
     
     @objc func removeParticipantsButtonPressed() {
-        let paramsToSend: JSON = ["threadId": 1330, "participants": [1]]
+//        let paramsToSend: JSON = ["threadId": 1330, "participants": [1]]
+//
+//        myChatObject?.removeParticipants(params: paramsToSend, uniqueId: { (removeParticipantsUniqueId) in
+//            print("\n remove participant request uniqueId = \t \(removeParticipantsUniqueId) \n")
+//        }, completion: { (myResponse) in
+//            print("\n this is my remove participants response:")
+//            let response: RemoveParticipantModel = myResponse as! RemoveParticipantModel
+//            let responseJSON: JSON = response.returnDataAsJSON()
+//            print("\(responseJSON) \n")
+//        })
         
-        myChatObject?.removeParticipants(params: paramsToSend, uniqueId: { (removeParticipantsUniqueId) in
+        let inputModel = RemoveParticipantsRequestModel(content: [1], threadId: 1330, typeCode: nil, uniqueId: nil)
+        myChatObject?.removeParticipants(removeParticipantsInput: inputModel, uniqueId: { (removeParticipantsUniqueId) in
             print("\n remove participant request uniqueId = \t \(removeParticipantsUniqueId) \n")
         }, completion: { (myResponse) in
             print("\n this is my remove participants response:")
@@ -1099,6 +1187,7 @@ extension MyViewController {
             let responseJSON: JSON = response.returnDataAsJSON()
             print("\(responseJSON) \n")
         })
+        
     }
     
     
@@ -1116,7 +1205,7 @@ extension MyViewController {
 //            print("\(myResponseJSON)")
 //        })
         
-        let inputModel = AddContactsRequestModel(firstName: "Sina", lastName: "Javaheri", cellphoneNumber: "09354045350", email: nil)
+        let inputModel = AddContactsRequestModel(cellphoneNumber: "09354045350", email: nil, firstName: "Sina", lastName: "Javaheri")
         myChatObject?.addContact(addContactsInput: inputModel, uniqueId: { (addContactUniqueId) in
             print("\n add Contact request uniqueId = \t \(addContactUniqueId) \n")
         }, completion: { (myResponse) in
@@ -1129,26 +1218,48 @@ extension MyViewController {
     
     
     @objc func updateContactButtonPressed() {
-        let params: JSON = ["id": 2225,
-                            "firstName": "Mehdi",
-                            "lastName": "Akbarian",
-                            "cellphoneNumber": "09368640180",
-                            "email": "Mehdi.Akbarian@fanap.ir"]
-        myChatObject?.updateContact(params: params, uniqueId: { (updateContactUniqueId) in
+//        let params: JSON = ["id": 2225,
+//                            "firstName": "Mehdi",
+//                            "lastName": "Akbarian",
+//                            "cellphoneNumber": "09368640180",
+//                            "email": "Mehdi.Akbarian@fanap.ir"]
+//        myChatObject?.updateContact(params: params, uniqueId: { (updateContactUniqueId) in
+//            print("\n update Contact request uniqueId = \t \(updateContactUniqueId) \n")
+//        }, completion: { (myResponse) in
+//            let myResponseModel: ContactModel = myResponse as! ContactModel
+//            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+//            print("\n this is my update contacts response:")
+//            print("\(myResponseJSON)")
+//
+//        })
+        
+        
+        let inputModel = UpdateContactsRequestModel(cellphoneNumber: "09368640180", email: "Mehdi.Akbarian@fanap.ir", firstName: "Mehdi", id: 2225, lastName: "Akbarian")
+        myChatObject?.updateContact(updateContactsInput: inputModel, uniqueId: { (updateContactUniqueId) in
             print("\n update Contact request uniqueId = \t \(updateContactUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: ContactModel = myResponse as! ContactModel
             let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
             print("\n this is my update contacts response:")
             print("\(myResponseJSON)")
-            
         })
+        
     }
     
     
     @objc func removeContactButtonPressed() {
-        let params: JSON = ["id": 2224]
-        myChatObject?.removeContact(params: params, uniqueId: { (removeContactUniqueId) in
+//        let params: JSON = ["id": 4121]
+//        myChatObject?.removeContact(params: params, uniqueId: { (removeContactUniqueId) in
+//            print("\n remove Contact request uniqueId = \t \(removeContactUniqueId) \n")
+//        }, completion: { (myResponse) in
+//            let myResponseModel: RemoveContactModel = myResponse as! RemoveContactModel
+//            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+//            print("\n this is my Remove contacts response:")
+//            print("\(myResponseJSON)")
+//        })
+        
+        let inputModel = RemoveContactsRequestModel(id: 4121)
+        myChatObject?.removeContact(removeContactsInput: inputModel, uniqueId: { (removeContactUniqueId) in
             print("\n remove Contact request uniqueId = \t \(removeContactUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: RemoveContactModel = myResponse as! RemoveContactModel
@@ -1178,7 +1289,7 @@ extension MyViewController {
 //                print("********************************")
 //            })
             
-            let inputModel = UploadFileRequestModel(fileExtension: nil, fileName: "newPic", fileSize: nil, threadId: nil, uniqueId: nil, originalFileName: nil, dataToSend: data)
+            let inputModel = UploadFileRequestModel(dataToSend: data, fileExtension: nil, fileName: "newPic", fileSize: nil, originalFileName: nil, threadId: nil, uniqueId: nil)
             myChatObject?.uploadFile(uploadFileInput: inputModel, uniqueId: { (uploadFileUniqueId) in
                 print("********************************")
                 print("UploadFileUniqueId is = \(uploadFileUniqueId)")
@@ -1193,6 +1304,17 @@ extension MyViewController {
                 print("\(responseJSON)")
                 print("********************************")
             })
+            
+//            let inputModel = UploadImageRequestModel(dataToSend: data, fileExtension: nil, fileName: "newPic", fileSize: nil, originalFileName: nil, threadId: nil, uniqueId: nil, xC: nil, yC: nil, hC: nil, wC: nil)
+//            myChatObject?.uploadImage(uploadImageInput: inputModel, uniqueId: { (UploadImageUniqueId) in
+//                print("UploadImageUniqueId is = \(UploadImageUniqueId)")
+//            }, progress: { (progress) in
+//                print("Upload Image progress is = \(progress)")
+//            }, completion: { (response) in
+//                let responseModel: UploadImageModel = response as! UploadImageModel
+//                let responseJSON: JSON = responseModel.returnDataAsJSON()
+//                print("\(responseJSON)")
+//            })
         }
     }
     
@@ -1207,59 +1329,95 @@ extension MyViewController {
     @objc func sendFileMessageButtonnPressed() {
         
         let metadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
-        let paramsToSendMessage: JSON = ["subjectId": 1101, "content": "\(inputTextFieldToSendMessage.text ?? "empty message")", "metaData": metadata]
+//        let paramsToSendMessage: JSON = ["subjectId": 1101, "content": "\(inputTextFieldToSendMessage.text ?? "empty message")", "metaData": metadata]
         
         let image = UIImage(named: "pic")
         if let data = UIImageJPEGRepresentation(image!, 1) {
-            let uploadParams: JSON = ["fileName": "newPic"]
+//            let uploadParams: JSON = ["fileName": "newPic"]
+//
+//            myChatObject?.sendFileMessage(textMessagParams: paramsToSendMessage, fileParams: uploadParams, imageToSend: nil, fileToSend: data, uniqueId: { (messageUniqueId) in
+//                print("message unique id is = \(messageUniqueId)")
+//            }, uploadProgress: { (prpgress) in
+//                print("upload progress is = \(prpgress)")
+//            }, onSent: { (isSent) in
+//                print("++++++++++++++++++++++++++")
+//                print("message Sent:")
+//                print("\(isSent)")
+//                print("++++++++++++++++++++++++++")
+//            }, onDelivered: { (isDelivered) in
+//                print("++++++++++++++++++++++++++")
+//                print("message Deliver:")
+//                print("\(isDelivered)")
+//                print("++++++++++++++++++++++++++")
+//            }, onSeen: { (isSeen) in
+//                print("++++++++++++++++++++++++++")
+//                print("message Seen:")
+//                print("\(isSeen)")
+//                print("++++++++++++++++++++++++++")
+//            })
             
-            myChatObject?.sendFileMessage(textMessagParams: paramsToSendMessage, fileParams: uploadParams, imageToSend: nil, fileToSend: data, uniqueId: { (messageUniqueId) in
+            
+            let inputModel = SendFileMessageRequestModel(fileName: "newPic", imageName: "newPic", xC: nil, yC: nil, hC: nil, wC: nil, threadId: 1101, content: "empty message", metaData: metadata, repliedTo: nil, subjectId: 1101, typeCode: nil, fileToSend: data, imageToSend: nil)
+            myChatObject?.sendFileMessage(sendFileMessageInput: inputModel, uniqueId: { (messageUniqueId) in
                 print("message unique id is = \(messageUniqueId)")
             }, uploadProgress: { (prpgress) in
                 print("upload progress is = \(prpgress)")
             }, onSent: { (isSent) in
-                print("++++++++++++++++++++++++++")
                 print("message Sent:")
                 print("\(isSent)")
-                print("++++++++++++++++++++++++++")
             }, onDelivered: { (isDelivered) in
-                print("++++++++++++++++++++++++++")
                 print("message Deliver:")
                 print("\(isDelivered)")
-                print("++++++++++++++++++++++++++")
             }, onSeen: { (isSeen) in
-                print("++++++++++++++++++++++++++")
                 print("message Seen:")
                 print("\(isSeen)")
-                print("++++++++++++++++++++++++++")
+
             })
+            
         }
     }
     
     
     @objc func muteThreadButtonPressed() {
-        let paramsToSend: JSON = ["subjectId": 1101]
-        myChatObject?.muteThread(params: paramsToSend, uniqueId: { (muteThreadUniqueId) in
+//        let paramsToSend: JSON = ["subjectId": 1101]
+//        myChatObject?.muteThread(params: paramsToSend, uniqueId: { (muteThreadUniqueId) in
+//            print("\n mute thread request uniqueId = \t \(muteThreadUniqueId) \n")
+//        }, completion: { (response) in
+//            print("***********************")
+//            print("\n this is my mute thread response:")
+//            print("\(response) \n")
+//            print("***********************")
+//        })
+        
+        let inputModel = MuteAndUnmuteThreadRequestModel(subjectId: 1101, typeCode: nil)
+        myChatObject?.muteThread(muteThreadInput: inputModel, uniqueId: { (muteThreadUniqueId) in
             print("\n mute thread request uniqueId = \t \(muteThreadUniqueId) \n")
         }, completion: { (response) in
-            print("***********************")
             print("\n this is my mute thread response:")
             print("\(response) \n")
-            print("***********************")
         })
     }
     
     
     @objc func unmuteThreadButtonPressed() {
-        let paramsToSend: JSON = ["subjectId": 1101]
-        myChatObject?.unmuteThread(params: paramsToSend, uniqueId: { (unmuteThreadUniqueId) in
+//        let paramsToSend: JSON = ["subjectId": 1101]
+//        myChatObject?.unmuteThread(params: paramsToSend, uniqueId: { (unmuteThreadUniqueId) in
+//            print("\n unmute thread request uniqueId = \t \(unmuteThreadUniqueId) \n")
+//        }, completion: { (response) in
+//            print("***********************")
+//            print("\n this is my unmute thread response:")
+//            print("\(response) \n")
+//            print("***********************")
+//        })
+        
+        let inputModel = MuteAndUnmuteThreadRequestModel(subjectId: 1101, typeCode: nil)
+        myChatObject?.unmuteThread(unmuteThreadInput: inputModel, uniqueId: { (unmuteThreadUniqueId) in
             print("\n unmute thread request uniqueId = \t \(unmuteThreadUniqueId) \n")
         }, completion: { (response) in
-            print("***********************")
             print("\n this is my unmute thread response:")
             print("\(response) \n")
-            print("***********************")
         })
+        
     }
     
     
@@ -1294,7 +1452,10 @@ extension MyViewController {
             let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
             print("\n this is my sync contacts response:")
             print("\(myResponseJSON)")
+        }, cacheResponse: { ([ContactModel]) in
+//            <#code#>
         })
+        
     }
     
     
@@ -1311,13 +1472,13 @@ extension MyViewController {
 //            print("***********************")
 //        })
         
-        let inputModel = SearchContactsRequestModel(firstName: nil,
-                                                    lastName: nil,
-                                                    cellphoneNumber: "09368640180",
+        let inputModel = SearchContactsRequestModel(cellphoneNumber: "09368640180",
                                                     email: "",
+                                                    firstName: nil,
                                                     id: nil,
-                                                    size: nil,
+                                                    lastName: nil,
                                                     offset: nil,
+                                                    size: nil,
                                                     uniqueId: nil)
         myChatObject?.searchContacts(searchContactsInput: inputModel, uniqueId: { (searchContactsUniqueId) in
             print("\n search contacts request uniqueId = \t\(searchContactsUniqueId)")
@@ -1342,8 +1503,20 @@ extension MyViewController {
     
  
     @objc func blockContactButtonPressed() {
-        let paramsToSend: JSON = ["contactId": 563]
-        myChatObject?.blockContact(params: paramsToSend, uniqueId: { (blockContactUniqueId) in
+//        let paramsToSend: JSON = ["contactId": 563]
+//        myChatObject?.blockContact(params: paramsToSend, uniqueId: { (blockContactUniqueId) in
+//            print("\n block request uniqueId = \t \(blockContactUniqueId) \n")
+//        }, completion: { (myResponse) in
+//            print("***********************")
+//            print("\n this is my block response:")
+//            let myResponseModel: BlockedContactModel = myResponse as! BlockedContactModel
+//            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+//            print("\(myResponseJSON) \n")
+//            print("***********************")
+//        })
+        
+        let inputModel = BlockContactsRequestModel(contactId: nil, threadId: nil, typeCode: nil, userId: 481)
+        myChatObject?.blockContact(blockContactsInput: inputModel, uniqueId: { (blockContactUniqueId) in
             print("\n block request uniqueId = \t \(blockContactUniqueId) \n")
         }, completion: { (myResponse) in
             print("***********************")
@@ -1353,12 +1526,25 @@ extension MyViewController {
             print("\(myResponseJSON) \n")
             print("***********************")
         })
+        
     }
     
     
     @objc func unblockContactButtonPressed() {
-        let paramsToSend: JSON = ["blockId": 61]
-        myChatObject?.unblockContact(params: paramsToSend, uniqueId: { (unblockContactUniqueId) in
+//        let paramsToSend: JSON = ["blockId": 61]
+//        myChatObject?.unblockContact(params: paramsToSend, uniqueId: { (unblockContactUniqueId) in
+//            print("\n unblock request uniqueId = \t \(unblockContactUniqueId) \n")
+//        }, completion: { (myResponse) in
+//            print("***********************")
+//            print("\n this is my unblock response:")
+//            let myResponseModel: BlockedContactModel = myResponse as! BlockedContactModel
+//            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+//            print("\(myResponseJSON) \n")
+//            print("***********************")
+//        })
+        
+        let inputModel = UnblockContactsRequestModel(blockId: 462, contactId: nil, threadId: nil, typeCode: nil, userId: nil)
+        myChatObject?.unblockContact(unblockContactsInput: inputModel, uniqueId: { (unblockContactUniqueId) in
             print("\n unblock request uniqueId = \t \(unblockContactUniqueId) \n")
         }, completion: { (myResponse) in
             print("***********************")
@@ -1368,11 +1554,23 @@ extension MyViewController {
             print("\(myResponseJSON) \n")
             print("***********************")
         })
+        
     }
     
     
     @objc func getBlockedContactsButtonPressed() {
-        myChatObject?.getBlockedContacts(params: nil, uniqueId: { (getBlockedContactListUniqueId) in
+
+//        myChatObject?.getBlockedContacts(params: nil, uniqueId: { (getBlockedContactListUniqueId) in
+//            print("\n get blocked list request uniqueId = \t \(getBlockedContactListUniqueId) \n")
+//        }, completion: { (myResponse) in
+//            let myResponseModel: GetBlockedContactListModel = myResponse as! GetBlockedContactListModel
+//            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+//            print("\n this is my get blocked list response:")
+//            print("\(myResponseJSON) \n")
+//        })
+        
+        let inputModel = GetBlockedContactListRequestModel(count: nil, offset: nil, typeCode: nil)
+        myChatObject?.getBlockedContacts(getBlockedContactsInput: inputModel, uniqueId: { (getBlockedContactListUniqueId) in
             print("\n get blocked list request uniqueId = \t \(getBlockedContactListUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: GetBlockedContactListModel = myResponse as! GetBlockedContactListModel
@@ -1380,12 +1578,23 @@ extension MyViewController {
             print("\n this is my get blocked list response:")
             print("\(myResponseJSON) \n")
         })
+        
     }
     
     
     @objc func leaveThreadButtonPressed() {
-        let paramsToSend: JSON = ["threadId": 1343]
-        myChatObject?.leaveThread(params: paramsToSend, uniqueId: { (leaveThreadUniqueId) in
+//        let paramsToSend: JSON = ["threadId": 1343]
+//        myChatObject?.leaveThread(params: paramsToSend, uniqueId: { (leaveThreadUniqueId) in
+//            print("\n get blocked list request uniqueId = \t \(leaveThreadUniqueId) \n")
+//        }, completion: { (myResponse) in
+//            let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
+//            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+//            print("\n this is my leave thread response:")
+//            print("\(myResponseJSON) \n")
+//        })
+        
+        let inputModel = LeaveThreadRequestModel(content: nil, threadId: 1343, typeCode: nil, uniqueId: nil)
+        myChatObject?.leaveThread(leaveThreadInput: inputModel, uniqueId: { (leaveThreadUniqueId) in
             print("\n get blocked list request uniqueId = \t \(leaveThreadUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
@@ -1435,8 +1644,9 @@ extension MyViewController {
     @objc func getImgeButtonPressed() {
         
 //        let inputModel = GetImageRequestModel(actual: nil, downloadable: nil, hashCode: "16822cbb454-0.1323003203052482", height: nil, imageId: 52164, width: nil)
-        let inputModel = GetImageRequestModel(actual: nil, downloadable: nil, hashCode: "16803a16292-0.15831373791354997", height: nil, imageId: 52004, width: nil)
 //        let inputModel = GetImageRequestModel(actual: nil, downloadable: nil, hashCode: "1681e9e6009-0.3921679128527612", height: nil, imageId: 52146, width: nil)
+        let inputModel = GetImageRequestModel(actual: nil, downloadable: nil, height: nil, hashCode: "16803a16292-0.15831373791354997", imageId: 52004, width: nil)
+
         myChatObject?.getImage(getImageInput: inputModel, uniqueId: { (getImageUniqueId) in
             print("getImage UniqueId = \(getImageUniqueId)")
         }, progress: { (myDownloadProgress) in
@@ -1496,7 +1706,7 @@ extension MyViewController {
     }
     
     @objc func mapRoutingButtonPressed() {
-        let inputModel = MapRoutingRequestModel(originLat: 36.28984398444424, originLng: 59.59045107288, destinationLat: 36.310886959563085, destinationLng: 59.53563741408013, alternative: true)
+        let inputModel = MapRoutingRequestModel(alternative: true, destinationLat: 36.310886959563085, destinationLng: 59.53563741408013, originLat: 36.28984398444424, originLng: 59.59045107288)
         myChatObject?.mapRouting(mapRoutingInput: inputModel, uniqueId: { (mapRoutingUniqueId) in
             print("Map Routing UniqueId request = \(mapRoutingUniqueId)")
         }, completion: { (theResponse) in
@@ -1506,7 +1716,7 @@ extension MyViewController {
     }
     
     @objc func mapStaticImageButtonPressed() {
-        let inputModel = MapStaticImageRequestModel(type: "standard-night", zoom: 15, centerLat: 36.310886959563085, centerLng: 59.53563741408013, width: 800, height: 500)
+        let inputModel = MapStaticImageRequestModel(centerLat: 36.310886959563085, centerLng: 59.53563741408013, height: 500, type: "standard-night", width: 800, zoom: 15)
         myChatObject?.mapStaticImage(mapStaticImageInput: inputModel, uniqueId: { (mapStaticImageUniqueId) in
             print("Map Static Image UniqueId request = \(mapStaticImageUniqueId)")
         }, progress: { (myProgress) in
