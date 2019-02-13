@@ -13,8 +13,7 @@
 		3E63A06F213A526F00E4E2C2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E63A06D213A526F00E4E2C2 /* LaunchScreen.storyboard */; };
 		3E63A07A213A526F00E4E2C2 /* SimpleAppUsingChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63A079213A526F00E4E2C2 /* SimpleAppUsingChatTests.swift */; };
 		3E85E841217B47E000CAE8EE /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E85E840217B47E000CAE8EE /* File.swift */; };
-		3EF2D3E421A995DD005867C2 /* Pod-Chat-SDK in Resources */ = {isa = PBXBuildFile; fileRef = 3EF2D3E321A995DD005867C2 /* Pod-Chat-SDK */; };
-		3EF2D3F321A995EA005867C2 /* Chat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EF2D3F021A995E1005867C2 /* Chat.framework */; };
+		3EC2C8FE21DCD64600D81DCE /* FanapPodChatSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EC2C8FB21DCD63400D81DCE /* FanapPodChatSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -25,19 +24,19 @@
 			remoteGlobalIDString = 3E63A060213A526D00E4E2C2;
 			remoteInfo = SimpleAppUsingChat;
 		};
-		3EF2D3EF21A995E1005867C2 /* PBXContainerItemProxy */ = {
+		3EC2C8FA21DCD63400D81DCE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 3EF2D3EA21A995E1005867C2 /* Chat.xcodeproj */;
+			containerPortal = 3EC2C8F021DCD63300D81DCE /* FanapPodChatSDK.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 3EE025ED21206E63001810FB;
-			remoteInfo = Chat;
+			remoteInfo = FanapPodChatSDK;
 		};
-		3EF2D3F121A995E1005867C2 /* PBXContainerItemProxy */ = {
+		3EC2C8FC21DCD63400D81DCE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 3EF2D3EA21A995E1005867C2 /* Chat.xcodeproj */;
+			containerPortal = 3EC2C8F021DCD63300D81DCE /* FanapPodChatSDK.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 3EE025F621206E63001810FB;
-			remoteInfo = ChatTests;
+			remoteInfo = FanapPodChatSDKTests;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -52,8 +51,7 @@
 		3E63A079213A526F00E4E2C2 /* SimpleAppUsingChatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleAppUsingChatTests.swift; sourceTree = "<group>"; };
 		3E63A07B213A526F00E4E2C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E85E840217B47E000CAE8EE /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
-		3EF2D3E321A995DD005867C2 /* Pod-Chat-SDK */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Pod-Chat-SDK"; sourceTree = "<group>"; };
-		3EF2D3EA21A995E1005867C2 /* Chat.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = Chat.xcodeproj; path = "Pod-Chat-SDK/Chat.xcodeproj"; sourceTree = "<group>"; };
+		3EC2C8F021DCD63300D81DCE /* FanapPodChatSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FanapPodChatSDK.xcodeproj; path = "../../../../Desktop/Pod-Chat-iOS-SDK/Pod-Chat-iOS-SDK/FanapPodChatSDK.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EF2D3F321A995EA005867C2 /* Chat.framework in Frameworks */,
+				3EC2C8FE21DCD64600D81DCE /* FanapPodChatSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -81,6 +79,7 @@
 				3E63A063213A526D00E4E2C2 /* SimpleAppUsingChat */,
 				3E63A078213A526F00E4E2C2 /* SimpleAppUsingChatTests */,
 				3E63A062213A526D00E4E2C2 /* Products */,
+				3EC2C8F021DCD63300D81DCE /* FanapPodChatSDK.xcodeproj */,
 				3E68E2BA21439100002C1E6B /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -119,17 +118,15 @@
 		3E68E2BA21439100002C1E6B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				3EF2D3EA21A995E1005867C2 /* Chat.xcodeproj */,
-				3EF2D3E321A995DD005867C2 /* Pod-Chat-SDK */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		3EF2D3EB21A995E1005867C2 /* Products */ = {
+		3EC2C8F121DCD63300D81DCE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3EF2D3F021A995E1005867C2 /* Chat.framework */,
-				3EF2D3F221A995E1005867C2 /* ChatTests.xctest */,
+				3EC2C8FB21DCD63400D81DCE /* FanapPodChatSDK.framework */,
+				3EC2C8FD21DCD63400D81DCE /* FanapPodChatSDKTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -204,8 +201,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 3EF2D3EB21A995E1005867C2 /* Products */;
-					ProjectRef = 3EF2D3EA21A995E1005867C2 /* Chat.xcodeproj */;
+					ProductGroup = 3EC2C8F121DCD63300D81DCE /* Products */;
+					ProjectRef = 3EC2C8F021DCD63300D81DCE /* FanapPodChatSDK.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -217,18 +214,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		3EF2D3F021A995E1005867C2 /* Chat.framework */ = {
+		3EC2C8FB21DCD63400D81DCE /* FanapPodChatSDK.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = Chat.framework;
-			remoteRef = 3EF2D3EF21A995E1005867C2 /* PBXContainerItemProxy */;
+			path = FanapPodChatSDK.framework;
+			remoteRef = 3EC2C8FA21DCD63400D81DCE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3EF2D3F221A995E1005867C2 /* ChatTests.xctest */ = {
+		3EC2C8FD21DCD63400D81DCE /* FanapPodChatSDKTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
-			path = ChatTests.xctest;
-			remoteRef = 3EF2D3F121A995E1005867C2 /* PBXContainerItemProxy */;
+			path = FanapPodChatSDKTests.xctest;
+			remoteRef = 3EC2C8FC21DCD63400D81DCE /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -238,7 +235,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EF2D3E421A995DD005867C2 /* Pod-Chat-SDK in Resources */,
 				3E63A06F213A526F00E4E2C2 /* LaunchScreen.storyboard in Resources */,
 				3E63A06C213A526F00E4E2C2 /* Assets.xcassets in Resources */,
 			);
@@ -345,7 +341,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -399,7 +395,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -421,6 +417,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fanapSoft.SimpleAppUsingChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ENABLE_BATCH_MODE = NO;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -439,6 +436,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.fanapSoft.SimpleAppUsingChat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ENABLE_BATCH_MODE = NO;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

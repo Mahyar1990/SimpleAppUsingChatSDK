@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import Chat
+import FanapPodChatSDK
 import SwiftyJSON
 
 
@@ -54,6 +54,14 @@ extension MyViewController {
         
         view.addSubview(messageDeliverList)
         view.addSubview(messageSeenList)
+        
+        view.addSubview(getImage)
+        view.addSubview(getFile)
+        
+        view.addSubview(mapReverse)
+        view.addSubview(mapSearch)
+        view.addSubview(mapRouting)
+        view.addSubview(mapStaticImage)
         
         view.addSubview(logView)
         logView.addSubview(myLogCollectionView)
@@ -209,7 +217,37 @@ extension MyViewController {
         messageSeenList.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
         messageSeenList.bottomAnchor.constraint(equalTo: messageDeliverList.bottomAnchor).isActive = true
         
-        logView.topAnchor.constraint(equalTo: messageDeliverList.bottomAnchor, constant: 8).isActive = true
+        getImage.topAnchor.constraint(equalTo: messageDeliverList.bottomAnchor, constant: 8).isActive = true
+        getImage.leftAnchor.constraint(equalTo: getUserInfoButton.leftAnchor).isActive = true
+        getImage.rightAnchor.constraint(equalTo: getUserInfoButton.rightAnchor).isActive = true
+        getImage.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        getFile.topAnchor.constraint(equalTo: getImage.topAnchor).isActive = true
+        getFile.leftAnchor.constraint(equalTo: getThreadsButton.leftAnchor).isActive = true
+        getFile.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
+        getFile.bottomAnchor.constraint(equalTo: getImage.bottomAnchor).isActive = true
+        
+        mapReverse.topAnchor.constraint(equalTo: getImage.bottomAnchor).isActive = true
+        mapReverse.leftAnchor.constraint(equalTo: getUserInfoButton.leftAnchor).isActive = true
+        mapReverse.rightAnchor.constraint(equalTo: getUserInfoButton.rightAnchor).isActive = true
+        mapReverse.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        mapSearch.topAnchor.constraint(equalTo: mapReverse.topAnchor).isActive = true
+        mapSearch.leftAnchor.constraint(equalTo: getThreadsButton.leftAnchor).isActive = true
+        mapSearch.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
+        mapSearch.bottomAnchor.constraint(equalTo: mapReverse.bottomAnchor).isActive = true
+        
+        mapRouting.topAnchor.constraint(equalTo: mapReverse.bottomAnchor).isActive = true
+        mapRouting.leftAnchor.constraint(equalTo: getUserInfoButton.leftAnchor).isActive = true
+        mapRouting.rightAnchor.constraint(equalTo: getUserInfoButton.rightAnchor).isActive = true
+        mapRouting.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        mapStaticImage.topAnchor.constraint(equalTo: mapRouting.topAnchor).isActive = true
+        mapStaticImage.leftAnchor.constraint(equalTo: getThreadsButton.leftAnchor).isActive = true
+        mapStaticImage.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
+        mapStaticImage.bottomAnchor.constraint(equalTo: mapRouting.bottomAnchor).isActive = true
+        
+        logView.topAnchor.constraint(equalTo: mapRouting.bottomAnchor, constant: 8).isActive = true
         logView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true
         logView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -8).isActive = true
         logView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8).isActive = true
@@ -235,22 +273,37 @@ extension MyViewController {
         
         if let data = UIImageJPEGRepresentation(selectedImage!, 100) {
             
-            let myParams: JSON = ["imageName": "newPicture"]
+//            let myParams: JSON = ["imageName": "newPicture"]
+//            myChatObject?.uploadImage(params: myParams, dataToSend: data, uniqueId: { (uploadFileUniqueId) in
+//                print("********************************")
+//                print("UploadImageUniqueId is = \(uploadFileUniqueId)")
+//                print("********************************")
+//            }, progress: { (progress) in
+//                print("Upload Image Progress = \(progress)")
+//            }, completion: { (response) in
+//                print("********************************")
+//                print("Response from Upload Image:")
+//                let responseModel: UploadImageModel = response as! UploadImageModel
+//                let responseJSON: JSON = responseModel.returnDataAsJSON()
+//                print("\(responseJSON)")
+//                print("********************************")
+//            })
             
-            myChatObject?.uploadImage(params: myParams, dataToSend: data, uniqueId: { (uploadFileUniqueId) in
-                print("********************************")
-                print("UploadImageUniqueId is = \(uploadFileUniqueId)")
-                print("********************************")
-            }, progress: { (progress) in
-                print("Upload Image Progress = \(progress)")
-            }, completion: { (response) in
-                print("********************************")
-                print("Response from Upload Image:")
-                let responseModel: UploadImageModel = response as! UploadImageModel
-                let responseJSON: JSON = responseModel.returnDataAsJSON()
-                print("\(responseJSON)")
-                print("********************************")
-            })
+//            let inputModel = UploadImageRequestModel(fileExtension: nil, fileName: "newPicture", fileSize: nil, threadId: nil, uniqueId: nil, originalFileName: nil, xC: nil, yC: nil, hC: nil, wC: nil, dataToSend: data)
+//            myChatObject?.uploadImage(uploadImageInput: inputModel, uniqueId: { (uploadFileUniqueId) in
+//                print("********************************")
+//                print("UploadImageUniqueId is = \(uploadFileUniqueId)")
+//                print("********************************")
+//            }, progress: { (progress) in
+//                print("Upload Image Progress = \(progress)")
+//            }, completion: { (response) in
+//                print("********************************")
+//                print("Response from Upload Image:")
+//                let responseModel: UploadImageModel = response as! UploadImageModel
+//                let responseJSON: JSON = responseModel.returnDataAsJSON()
+//                print("\(responseJSON)")
+//                print("********************************")
+//            })
             
         }
         
