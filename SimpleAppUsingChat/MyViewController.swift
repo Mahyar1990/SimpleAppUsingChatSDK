@@ -30,21 +30,21 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     */
     
     // SandBox Addresses:
-    let socketAddress           = "wss://chat-sandbox.pod.land/ws"
-    let serverName              = "chat-server"
-    let ssoHost                 = "https://accounts.pod.land"
-    let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
-    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "6a618bd3aaf44782aff78197cb415ade"
+//    let socketAddress           = "wss://chat-sandbox.pod.land/ws"
+//    let serverName              = "chat-server"
+//    let ssoHost                 = "https://accounts.pod.land"
+//    let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
+//    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
+//    let token                   = "c850d7b7b1af4b53a14d53e03d5b7289"
 
     
     // Local Addresses
-//    let socketAddress           = "ws://172.16.106.26:8003/ws"
-//    let serverName              = "chat-server"
-//    let ssoHost                 = "http://172.16.110.76"
-//    let platformHost            = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} Platform Core Address
-//    let fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
-//    let token                   = "7a18deb4a4b64339a81056089f5e5922"    // ialexi
+    let socketAddress           = "ws://172.16.106.26:8003/ws"
+    let serverName              = "chat-server"
+    let ssoHost                 = "http://172.16.110.76"
+    let platformHost            = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} Platform Core Address
+    let fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
+    let token                   = "7a18deb4a4b64339a81056089f5e5922"    // ialexi
 //    let token                   = "6421ecebd40b4d09923bcf6379663d87"    // iFelfeli
 //    let token                   = "6421ecebd40b4d09923bcf6379663d87"
 //    let token = "fbd4ecedb898426394646e65c6b1d5d1" //  {**REQUIRED**} SSO Token JiJi
@@ -962,7 +962,7 @@ extension MyViewController {
 //            print("\(myResponseJSON) \n")
 //        })
         
-        let inputModel = GetContactsRequestModel(count: 5, name: nil, offset: 0, typeCode: nil)
+        let inputModel = GetContactsRequestModel(count: 25, name: nil, offset: 0, typeCode: nil)
         myChatObject?.getContacts(getContactsInput: inputModel, uniqueId: { (getContactUniqueId) in
             print("\n get contact request uniqueId = \t \(getContactUniqueId) \n")
         }, completion: { (myResponse) in
@@ -1515,7 +1515,9 @@ extension MyViewController {
 //            print("***********************")
 //        })
         
-        let inputModel = BlockContactsRequestModel(contactId: nil, threadId: nil, typeCode: nil, userId: 481)
+//        let inputModel = BlockContactsRequestModel(contactId: 3157, threadId: nil, typeCode: nil, userId: nil)
+//        let inputModel = BlockContactsRequestModel(contactId: nil, threadId: nil, typeCode: nil, userId: 481)
+        let inputModel = BlockContactsRequestModel(contactId: nil, threadId: 1381, typeCode: nil, userId: nil)
         myChatObject?.blockContact(blockContactsInput: inputModel, uniqueId: { (blockContactUniqueId) in
             print("\n block request uniqueId = \t \(blockContactUniqueId) \n")
         }, completion: { (myResponse) in
@@ -1543,7 +1545,10 @@ extension MyViewController {
 //            print("***********************")
 //        })
         
-        let inputModel = UnblockContactsRequestModel(blockId: 462, contactId: nil, threadId: nil, typeCode: nil, userId: nil)
+//        let inputModel = UnblockContactsRequestModel(blockId: nil, contactId: 3157, threadId: nil, typeCode: nil, userId: nil)
+        let inputModel = UnblockContactsRequestModel(blockId: nil, contactId: nil, threadId: 1381, typeCode: nil, userId: nil)
+//        let inputModel = UnblockContactsRequestModel(blockId: nil, contactId: nil, threadId: nil, typeCode: nil, userId: 919)
+//        let inputModel = UnblockContactsRequestModel(blockId: 462, contactId: nil, threadId: nil, typeCode: nil, userId: nil)
         myChatObject?.unblockContact(unblockContactsInput: inputModel, uniqueId: { (unblockContactUniqueId) in
             print("\n unblock request uniqueId = \t \(unblockContactUniqueId) \n")
         }, completion: { (myResponse) in
