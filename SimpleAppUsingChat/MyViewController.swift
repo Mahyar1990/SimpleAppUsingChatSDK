@@ -30,21 +30,21 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     */
     
     // SandBox Addresses:
-//    let socketAddress           = "wss://chat-sandbox.pod.land/ws"
-//    let serverName              = "chat-server"
-//    let ssoHost                 = "https://accounts.pod.land"
-//    let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
-//    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-//    let token                   = "c850d7b7b1af4b53a14d53e03d5b7289"
+    let socketAddress           = "wss://chat-sandbox.pod.land/ws"
+    let serverName              = "chat-server"
+    let ssoHost                 = "https://accounts.pod.land"
+    let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
+    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
+    let token                   = "46ca81271c334dd48bd6dec5410117ba"
 
     
     // Local Addresses
-    let socketAddress           = "ws://172.16.106.26:8003/ws"
-    let serverName              = "chat-server"
-    let ssoHost                 = "http://172.16.110.76"
-    let platformHost            = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} Platform Core Address
-    let fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
-    let token                   = "7a18deb4a4b64339a81056089f5e5922"    // ialexi
+//    let socketAddress           = "ws://172.16.106.26:8003/ws"
+//    let serverName              = "chat-server"
+//    let ssoHost                 = "http://172.16.110.76"
+//    let platformHost            = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} Platform Core Address
+//    let fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
+//    let token                   = "7a18deb4a4b64339a81056089f5e5922"    // ialexi
 //    let token                   = "6421ecebd40b4d09923bcf6379663d87"    // iFelfeli
 //    let token                   = "6421ecebd40b4d09923bcf6379663d87"
 //    let token = "fbd4ecedb898426394646e65c6b1d5d1" //  {**REQUIRED**} SSO Token JiJi
@@ -837,19 +837,31 @@ extension MyViewController {
 //            print("\(myResponseJSON) \n")
 //        })
 
-        let inputModel = GetHistoryRequestModel(count: 2, firstMessageId: nil, fromTime: nil/*1541856621893000000*/, lastMessageId: nil, messageId: nil, metadataCriteria: nil, offset: nil, order: nil, query: nil, threadId: 1328, toTime: nil/*1541856821893000000*/, typeCode: nil, uniqueId: nil)
-        myChatObject?.getHistory(getHistoryInput: inputModel, uniqueId: { (getHistoryUniqueId) in
-            print("\n get history request uniqueId = \t \(getHistoryUniqueId) \n")
-        }, completion: { (myResponse) in
-            let myResponseModel: GetHistoryModel = myResponse as! GetHistoryModel
-            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
-            print("\n this is my get history response from Server:")
-            print("\(myResponseJSON) \n")
-        }, cacheResponse: { (historyResponse) in
-            print("\n this is my get history response from Cache:")
-            let responseJSON = historyResponse.returnDataAsJSON()
-            print("\(responseJSON)")
-        })
+//        let inputModel = GetHistoryRequestModel(count: 2, firstMessageId: nil, fromTime: nil/*1541856621893000000*/, lastMessageId: nil, messageId: nil, metadataCriteria: nil, offset: nil, order: nil, query: nil, threadId: 1328, toTime: nil/*1541856821893000000*/, typeCode: nil, uniqueId: nil)
+//        myChatObject?.getHistory(getHistoryInput: inputModel, uniqueId: { (getHistoryUniqueId) in
+//            print("\n get history request uniqueId = \t \(getHistoryUniqueId) \n")
+//        }, completion: { (myResponse) in
+//            let myResponseModel: GetHistoryModel = myResponse as! GetHistoryModel
+//            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+//            print("\n this is my get history response from Server:")
+//            print("\(myResponseJSON) \n")
+//        }, cacheResponse: { (historyResponse) in
+//            print("\n this is my get history response from Cache:")
+//            let responseJSON = historyResponse.returnDataAsJSON()
+//            print("\(responseJSON)")
+//        }, textMessagesNotSent: { (<#[QueueOfWaitTextMessagesModel]#>) in
+//            <#code#>
+//        }, editMessagesNotSent: { (<#[QueueOfWaitEditMessagesModel]#>) in
+//            <#code#>
+//        }, forwardMessagesNotSent: { (<#[QueueOfWaitForwardMessagesModel]#>) in
+//            <#code#>
+//        }, fileMessagesNotSent: { (<#[QueueOfWaitFileMessagesModel]#>) in
+//            <#code#>
+//        }, uploadImageNotSent: { (<#[QueueOfWaitUploadImagesModel]#>) in
+//            <#code#>
+//        }, uploadFileNotSent: { (<#[QueueOfWaitUploadFilesModel]#>) in
+//            <#code#>
+//        })
         
     }
     
