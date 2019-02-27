@@ -35,7 +35,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "6a618bd3aaf44782aff78197cb415ade"
+    let token                   = "46ca81271c334dd48bd6dec5410117ba"
 
     
     // Local Addresses
@@ -837,19 +837,31 @@ extension MyViewController {
 //            print("\(myResponseJSON) \n")
 //        })
 
-        let inputModel = GetHistoryRequestModel(count: 2, firstMessageId: nil, fromTime: nil/*1541856621893000000*/, lastMessageId: nil, messageId: nil, metadataCriteria: nil, offset: nil, order: nil, query: nil, threadId: 1328, toTime: nil/*1541856821893000000*/, typeCode: nil, uniqueId: nil)
-        myChatObject?.getHistory(getHistoryInput: inputModel, uniqueId: { (getHistoryUniqueId) in
-            print("\n get history request uniqueId = \t \(getHistoryUniqueId) \n")
-        }, completion: { (myResponse) in
-            let myResponseModel: GetHistoryModel = myResponse as! GetHistoryModel
-            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
-            print("\n this is my get history response from Server:")
-            print("\(myResponseJSON) \n")
-        }, cacheResponse: { (historyResponse) in
-            print("\n this is my get history response from Cache:")
-            let responseJSON = historyResponse.returnDataAsJSON()
-            print("\(responseJSON)")
-        })
+//        let inputModel = GetHistoryRequestModel(count: 2, firstMessageId: nil, fromTime: nil/*1541856621893000000*/, lastMessageId: nil, messageId: nil, metadataCriteria: nil, offset: nil, order: nil, query: nil, threadId: 1328, toTime: nil/*1541856821893000000*/, typeCode: nil, uniqueId: nil)
+//        myChatObject?.getHistory(getHistoryInput: inputModel, uniqueId: { (getHistoryUniqueId) in
+//            print("\n get history request uniqueId = \t \(getHistoryUniqueId) \n")
+//        }, completion: { (myResponse) in
+//            let myResponseModel: GetHistoryModel = myResponse as! GetHistoryModel
+//            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+//            print("\n this is my get history response from Server:")
+//            print("\(myResponseJSON) \n")
+//        }, cacheResponse: { (historyResponse) in
+//            print("\n this is my get history response from Cache:")
+//            let responseJSON = historyResponse.returnDataAsJSON()
+//            print("\(responseJSON)")
+//        }, textMessagesNotSent: { (<#[QueueOfWaitTextMessagesModel]#>) in
+//            <#code#>
+//        }, editMessagesNotSent: { (<#[QueueOfWaitEditMessagesModel]#>) in
+//            <#code#>
+//        }, forwardMessagesNotSent: { (<#[QueueOfWaitForwardMessagesModel]#>) in
+//            <#code#>
+//        }, fileMessagesNotSent: { (<#[QueueOfWaitFileMessagesModel]#>) in
+//            <#code#>
+//        }, uploadImageNotSent: { (<#[QueueOfWaitUploadImagesModel]#>) in
+//            <#code#>
+//        }, uploadFileNotSent: { (<#[QueueOfWaitUploadFilesModel]#>) in
+//            <#code#>
+//        })
         
     }
     
@@ -962,7 +974,7 @@ extension MyViewController {
 //            print("\(myResponseJSON) \n")
 //        })
         
-        let inputModel = GetContactsRequestModel(count: 5, name: nil, offset: 0, typeCode: nil)
+        let inputModel = GetContactsRequestModel(count: 25, name: nil, offset: 0, typeCode: nil)
         myChatObject?.getContacts(getContactsInput: inputModel, uniqueId: { (getContactUniqueId) in
             print("\n get contact request uniqueId = \t \(getContactUniqueId) \n")
         }, completion: { (myResponse) in
@@ -1515,7 +1527,9 @@ extension MyViewController {
 //            print("***********************")
 //        })
         
-        let inputModel = BlockContactsRequestModel(contactId: nil, threadId: nil, typeCode: nil, userId: 481)
+//        let inputModel = BlockContactsRequestModel(contactId: 3157, threadId: nil, typeCode: nil, userId: nil)
+//        let inputModel = BlockContactsRequestModel(contactId: nil, threadId: nil, typeCode: nil, userId: 481)
+        let inputModel = BlockContactsRequestModel(contactId: nil, threadId: 1381, typeCode: nil, userId: nil)
         myChatObject?.blockContact(blockContactsInput: inputModel, uniqueId: { (blockContactUniqueId) in
             print("\n block request uniqueId = \t \(blockContactUniqueId) \n")
         }, completion: { (myResponse) in
@@ -1543,7 +1557,10 @@ extension MyViewController {
 //            print("***********************")
 //        })
         
-        let inputModel = UnblockContactsRequestModel(blockId: 462, contactId: nil, threadId: nil, typeCode: nil, userId: nil)
+//        let inputModel = UnblockContactsRequestModel(blockId: nil, contactId: 3157, threadId: nil, typeCode: nil, userId: nil)
+        let inputModel = UnblockContactsRequestModel(blockId: nil, contactId: nil, threadId: 1381, typeCode: nil, userId: nil)
+//        let inputModel = UnblockContactsRequestModel(blockId: nil, contactId: nil, threadId: nil, typeCode: nil, userId: 919)
+//        let inputModel = UnblockContactsRequestModel(blockId: 462, contactId: nil, threadId: nil, typeCode: nil, userId: nil)
         myChatObject?.unblockContact(unblockContactsInput: inputModel, uniqueId: { (unblockContactUniqueId) in
             print("\n unblock request uniqueId = \t \(unblockContactUniqueId) \n")
         }, completion: { (myResponse) in

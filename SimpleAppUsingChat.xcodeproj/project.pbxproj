@@ -13,7 +13,7 @@
 		3E63A06F213A526F00E4E2C2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E63A06D213A526F00E4E2C2 /* LaunchScreen.storyboard */; };
 		3E63A07A213A526F00E4E2C2 /* SimpleAppUsingChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63A079213A526F00E4E2C2 /* SimpleAppUsingChatTests.swift */; };
 		3E85E841217B47E000CAE8EE /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E85E840217B47E000CAE8EE /* File.swift */; };
-		3EC2C8FE21DCD64600D81DCE /* FanapPodChatSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EC2C8FB21DCD63400D81DCE /* FanapPodChatSDK.framework */; };
+		3EEF3A7822228A7D00F8B05C /* FanapPodChatSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EEF3A7522228A7000F8B05C /* FanapPodChatSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -24,16 +24,16 @@
 			remoteGlobalIDString = 3E63A060213A526D00E4E2C2;
 			remoteInfo = SimpleAppUsingChat;
 		};
-		3EC2C8FA21DCD63400D81DCE /* PBXContainerItemProxy */ = {
+		3EEF3A7422228A7000F8B05C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 3EC2C8F021DCD63300D81DCE /* FanapPodChatSDK.xcodeproj */;
+			containerPortal = 3EEF3A6A22228A6F00F8B05C /* FanapPodChatSDK.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 3EE025ED21206E63001810FB;
 			remoteInfo = FanapPodChatSDK;
 		};
-		3EC2C8FC21DCD63400D81DCE /* PBXContainerItemProxy */ = {
+		3EEF3A7622228A7000F8B05C /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 3EC2C8F021DCD63300D81DCE /* FanapPodChatSDK.xcodeproj */;
+			containerPortal = 3EEF3A6A22228A6F00F8B05C /* FanapPodChatSDK.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 3EE025F621206E63001810FB;
 			remoteInfo = FanapPodChatSDKTests;
@@ -51,7 +51,7 @@
 		3E63A079213A526F00E4E2C2 /* SimpleAppUsingChatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleAppUsingChatTests.swift; sourceTree = "<group>"; };
 		3E63A07B213A526F00E4E2C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E85E840217B47E000CAE8EE /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
-		3EC2C8F021DCD63300D81DCE /* FanapPodChatSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FanapPodChatSDK.xcodeproj; path = "../../../../Desktop/Pod-Chat-iOS-SDK/Pod-Chat-iOS-SDK/FanapPodChatSDK.xcodeproj"; sourceTree = "<group>"; };
+		3EEF3A6A22228A6F00F8B05C /* FanapPodChatSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FanapPodChatSDK.xcodeproj; path = "../../../Xcode Projects/Pod-Chat-iOS-SDK/Pod-Chat-iOS-SDK/FanapPodChatSDK.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,7 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EC2C8FE21DCD64600D81DCE /* FanapPodChatSDK.framework in Frameworks */,
+				3EEF3A7822228A7D00F8B05C /* FanapPodChatSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,7 +79,7 @@
 				3E63A063213A526D00E4E2C2 /* SimpleAppUsingChat */,
 				3E63A078213A526F00E4E2C2 /* SimpleAppUsingChatTests */,
 				3E63A062213A526D00E4E2C2 /* Products */,
-				3EC2C8F021DCD63300D81DCE /* FanapPodChatSDK.xcodeproj */,
+				3EEF3A6A22228A6F00F8B05C /* FanapPodChatSDK.xcodeproj */,
 				3E68E2BA21439100002C1E6B /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -122,11 +122,11 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		3EC2C8F121DCD63300D81DCE /* Products */ = {
+		3EEF3A6B22228A6F00F8B05C /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				3EC2C8FB21DCD63400D81DCE /* FanapPodChatSDK.framework */,
-				3EC2C8FD21DCD63400D81DCE /* FanapPodChatSDKTests.xctest */,
+				3EEF3A7522228A7000F8B05C /* FanapPodChatSDK.framework */,
+				3EEF3A7722228A7000F8B05C /* FanapPodChatSDKTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -201,8 +201,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 3EC2C8F121DCD63300D81DCE /* Products */;
-					ProjectRef = 3EC2C8F021DCD63300D81DCE /* FanapPodChatSDK.xcodeproj */;
+					ProductGroup = 3EEF3A6B22228A6F00F8B05C /* Products */;
+					ProjectRef = 3EEF3A6A22228A6F00F8B05C /* FanapPodChatSDK.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -214,18 +214,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		3EC2C8FB21DCD63400D81DCE /* FanapPodChatSDK.framework */ = {
+		3EEF3A7522228A7000F8B05C /* FanapPodChatSDK.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = FanapPodChatSDK.framework;
-			remoteRef = 3EC2C8FA21DCD63400D81DCE /* PBXContainerItemProxy */;
+			remoteRef = 3EEF3A7422228A7000F8B05C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3EC2C8FD21DCD63400D81DCE /* FanapPodChatSDKTests.xctest */ = {
+		3EEF3A7722228A7000F8B05C /* FanapPodChatSDKTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = FanapPodChatSDKTests.xctest;
-			remoteRef = 3EC2C8FC21DCD63400D81DCE /* PBXContainerItemProxy */;
+			remoteRef = 3EEF3A7622228A7000F8B05C /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -411,6 +411,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GP3XLTT75N;
 				INFOPLIST_FILE = SimpleAppUsingChat/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -430,6 +431,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = GP3XLTT75N;
 				INFOPLIST_FILE = SimpleAppUsingChat/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
