@@ -35,7 +35,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "6a618bd3aaf44782aff78197cb415ade"
+    let token                   = "7e7daf8ea0fa4f038c3826a06b472e6c"
 
     
     // Local Addresses
@@ -837,19 +837,19 @@ extension MyViewController {
 //            print("\(myResponseJSON) \n")
 //        })
 
-        let inputModel = GetHistoryRequestModel(count: 2, firstMessageId: nil, fromTime: nil/*1541856621893000000*/, lastMessageId: nil, messageId: nil, metadataCriteria: nil, offset: nil, order: nil, query: nil, threadId: 1328, toTime: nil/*1541856821893000000*/, typeCode: nil, uniqueId: nil)
-        myChatObject?.getHistory(getHistoryInput: inputModel, uniqueId: { (getHistoryUniqueId) in
-            print("\n get history request uniqueId = \t \(getHistoryUniqueId) \n")
-        }, completion: { (myResponse) in
-            let myResponseModel: GetHistoryModel = myResponse as! GetHistoryModel
-            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
-            print("\n this is my get history response from Server:")
-            print("\(myResponseJSON) \n")
-        }, cacheResponse: { (historyResponse) in
-            print("\n this is my get history response from Cache:")
-            let responseJSON = historyResponse.returnDataAsJSON()
-            print("\(responseJSON)")
-        })
+//        let inputModel = GetHistoryRequestModel(count: 2, firstMessageId: nil, fromTime: nil/*1541856621893000000*/, lastMessageId: nil, messageId: nil, metadataCriteria: nil, offset: nil, order: nil, query: nil, threadId: 1328, toTime: nil/*1541856821893000000*/, typeCode: nil, uniqueId: nil)
+//        myChatObject?.getHistory(getHistoryInput: inputModel, uniqueId: { (getHistoryUniqueId) in
+//            print("\n get history request uniqueId = \t \(getHistoryUniqueId) \n")
+//        }, completion: { (myResponse) in
+//            let myResponseModel: GetHistoryModel = myResponse as! GetHistoryModel
+//            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+//            print("\n this is my get history response from Server:")
+//            print("\(myResponseJSON) \n")
+//        }, cacheResponse: { (historyResponse) in
+//            print("\n this is my get history response from Cache:")
+//            let responseJSON = historyResponse.returnDataAsJSON()
+//            print("\(responseJSON)")
+//        })
         
     }
     
@@ -885,7 +885,7 @@ extension MyViewController {
     
     @objc func createThreadButtonPressed() {
         
-//        let messageMetadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
+        let messageMetadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
 //        let messageParamsToSend: JSON = ["content": "\(inputTextFieldToSendMessage.text ?? "empty message")", "metaData": messageMetadata]
         
 //        let user1: JSON = ["id": "2202", "idType": inviteeVOidTypes.TO_BE_USER_CONTACT_ID.rawValue]
@@ -921,32 +921,33 @@ extension MyViewController {
 //            print("**************************")
 //        })
         
-        
-//        let inviteeArray: [Invitee] = [Invitee(id: "09981084527", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue)")]
-//        let inputModel = CreateThreadRequestModel(description: nil, image: nil, invitees: inviteeArray, metadata: nil, title: "New Group", type: ThreadTypes.NORMAL.rawValue, uniqueId: nil)
-//        myChatObject?.createThread(createThreadInput: inputModel, uniqueId: { (createThreadUniqeuId) in
-//            print("\n create thread reqeuest uniqueId = \t \(createThreadUniqeuId) \n")
-//        }, completion: { (myResponse) in
-//            let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
-//        })
-        
-        
-        let inviteeArray: [Invitee] = [Invitee(id: "09981084527", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue)")]
-        let inputModel = CreateThreadWithMessageRequestModel(threadDescription: nil, threadImage: nil, threadInvitees: inviteeArray, threadMetadata: nil, threadTitle: "New Group", threadType: "\(ThreadTypes.NORMAL.rawValue)", uniqueId: nil, messageContent: "This is the text of the message", messageMetaDataId: 2341234123, messageMetaDataType: "BOT_MESSAGE", messageMetaDataOwner: "Mahyar")
-        myChatObject?.creatThreadWithMessage(creatThreadWithMessageInput: inputModel, uniqueId: { (createWithSendMessageUniqeuId) in
-            print("\n create thread reqeuest uniqueId = \t \(createWithSendMessageUniqeuId) \n")
+//        let inviteeArray: [Invitee] = [Invitee(id: "2306", idType: "\(InviteeVOidTypes.TO_BE_USER_CONTACT_ID.rawValue)")]
+        let inviteeArray: [Invitee] = [Invitee(id: "09368640180", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")]
+        let inputModel = CreateThreadRequestModel(description: "nil", image: "nil", invitees: inviteeArray, metadata: "\(messageMetadata)", title: "New Group", type: ThreadTypes.NORMAL.rawValue, uniqueId: nil)
+        myChatObject?.createThread(createThreadInput: inputModel, uniqueId: { (createThreadUniqeuId) in
+            print("\n create thread reqeuest uniqueId = \t \(createThreadUniqeuId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
-            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
-            print("\n this is my create thread response:")
-            print("\(myResponseJSON) \n")
-        }, onSent: { (isSent) in
-            print("the message is sent = \(isSent)")
-        }, onDelivere: { (isDeliver) in
-            print("the message is delivered: '\(isDeliver)'")
-        }, onSeen: { (isSeen) in
-            print("the message with is Seen: '\(isSeen)'")
+            print("server response = \n \(myResponseModel.returnDataAsJSON())")
         })
+        
+        
+//        let inviteeArray: [Invitee] = [Invitee(id: "09981084527", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue)")]
+//        let inputModel = CreateThreadWithMessageRequestModel(threadDescription: nil, threadImage: nil, threadInvitees: inviteeArray, threadMetadata: nil, threadTitle: "New Group", threadType: "\(ThreadTypes.NORMAL.rawValue)", uniqueId: nil, messageContent: "This is the text of the message", messageMetaDataId: 2341234123, messageMetaDataType: "BOT_MESSAGE", messageMetaDataOwner: "Mahyar")
+//        myChatObject?.creatThreadWithMessage(creatThreadWithMessageInput: inputModel, uniqueId: { (createWithSendMessageUniqeuId) in
+//            print("\n create thread reqeuest uniqueId = \t \(createWithSendMessageUniqeuId) \n")
+//        }, completion: { (myResponse) in
+//            let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
+//            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+//            print("\n this is my create thread response:")
+//            print("\(myResponseJSON) \n")
+//        }, onSent: { (isSent) in
+//            print("the message is sent = \(isSent)")
+//        }, onDelivere: { (isDeliver) in
+//            print("the message is delivered: '\(isDeliver)'")
+//        }, onSeen: { (isSeen) in
+//            print("the message with is Seen: '\(isSeen)'")
+//        })
         
     }
     
@@ -1737,73 +1738,48 @@ extension MyViewController {
 
 
 extension MyViewController: ChatDelegates {
-    
     func chatConnected() {
-        //        print("@@MyLog(Chat): connect")
+        //
     }
     
     func chatDisconnect() {
-        //        print("@@MyLog(Chat): disconnect")
+        //
     }
     
     func chatReconnect() {
-        //        print("@@MyLog(Chat): reconnect")
-    }
-    
-    func chatThreadEvents() {
-        //        print("@@MyLog(Chat): thread events")
-    }
-    
-    func chatReady() {
-        //        print("@@MyLog(Chat): chat ready")
-    }
-    
-    func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {
-        //        print("@@MyLog(Chat): error: errCode = \(errorCode), errMsg = \(errorMessage)")
+        //
     }
     
     func chatState(state: Int) {
-        //        print("@@MyLog(Chat): chat state = \(state)")
+        //
+    }
+    
+    func chatReady(withUserInfo: User) {
+        //
+    }
+    
+    func userEvents(type: UserEventTypes, result: Any) {
+        //
+    }
+    
+    func contactEvents(type: ContactEventTypes, result: Any) {
+        //
     }
     
     func chatDeliver(messageId: Int, ownerId: Int) {
-        //        print("@@MyLog(Chat): deliver with messageId = \(messageId), and ownerId = \(ownerId)")
+        //
     }
     
-    func messageEvents(type: String, result: JSON) {
-        //        print("@@MyLog(Chat): message events with \n type = \(type) \n result: \(result)")
-        
-//        print("\n\n\n****************************")
-//        print("****************************")
-//        print("****************************")
-//        print("MessageType: \(type)")
-//        print("result in JSON: \n \(result)")
-//        print("****************************")
-//        print("****************************")
-//        print("****************************\n\n\n")
+    func messageEvents(type: MessageEventTypes, result: Any) {
+        //
     }
     
-    func threadEvents(type: String, result: JSON) {
-        //        print("@@MyLog:(Chat): ThreadEvents: \n type = \(type) , \n result: \(result) \n")
-        
-        if type == "THREAD_UNREAD_COUNT_UPDATED" {
-            print("\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("THREAD_UNREAD_COUNT_UPDATED : ")
-            print("\(result)")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n")
-        }
-        
-        if (type == "THREAD_LAST_ACTIVITY_TIME") {
-            print("\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("THREAD_LAST_ACTIVITY_TIME : ")
-            print("\(result)")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n")
-        }
-        
+    func threadEvents(type: ThreadEventTypes, result: Any) {
+        //
+    }
+    
+    func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {
+        //
     }
     
     
