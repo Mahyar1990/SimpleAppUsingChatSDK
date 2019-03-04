@@ -35,7 +35,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let ssoHost                 = "https://accounts.pod.land"
     let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "7e7daf8ea0fa4f038c3826a06b472e6c"
+    let token                   = "9ea5cb5d3cae4de2989a4bfb4df17fd5"
 
     
     // Local Addresses
@@ -700,6 +700,24 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         mb.titleLabel?.numberOfLines = 1
         mb.titleLabel?.adjustsFontSizeToFitWidth = true
         mb.addTarget(self, action: #selector(mapStaticImageButtonPressed), for: UIControlEvents.touchUpInside)
+        return mb
+    }()
+    
+    let sendLocatinoMessage: UIButton = {
+        let mb = UIButton()
+        mb.translatesAutoresizingMaskIntoConstraints = false
+        mb.setTitle("send location Message...", for: UIControlState.normal)
+        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
+        mb.layer.cornerRadius = 5
+        mb.layer.borderWidth = 2
+        mb.layer.borderColor = UIColor.clear.cgColor
+        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
+        mb.layer.shadowOpacity = 2
+        mb.layer.shadowRadius = 1
+        mb.layer.shadowOffset = CGSize(width: 0, height: 3)
+        mb.titleLabel?.numberOfLines = 1
+        mb.titleLabel?.adjustsFontSizeToFitWidth = true
+        mb.addTarget(self, action: #selector(sendLocationMessageButtonPressed), for: UIControlEvents.touchUpInside)
         return mb
     }()
     
@@ -1724,6 +1742,41 @@ extension MyViewController {
             print("progress downloaded: \(myProgress)")
         }, completion: { (theResponse) in
             print("Image Downloaded Successfully")
+        })
+    }
+    
+    @objc func sendLocationMessageButtonPressed() {
+        let metadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
+        let locationMessage = SendLocationMessageRequestModel(mapStaticCenterLat:   36.310886959563085,
+                                                              mapStaticCenterLng:   59.53563741408013,
+                                                              mapStaticHeight:      500,
+                                                              mapStaticType:        "standard-night",
+                                                              mapStaticWidth:       800,
+                                                              mapStaticZoom:        15,
+                                                              sendMessageImageName: "staticLocationPic",
+                                                              sendMessageXC:        nil,
+                                                              sendMessageYC:        nil,
+                                                              sendMessageHC:        nil,
+                                                              sendMessageWC:        nil,
+                                                              sendMessageThreadId:  1342,
+                                                              sendMessageContent:   "This is my location on the map",
+                                                              sendMessageMetaData:  metadata,
+                                                              sendMessageRepliedTo: nil,
+                                                              sendMessageSubjectId: 1342,
+                                                              sendMessageTypeCode:  nil)
+        
+        myChatObject?.sendLocationMessage(sendLocationMessageRequest: locationMessage, uniqueId: { (sendLocationMessageUniqueId) in
+            print("sendLocationMessageUniqueId = \(sendLocationMessageUniqueId)")
+        }, downloadProgress: { (progress) in
+            print("downloaded progress = \(progress)")
+        }, uploadProgress: { (progress) in
+            print("uploaded progress = \(progress)")
+        }, onSent: { (sent) in
+            print("the messsage has been sent: \n\(sent)")
+        }, onDelivere: { (deliver) in
+            print("the messsage has been delivered: \n\(deliver)")
+        }, onSeen: { (seen) in
+            print("the messsage has been seen: \n\(seen)")
         })
     }
     
