@@ -37,6 +37,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
     let token                   = "46ca81271c334dd48bd6dec5410117ba"
 
+
     
     // Local Addresses
 //    let socketAddress           = "ws://172.16.106.26:8003/ws"
@@ -703,6 +704,24 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         return mb
     }()
     
+    let sendLocatinoMessage: UIButton = {
+        let mb = UIButton()
+        mb.translatesAutoresizingMaskIntoConstraints = false
+        mb.setTitle("send location Message...", for: UIControlState.normal)
+        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
+        mb.layer.cornerRadius = 5
+        mb.layer.borderWidth = 2
+        mb.layer.borderColor = UIColor.clear.cgColor
+        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
+        mb.layer.shadowOpacity = 2
+        mb.layer.shadowRadius = 1
+        mb.layer.shadowOffset = CGSize(width: 0, height: 3)
+        mb.titleLabel?.numberOfLines = 1
+        mb.titleLabel?.adjustsFontSizeToFitWidth = true
+        mb.addTarget(self, action: #selector(sendLocationMessageButtonPressed), for: UIControlEvents.touchUpInside)
+        return mb
+    }()
+    
     let logView: UIView = {
         let mv = UIView()
         mv.translatesAutoresizingMaskIntoConstraints = false
@@ -897,7 +916,7 @@ extension MyViewController {
     
     @objc func createThreadButtonPressed() {
         
-//        let messageMetadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
+        let messageMetadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
 //        let messageParamsToSend: JSON = ["content": "\(inputTextFieldToSendMessage.text ?? "empty message")", "metaData": messageMetadata]
         
 //        let user1: JSON = ["id": "2202", "idType": inviteeVOidTypes.TO_BE_USER_CONTACT_ID.rawValue]
@@ -933,32 +952,33 @@ extension MyViewController {
 //            print("**************************")
 //        })
         
-        
-//        let inviteeArray: [Invitee] = [Invitee(id: "09981084527", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue)")]
-//        let inputModel = CreateThreadRequestModel(description: nil, image: nil, invitees: inviteeArray, metadata: nil, title: "New Group", type: ThreadTypes.NORMAL.rawValue, uniqueId: nil)
-//        myChatObject?.createThread(createThreadInput: inputModel, uniqueId: { (createThreadUniqeuId) in
-//            print("\n create thread reqeuest uniqueId = \t \(createThreadUniqeuId) \n")
-//        }, completion: { (myResponse) in
-//            let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
-//        })
-        
-        
-        let inviteeArray: [Invitee] = [Invitee(id: "09981084527", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue)")]
-        let inputModel = CreateThreadWithMessageRequestModel(threadDescription: nil, threadImage: nil, threadInvitees: inviteeArray, threadMetadata: nil, threadTitle: "New Group", threadType: "\(ThreadTypes.NORMAL.rawValue)", uniqueId: nil, messageContent: "This is the text of the message", messageMetaDataId: 2341234123, messageMetaDataType: "BOT_MESSAGE", messageMetaDataOwner: "Mahyar")
-        myChatObject?.creatThreadWithMessage(creatThreadWithMessageInput: inputModel, uniqueId: { (createWithSendMessageUniqeuId) in
-            print("\n create thread reqeuest uniqueId = \t \(createWithSendMessageUniqeuId) \n")
+//        let inviteeArray: [Invitee] = [Invitee(id: "2306", idType: "\(InviteeVOidTypes.TO_BE_USER_CONTACT_ID.rawValue)")]
+        let inviteeArray: [Invitee] = [Invitee(id: "09368640180", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")]
+        let inputModel = CreateThreadRequestModel(description: "nil", image: "nil", invitees: inviteeArray, metadata: "\(messageMetadata)", title: "New Group", type: ThreadTypes.NORMAL.rawValue, uniqueId: nil)
+        myChatObject?.createThread(createThreadInput: inputModel, uniqueId: { (createThreadUniqeuId) in
+            print("\n create thread reqeuest uniqueId = \t \(createThreadUniqeuId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
-            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
-            print("\n this is my create thread response:")
-            print("\(myResponseJSON) \n")
-        }, onSent: { (isSent) in
-            print("the message is sent = \(isSent)")
-        }, onDelivere: { (isDeliver) in
-            print("the message is delivered: '\(isDeliver)'")
-        }, onSeen: { (isSeen) in
-            print("the message with is Seen: '\(isSeen)'")
+            print("server response = \n \(myResponseModel.returnDataAsJSON())")
         })
+        
+        
+//        let inviteeArray: [Invitee] = [Invitee(id: "09981084527", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue)")]
+//        let inputModel = CreateThreadWithMessageRequestModel(threadDescription: nil, threadImage: nil, threadInvitees: inviteeArray, threadMetadata: nil, threadTitle: "New Group", threadType: "\(ThreadTypes.NORMAL.rawValue)", uniqueId: nil, messageContent: "This is the text of the message", messageMetaDataId: 2341234123, messageMetaDataType: "BOT_MESSAGE", messageMetaDataOwner: "Mahyar")
+//        myChatObject?.creatThreadWithMessage(creatThreadWithMessageInput: inputModel, uniqueId: { (createWithSendMessageUniqeuId) in
+//            print("\n create thread reqeuest uniqueId = \t \(createWithSendMessageUniqeuId) \n")
+//        }, completion: { (myResponse) in
+//            let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
+//            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+//            print("\n this is my create thread response:")
+//            print("\(myResponseJSON) \n")
+//        }, onSent: { (isSent) in
+//            print("the message is sent = \(isSent)")
+//        }, onDelivere: { (isDeliver) in
+//            print("the message is delivered: '\(isDeliver)'")
+//        }, onSeen: { (isSeen) in
+//            print("the message with is Seen: '\(isSeen)'")
+//        })
         
     }
     
@@ -1743,6 +1763,41 @@ extension MyViewController {
         })
     }
     
+    @objc func sendLocationMessageButtonPressed() {
+        let metadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
+        let locationMessage = SendLocationMessageRequestModel(mapStaticCenterLat:   36.310886959563085,
+                                                              mapStaticCenterLng:   59.53563741408013,
+                                                              mapStaticHeight:      500,
+                                                              mapStaticType:        "standard-night",
+                                                              mapStaticWidth:       800,
+                                                              mapStaticZoom:        15,
+                                                              sendMessageImageName: "staticLocationPic",
+                                                              sendMessageXC:        nil,
+                                                              sendMessageYC:        nil,
+                                                              sendMessageHC:        nil,
+                                                              sendMessageWC:        nil,
+                                                              sendMessageThreadId:  1342,
+                                                              sendMessageContent:   "This is my location on the map",
+                                                              sendMessageMetaData:  metadata,
+                                                              sendMessageRepliedTo: nil,
+                                                              sendMessageSubjectId: 1342,
+                                                              sendMessageTypeCode:  nil)
+        
+        myChatObject?.sendLocationMessage(sendLocationMessageRequest: locationMessage, uniqueId: { (sendLocationMessageUniqueId) in
+            print("sendLocationMessageUniqueId = \(sendLocationMessageUniqueId)")
+        }, downloadProgress: { (progress) in
+            print("downloaded progress = \(progress)")
+        }, uploadProgress: { (progress) in
+            print("uploaded progress = \(progress)")
+        }, onSent: { (sent) in
+            print("the messsage has been sent: \n\(sent)")
+        }, onDelivere: { (deliver) in
+            print("the messsage has been delivered: \n\(deliver)")
+        }, onSeen: { (seen) in
+            print("the messsage has been seen: \n\(seen)")
+        })
+    }
+    
     
 }
 
@@ -1754,73 +1809,48 @@ extension MyViewController {
 
 
 extension MyViewController: ChatDelegates {
-    
     func chatConnected() {
-        //        print("@@MyLog(Chat): connect")
+        //
     }
     
     func chatDisconnect() {
-        //        print("@@MyLog(Chat): disconnect")
+        //
     }
     
     func chatReconnect() {
-        //        print("@@MyLog(Chat): reconnect")
-    }
-    
-    func chatThreadEvents() {
-        //        print("@@MyLog(Chat): thread events")
-    }
-    
-    func chatReady() {
-        //        print("@@MyLog(Chat): chat ready")
-    }
-    
-    func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {
-        //        print("@@MyLog(Chat): error: errCode = \(errorCode), errMsg = \(errorMessage)")
+        //
     }
     
     func chatState(state: Int) {
-        //        print("@@MyLog(Chat): chat state = \(state)")
+        //
+    }
+    
+    func chatReady(withUserInfo: User) {
+        //
+    }
+    
+    func userEvents(type: UserEventTypes, result: Any) {
+        //
+    }
+    
+    func contactEvents(type: ContactEventTypes, result: Any) {
+        //
     }
     
     func chatDeliver(messageId: Int, ownerId: Int) {
-        //        print("@@MyLog(Chat): deliver with messageId = \(messageId), and ownerId = \(ownerId)")
+        //
     }
     
-    func messageEvents(type: String, result: JSON) {
-        //        print("@@MyLog(Chat): message events with \n type = \(type) \n result: \(result)")
-        
-//        print("\n\n\n****************************")
-//        print("****************************")
-//        print("****************************")
-//        print("MessageType: \(type)")
-//        print("result in JSON: \n \(result)")
-//        print("****************************")
-//        print("****************************")
-//        print("****************************\n\n\n")
+    func messageEvents(type: MessageEventTypes, result: Any) {
+        //
     }
     
-    func threadEvents(type: String, result: JSON) {
-        //        print("@@MyLog:(Chat): ThreadEvents: \n type = \(type) , \n result: \(result) \n")
-        
-        if type == "THREAD_UNREAD_COUNT_UPDATED" {
-            print("\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("THREAD_UNREAD_COUNT_UPDATED : ")
-            print("\(result)")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n")
-        }
-        
-        if (type == "THREAD_LAST_ACTIVITY_TIME") {
-            print("\n%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("THREAD_LAST_ACTIVITY_TIME : ")
-            print("\(result)")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%")
-            print("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%\n")
-        }
-        
+    func threadEvents(type: ThreadEventTypes, result: Any) {
+        //
+    }
+    
+    func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {
+        //
     }
     
     

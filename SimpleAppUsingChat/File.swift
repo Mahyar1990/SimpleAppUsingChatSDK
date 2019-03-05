@@ -62,6 +62,7 @@ extension MyViewController {
         view.addSubview(mapSearch)
         view.addSubview(mapRouting)
         view.addSubview(mapStaticImage)
+        view.addSubview(sendLocatinoMessage)
         
         view.addSubview(logView)
         logView.addSubview(myLogCollectionView)
@@ -247,7 +248,12 @@ extension MyViewController {
         mapStaticImage.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
         mapStaticImage.bottomAnchor.constraint(equalTo: mapRouting.bottomAnchor).isActive = true
         
-        logView.topAnchor.constraint(equalTo: mapRouting.bottomAnchor, constant: 8).isActive = true
+        sendLocatinoMessage.topAnchor.constraint(equalTo: mapRouting.bottomAnchor).isActive = true
+        sendLocatinoMessage.leftAnchor.constraint(equalTo: getUserInfoButton.leftAnchor).isActive = true
+        sendLocatinoMessage.rightAnchor.constraint(equalTo: getUserInfoButton.rightAnchor).isActive = true
+        sendLocatinoMessage.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        logView.topAnchor.constraint(equalTo: sendLocatinoMessage.bottomAnchor, constant: 8).isActive = true
         logView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true
         logView.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -8).isActive = true
         logView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -8).isActive = true
