@@ -7,30 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3E02EB12222BF45A0071C1E9 /* FanapPodChatSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3E02EB0F222BF2AA0071C1E9 /* FanapPodChatSDK.framework */; };
 		3E63A065213A526D00E4E2C2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63A064213A526D00E4E2C2 /* AppDelegate.swift */; };
 		3E63A067213A526D00E4E2C2 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63A066213A526D00E4E2C2 /* MyViewController.swift */; };
 		3E63A06C213A526F00E4E2C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E63A06B213A526F00E4E2C2 /* Assets.xcassets */; };
 		3E63A06F213A526F00E4E2C2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E63A06D213A526F00E4E2C2 /* LaunchScreen.storyboard */; };
 		3E63A07A213A526F00E4E2C2 /* SimpleAppUsingChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63A079213A526F00E4E2C2 /* SimpleAppUsingChatTests.swift */; };
 		3E85E841217B47E000CAE8EE /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E85E840217B47E000CAE8EE /* File.swift */; };
+		3EEB083E227EF2B2009DA162 /* FanapPodChatSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EEB083B227EF2A9009DA162 /* FanapPodChatSDK.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		3E02EB0E222BF2AA0071C1E9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3E02EB04222BF2AA0071C1E9 /* FanapPodChatSDK.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3EE025ED21206E63001810FB;
-			remoteInfo = FanapPodChatSDK;
-		};
-		3E02EB10222BF2AA0071C1E9 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3E02EB04222BF2AA0071C1E9 /* FanapPodChatSDK.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 3EE025F621206E63001810FB;
-			remoteInfo = FanapPodChatSDKTests;
-		};
 		3E63A076213A526F00E4E2C2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3E63A059213A526D00E4E2C2 /* Project object */;
@@ -38,10 +24,23 @@
 			remoteGlobalIDString = 3E63A060213A526D00E4E2C2;
 			remoteInfo = SimpleAppUsingChat;
 		};
+		3EEB083A227EF2A9009DA162 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3EEB0830227EF2A9009DA162 /* FanapPodChatSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3EE025ED21206E63001810FB;
+			remoteInfo = FanapPodChatSDK;
+		};
+		3EEB083C227EF2A9009DA162 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3EEB0830227EF2A9009DA162 /* FanapPodChatSDK.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3EE025F621206E63001810FB;
+			remoteInfo = FanapPodChatSDKTests;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		3E02EB04222BF2AA0071C1E9 /* FanapPodChatSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FanapPodChatSDK.xcodeproj; path = "../../../Xcode Projects/Pod-Chat-iOS-SDK/Pod-Chat-iOS-SDK/FanapPodChatSDK.xcodeproj"; sourceTree = "<group>"; };
 		3E63A061213A526D00E4E2C2 /* SimpleAppUsingChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleAppUsingChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E63A064213A526D00E4E2C2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		3E63A066213A526D00E4E2C2 /* MyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyViewController.swift; sourceTree = "<group>"; };
@@ -52,6 +51,7 @@
 		3E63A079213A526F00E4E2C2 /* SimpleAppUsingChatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleAppUsingChatTests.swift; sourceTree = "<group>"; };
 		3E63A07B213A526F00E4E2C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E85E840217B47E000CAE8EE /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		3EEB0830227EF2A9009DA162 /* FanapPodChatSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FanapPodChatSDK.xcodeproj; path = "../Pod-Chat-iOS-SDK/Pod-Chat-iOS-SDK/FanapPodChatSDK.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,7 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3E02EB12222BF45A0071C1E9 /* FanapPodChatSDK.framework in Frameworks */,
+				3EEB083E227EF2B2009DA162 /* FanapPodChatSDK.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -73,22 +73,13 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3E02EB05222BF2AA0071C1E9 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3E02EB0F222BF2AA0071C1E9 /* FanapPodChatSDK.framework */,
-				3E02EB11222BF2AA0071C1E9 /* FanapPodChatSDKTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		3E63A058213A526D00E4E2C2 = {
 			isa = PBXGroup;
 			children = (
 				3E63A063213A526D00E4E2C2 /* SimpleAppUsingChat */,
 				3E63A078213A526F00E4E2C2 /* SimpleAppUsingChatTests */,
 				3E63A062213A526D00E4E2C2 /* Products */,
-				3E02EB04222BF2AA0071C1E9 /* FanapPodChatSDK.xcodeproj */,
+				3EEB0830227EF2A9009DA162 /* FanapPodChatSDK.xcodeproj */,
 				3E68E2BA21439100002C1E6B /* Frameworks */,
 			);
 			sourceTree = "<group>";
@@ -129,6 +120,15 @@
 			children = (
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3EEB0831227EF2A9009DA162 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3EEB083B227EF2A9009DA162 /* FanapPodChatSDK.framework */,
+				3EEB083D227EF2A9009DA162 /* FanapPodChatSDKTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -201,8 +201,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 3E02EB05222BF2AA0071C1E9 /* Products */;
-					ProjectRef = 3E02EB04222BF2AA0071C1E9 /* FanapPodChatSDK.xcodeproj */;
+					ProductGroup = 3EEB0831227EF2A9009DA162 /* Products */;
+					ProjectRef = 3EEB0830227EF2A9009DA162 /* FanapPodChatSDK.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -214,18 +214,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		3E02EB0F222BF2AA0071C1E9 /* FanapPodChatSDK.framework */ = {
+		3EEB083B227EF2A9009DA162 /* FanapPodChatSDK.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = FanapPodChatSDK.framework;
-			remoteRef = 3E02EB0E222BF2AA0071C1E9 /* PBXContainerItemProxy */;
+			remoteRef = 3EEB083A227EF2A9009DA162 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3E02EB11222BF2AA0071C1E9 /* FanapPodChatSDKTests.xctest */ = {
+		3EEB083D227EF2A9009DA162 /* FanapPodChatSDKTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = FanapPodChatSDKTests.xctest;
-			remoteRef = 3E02EB10222BF2AA0071C1E9 /* PBXContainerItemProxy */;
+			remoteRef = 3EEB083C227EF2A9009DA162 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
