@@ -44,6 +44,7 @@ extension MyViewController {
         view.addSubview(searchThreadButton)
         view.addSubview(searchContactButton)
         view.addSubview(searchHistoryButton)
+        view.addSubview(clearHistoryButton)
         
         view.addSubview(blockButton)
         view.addSubview(unblockButton)
@@ -182,6 +183,11 @@ extension MyViewController {
         searchHistoryButton.leftAnchor.constraint(equalTo: getUserInfoButton.leftAnchor).isActive = true
         searchHistoryButton.rightAnchor.constraint(equalTo: getUserInfoButton.rightAnchor).isActive = true
         searchHistoryButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        clearHistoryButton.topAnchor.constraint(equalTo: searchHistoryButton.topAnchor).isActive = true
+        clearHistoryButton.leftAnchor.constraint(equalTo: getThreadsButton.leftAnchor).isActive = true
+        clearHistoryButton.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
+        clearHistoryButton.bottomAnchor.constraint(equalTo: searchHistoryButton.bottomAnchor).isActive = true
         
         blockButton.topAnchor.constraint(equalTo: searchHistoryButton.bottomAnchor, constant: 8).isActive = true
         blockButton.leftAnchor.constraint(equalTo: getUserInfoButton.leftAnchor).isActive = true

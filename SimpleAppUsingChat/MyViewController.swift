@@ -30,22 +30,22 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     */
     
     // SandBox Addresses:
-    let socketAddress           = "wss://chat-sandbox.pod.land/ws"
-    let serverName              = "chat-server"
-    let ssoHost                 = "https://accounts.pod.land"
-    let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
-    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "46ca81271c334dd48bd6dec5410117ba"
+//    let socketAddress           = "wss://chat-sandbox.pod.land/ws"
+//    let serverName              = "chat-server"
+//    let ssoHost                 = "https://accounts.pod.land"
+//    let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
+//    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
+//    let token                   = "ef526460c6144a228e5465ec7a1e60e3"
 
 
     
     // Local Addresses
-//    let socketAddress           = "ws://172.16.106.26:8003/ws"
-//    let serverName              = "chat-server"
-//    let ssoHost                 = "http://172.16.110.76"
-//    let platformHost            = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} Platform Core Address
-//    let fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
-//    let token                   = "7a18deb4a4b64339a81056089f5e5922"    // ialexi
+    let socketAddress           = "ws://172.16.106.26:8003/ws"
+    let serverName              = "chat-server"
+    let ssoHost                 = "http://172.16.110.76"
+    let platformHost            = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} Platform Core Address
+    let fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
+    let token                   = "7a18deb4a4b64339a81056089f5e5922"    // ialexi
 //    let token                   = "6421ecebd40b4d09923bcf6379663d87"    // iFelfeli
 //    let token                   = "6421ecebd40b4d09923bcf6379663d87"
 //    let token = "fbd4ecedb898426394646e65c6b1d5d1" //  {**REQUIRED**} SSO Token JiJi
@@ -468,6 +468,23 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         return mb
     }()
     
+    let clearHistoryButton: UIButton = {
+        let mb = UIButton()
+        mb.translatesAutoresizingMaskIntoConstraints = false
+        mb.setTitle("Clear History...", for: UIControlState.normal)
+        mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
+        mb.layer.cornerRadius = 5
+        mb.layer.borderWidth = 2
+        mb.layer.borderColor = UIColor.clear.cgColor
+        mb.layer.shadowColor = UIColor(red: 0, green: 100/255, blue: 110/255, alpha: 1.0).cgColor
+        mb.layer.shadowOpacity = 2
+        mb.layer.shadowRadius = 1
+        mb.layer.shadowOffset = CGSize(width: 0, height: 3)
+        mb.titleLabel?.numberOfLines = 1
+        mb.titleLabel?.adjustsFontSizeToFitWidth = true
+        mb.addTarget(self, action: #selector(clearHistoryButtonPressed), for: UIControlEvents.touchUpInside)
+        return mb
+    }()
     
     let blockButton: UIButton = {
         let mb = UIButton()
@@ -953,32 +970,57 @@ extension MyViewController {
 //        })
         
 //        let inviteeArray: [Invitee] = [Invitee(id: "2306", idType: "\(InviteeVOidTypes.TO_BE_USER_CONTACT_ID.rawValue)")]
-        let inviteeArray: [Invitee] = [Invitee(id: "09368640180", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")]
-        let inputModel = CreateThreadRequestModel(description: "nil", image: "nil", invitees: inviteeArray, metadata: "\(messageMetadata)", title: "New Group", type: ThreadTypes.NORMAL.rawValue, uniqueId: nil)
-        myChatObject?.createThread(createThreadInput: inputModel, uniqueId: { (createThreadUniqeuId) in
-            print("\n create thread reqeuest uniqueId = \t \(createThreadUniqeuId) \n")
-        }, completion: { (myResponse) in
-            let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
-            print("server response = \n \(myResponseModel.returnDataAsJSON())")
-        })
-        
-        
-//        let inviteeArray: [Invitee] = [Invitee(id: "09981084527", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue)")]
-//        let inputModel = CreateThreadWithMessageRequestModel(threadDescription: nil, threadImage: nil, threadInvitees: inviteeArray, threadMetadata: nil, threadTitle: "New Group", threadType: "\(ThreadTypes.NORMAL.rawValue)", uniqueId: nil, messageContent: "This is the text of the message", messageMetaDataId: 2341234123, messageMetaDataType: "BOT_MESSAGE", messageMetaDataOwner: "Mahyar")
-//        myChatObject?.creatThreadWithMessage(creatThreadWithMessageInput: inputModel, uniqueId: { (createWithSendMessageUniqeuId) in
-//            print("\n create thread reqeuest uniqueId = \t \(createWithSendMessageUniqeuId) \n")
+//        let inviteeArray: [Invitee] = [Invitee(id: "09368640180", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")]
+//        let inputModel = CreateThreadRequestModel(description: "nil", image: "nil", invitees: inviteeArray, metadata: "\(messageMetadata)", title: "New Group", type: ThreadTypes.NORMAL.rawValue, uniqueId: nil)
+//        myChatObject?.createThread(createThreadInput: inputModel, uniqueId: { (createThreadUniqeuId) in
+//            print("\n create thread reqeuest uniqueId = \t \(createThreadUniqeuId) \n")
 //        }, completion: { (myResponse) in
 //            let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
-//            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
-//            print("\n this is my create thread response:")
-//            print("\(myResponseJSON) \n")
-//        }, onSent: { (isSent) in
-//            print("the message is sent = \(isSent)")
-//        }, onDelivere: { (isDeliver) in
-//            print("the message is delivered: '\(isDeliver)'")
-//        }, onSeen: { (isSeen) in
-//            print("the message with is Seen: '\(isSeen)'")
+//            print("server response = \n \(myResponseModel.returnDataAsJSON())")
 //        })
+        
+        
+        let inviteeArray: [Invitee] = [Invitee(id: "09981084527", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue)")]
+        
+//        let inputModel = CreateThreadWithMessageRequestModel(threadDescription: nil,
+//                                                             threadImage: nil,
+//                                                             threadInvitees: inviteeArray,
+//                                                             threadMetadata: nil,
+//                                                             threadTitle: "New Group",
+//                                                             threadType: "\(ThreadTypes.NORMAL.rawValue)",
+//                                                             messageContentText: "This is the text of the message",
+//                                                             messageForwardMessageIds: nil,
+//                                                             messageMetaData: messageMetadata,
+//                                                             messageRepliedTo: nil,
+//                                                             messageSystemMetadata: nil,
+//                                                             messageType: nil,
+//                                                             messageUniqueId: nil)
+        
+        let inputModel = CreateThreadWithMessageRequestModel(threadDescription: nil,
+                                                             threadImage: nil,
+                                                             threadInvitees: inviteeArray,
+                                                             threadMetadata: nil,
+                                                             threadTitle: "New Group",
+                                                             threadType: "\(ThreadTypes.NORMAL.rawValue)",
+                                                             uniqueId: nil,
+                                                             messageContent: "This is the text of the message",
+                                                             messageMetaDataId: 2341234123,
+                                                             messageMetaDataType: "BOT_MESSAGE",
+                                                             messageMetaDataOwner: "Mahyar")
+        myChatObject?.createThreadWithMessage(creatThreadWithMessageInput: inputModel, uniqueId: { (createWithSendMessageUniqeuId) in
+            print("\n create thread reqeuest uniqueId = \t \(createWithSendMessageUniqeuId) \n")
+        }, completion: { (myResponse) in
+            let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
+            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+            print("\n this is my create thread response:")
+            print("\(myResponseJSON) \n")
+        }, onSent: { (isSent) in
+            print("the message is sent = \(isSent)")
+        }, onDelivere: { (isDeliver) in
+            print("the message is delivered: '\(isDeliver)'")
+        }, onSeen: { (isSeen) in
+            print("the message with is Seen: '\(isSeen)'")
+        })
         
     }
     
@@ -994,7 +1036,7 @@ extension MyViewController {
 //            print("\(myResponseJSON) \n")
 //        })
         
-        let inputModel = GetContactsRequestModel(count: 25, name: nil, offset: 0, typeCode: nil)
+        let inputModel = GetContactsRequestModel(count: 50, name: nil, offset: 0, typeCode: nil)
         myChatObject?.getContacts(getContactsInput: inputModel, uniqueId: { (getContactUniqueId) in
             print("\n get contact request uniqueId = \t \(getContactUniqueId) \n")
         }, completion: { (myResponse) in
@@ -1185,7 +1227,7 @@ extension MyViewController {
 //            print("\(responseJSON) \n")
 //        })
         
-        let inputModel = AddParticipantsRequestModel(contacts: [2202, 952, 1281, 2306], threadId: 1330, typeCode: nil, uniqueId: nil)
+        let inputModel = AddParticipantsRequestModel(contacts: [2202, 2869], threadId: 3861, typeCode: nil, uniqueId: nil)
         myChatObject?.addParticipants(addParticipantsInput: inputModel, uniqueId: { (addParticipantsUniqueId) in
             print("\n add participant request uniqueId = \t \(addParticipantsUniqueId) \n")
         }, completion: { (myResponse) in
@@ -1421,7 +1463,7 @@ extension MyViewController {
 //            print("***********************")
 //        })
         
-        let inputModel = MuteAndUnmuteThreadRequestModel(subjectId: 1101, typeCode: nil)
+        let inputModel = MuteAndUnmuteThreadRequestModel(subjectId: 2195, typeCode: nil)
         myChatObject?.muteThread(muteThreadInput: inputModel, uniqueId: { (muteThreadUniqueId) in
             print("\n mute thread request uniqueId = \t \(muteThreadUniqueId) \n")
         }, completion: { (response) in
@@ -1549,7 +1591,7 @@ extension MyViewController {
         
 //        let inputModel = BlockContactsRequestModel(contactId: 3157, threadId: nil, typeCode: nil, userId: nil)
 //        let inputModel = BlockContactsRequestModel(contactId: nil, threadId: nil, typeCode: nil, userId: 481)
-        let inputModel = BlockContactsRequestModel(contactId: nil, threadId: 1381, typeCode: nil, userId: nil)
+        let inputModel = BlockContactsRequestModel(contactId: 896, threadId: nil, typeCode: nil, userId: nil)
         myChatObject?.blockContact(blockContactsInput: inputModel, uniqueId: { (blockContactUniqueId) in
             print("\n block request uniqueId = \t \(blockContactUniqueId) \n")
         }, completion: { (myResponse) in
@@ -1578,7 +1620,7 @@ extension MyViewController {
 //        })
         
 //        let inputModel = UnblockContactsRequestModel(blockId: nil, contactId: 3157, threadId: nil, typeCode: nil, userId: nil)
-        let inputModel = UnblockContactsRequestModel(blockId: nil, contactId: nil, threadId: 1381, typeCode: nil, userId: nil)
+        let inputModel = UnblockContactsRequestModel(blockId: 896, contactId: nil, threadId: nil, typeCode: nil, userId: nil)
 //        let inputModel = UnblockContactsRequestModel(blockId: nil, contactId: nil, threadId: nil, typeCode: nil, userId: 919)
 //        let inputModel = UnblockContactsRequestModel(blockId: 462, contactId: nil, threadId: nil, typeCode: nil, userId: nil)
         myChatObject?.unblockContact(unblockContactsInput: inputModel, uniqueId: { (unblockContactUniqueId) in
@@ -1799,6 +1841,19 @@ extension MyViewController {
     }
     
     
+    @objc func clearHistoryButtonPressed() {
+        let inputModel = ClearHistoryRequestModel(threadId: 2195, uniqueId: nil)
+        myChatObject?.clearHistory(clearHistoryInput: inputModel, uniqueId: { (createHistoryUniqueId) in
+            print("\n create history request uniqueId = \t \(createHistoryUniqueId) \n")
+        }, completion: { (myResponseJSON) in
+            print("\n create history server response:")
+            print("\(myResponseJSON) \n")
+        }, cacheResponse: { (myResponseJSON) in
+            print("\n create history cache response:")
+            print("\(myResponseJSON) \n")
+        })
+    }
+    
 }
 
 
@@ -1850,7 +1905,7 @@ extension MyViewController: ChatDelegates {
     }
     
     func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {
-        //
+        print("Error: \n errorCode = \(errorCode) \n errorMessage = \(errorMessage) \n errorResult = \(errorResult ?? "nil")")
     }
     
     
