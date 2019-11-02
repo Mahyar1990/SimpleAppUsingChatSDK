@@ -20,7 +20,7 @@ class MyViewController: UIViewController, UIImagePickerControllerDelegate, UINav
     var logBackgroundColor = [UIColor]()
     //    let cellColors = [UIColor.red, UIColor.green, UIColor.blue]
     
-    var myChatObject: Chat?
+//    var myChatObject: Chat?
     
     
     // get tocken for SandBox:
@@ -30,22 +30,30 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     */
     
     // SandBox Addresses:
-//    let socketAddress           = "wss://chat-sandbox.pod.land/ws"
-//    let serverName              = "chat-server"
-//    let ssoHost                 = "https://accounts.pod.land"
-//    let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
-//    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-//    let token                   = "ef526460c6144a228e5465ec7a1e60e3"
-
-
-    
-    // Local Addresses
-    let socketAddress           = "ws://172.16.106.26:8003/ws"
+    let socketAddress           = "wss://chat-sandbox.pod.land/ws"
     let serverName              = "chat-server"
-    let ssoHost                 = "http://172.16.110.76"
-    let platformHost            = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} Platform Core Address
-    let fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
-    let token                   = "7a18deb4a4b64339a81056089f5e5922"    // ialexi
+    let ssoHost                 = "https://accounts.pod.land"
+    let platformHost            = "https://sandbox.pod.land:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
+    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
+    let token                   = "d19eb3bea0d74fbca2b30695c05b9966"
+    
+    
+    // Mehrara
+//    let socketAddress           = "ws://172.16.106.26:8003/ws"
+//    let serverName              = "chat-server"
+//    let platformHost            = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} Platform Core Address
+//    let ssoHost                 = "http://172.16.110.76"
+//    let fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
+    
+    // SheikhHoseini
+//    let socketAddress           = "ws://172.16.110.131:8003/ws"
+//    let serverName              = "chat-server2"
+//    var platformHost            = "http://172.16.110.131:8080"
+//    let ssoHost                 = "http://172.16.110.76"
+//    let fileServer              = "http://172.16.106.26:8080/hamsam"    // {**REQUIRED**} File Server Address
+    
+//    let token                   = "fbd4ecedb898426394646e65c6b1d5d1"
+//    let token                   = "7a18deb4a4b64339a81056089f5e5922"    // ialexi
 //    let token                   = "6421ecebd40b4d09923bcf6379663d87"    // iFelfeli
 //    let token                   = "6421ecebd40b4d09923bcf6379663d87"
 //    let token = "fbd4ecedb898426394646e65c6b1d5d1" //  {**REQUIRED**} SSO Token JiJi
@@ -196,7 +204,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let addParticipantButton: UIButton = {
         let mb = UIButton()
         mb.translatesAutoresizingMaskIntoConstraints = false
-        mb.setTitle("Add Participant...", for: UIControlState.normal)
+        mb.setTitle("Sent isTyping...", for: UIControlState.normal)
         mb.backgroundColor = UIColor(red: 0, green: 150/255, blue: 200/255, alpha: 1.0)
         mb.layer.cornerRadius = 5
         mb.layer.borderWidth = 2
@@ -775,32 +783,28 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
         
         setupView()
         
-        myChatObject = Chat(socketAddress: socketAddress,
-                            ssoHost: ssoHost,
-                            platformHost: platformHost,
-                            fileServer: fileServer,
-                            serverName: serverName,
-                            token: token,
-                            mapApiKey: nil,
-                            mapServer: "https://api.neshan.org/v1",
-                            typeCode: "default",
-                            enableCache: true,
-                            cacheTimeStampInSec: nil,
-                            msgPriority: 1,
-                            msgTTL: messageTtl,
-                            httpRequestTimeout: nil,
-                            actualTimingLog: nil,
-                            wsConnectionWaitTime: Double(wsConnectionWaitTime),
-                            connectionRetryInterval: connectionRetryInterval,
-                            connectionCheckTimeout: connectionCheckTimeout,
-                            messageTtl: messageTtl,
-                            reconnectOnClose: true)
+        Chat.sharedInstance.createChatObject(socketAddress:          socketAddress,
+                                             ssoHost:                ssoHost,
+                                             platformHost:           platformHost,
+                                             fileServer:             fileServer,
+                                             serverName:             serverName,
+                                             token:                  token,
+                                             mapApiKey:              nil,
+                                             mapServer:              "https://api.neshan.org/v1",
+                                             typeCode:               "default",
+                                             enableCache:            false,
+                                             cacheTimeStampInSec:    nil,
+                                             msgPriority:            1,
+                                             msgTTL:                 messageTtl,
+                                             httpRequestTimeout:     nil,
+                                             actualTimingLog:        nil,
+                                             wsConnectionWaitTime:   Double(wsConnectionWaitTime),
+                                             connectionRetryInterval: connectionRetryInterval,
+                                             connectionCheckTimeout: connectionCheckTimeout,
+                                             messageTtl:             messageTtl,
+                                             reconnectOnClose:       true)
         
-        myChatObject?.delegate = self
-        
-        //        myChatObject = Chat(...)
-        //        myChatObject!.delegate = self
-        
+        Chat.sharedInstance.delegate = self
         
     }
     
@@ -815,7 +819,7 @@ extension MyViewController {
     
     
     @objc func getUserInfoButtonPressed() {
-        myChatObject?.getUserInfo(uniqueId: { (getUserInfoUniqueId) in
+        Chat.sharedInstance.getUserInfo(uniqueId: { (getUserInfoUniqueId) in
             print("\n get user info request uniqueId = \t \(getUserInfoUniqueId) \n")
         }, completion: { (myResponse) in
             print("\n this is my get user info response from Server:")
@@ -836,7 +840,7 @@ extension MyViewController {
 //                                      "and": ["field": "id", "is": "1534835339446"]
 //                                    ]
 //        let paramsToSend: JSON = ["count": 3, "offset": 8/*, "metadataCriteria": metadataCriteria*/]
-//        myChatObject?.getThreads(params: paramsToSend, uniqueId: { (getThreadUniqueId) in
+//        Chat.sharedInstance.getThreads(params: paramsToSend, uniqueId: { (getThreadUniqueId) in
 //            print("\n get thread request uniqueId = \t \(getThreadUniqueId) \n")
 //        }, completion: { (myResponse) in
 //            let myResponseModel: GetThreadsModel = myResponse as! GetThreadsModel
@@ -845,8 +849,8 @@ extension MyViewController {
 //            print("\(myResponseJSON) \n")
 //        })
         
-        let inputModel = GetThreadsRequestModel(count: 9, coreUserId: nil, metadataCriteria: nil, name: nil, new: nil, offset: 0, threadIds: nil, typeCode: nil)
-        myChatObject?.getThreads(getThreadsInput: inputModel, uniqueId: { (getThreadUniqueId) in
+        let inputModel = GetThreadsRequestModel(count: 9, creatorCoreUserId: nil, metadataCriteria: nil, name: nil, new: nil, offset: 0, partnerCoreContactId: nil, partnerCoreUserId: nil, threadIds: nil, typeCode: nil, uniqueId: nil)
+        Chat.sharedInstance.getThreads(getThreadsInput: inputModel, uniqueId: { (getThreadUniqueId) in
             print("\n get thread request uniqueId = \t \(getThreadUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: GetThreadsModel = myResponse as! GetThreadsModel
@@ -864,7 +868,7 @@ extension MyViewController {
     
     @objc func getHistoryButtonPressed() {
 //        let paramsToSend: JSON = ["threadId": 1328, "count": 1, "offset": 0]
-//        myChatObject?.getHistory(params: paramsToSend, uniqueId: { (getHistoryUniqueId) in
+//        Chat.sharedInstance.getHistory(params: paramsToSend, uniqueId: { (getHistoryUniqueId) in
 //            print("\n get history request uniqueId = \t \(getHistoryUniqueId) \n")
 //        }, completion: { (myResponse) in
 //            let myResponseModel: GetHistoryModel = myResponse as! GetHistoryModel
@@ -873,38 +877,26 @@ extension MyViewController {
 //            print("\(myResponseJSON) \n")
 //        })
 
-//        let inputModel = GetHistoryRequestModel(count: 2, firstMessageId: nil, fromTime: nil/*1541856621893000000*/, lastMessageId: nil, messageId: nil, metadataCriteria: nil, offset: nil, order: nil, query: nil, threadId: 1328, toTime: nil/*1541856821893000000*/, typeCode: nil, uniqueId: nil)
-//        myChatObject?.getHistory(getHistoryInput: inputModel, uniqueId: { (getHistoryUniqueId) in
-//            print("\n get history request uniqueId = \t \(getHistoryUniqueId) \n")
-//        }, completion: { (myResponse) in
-//            let myResponseModel: GetHistoryModel = myResponse as! GetHistoryModel
-//            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
-//            print("\n this is my get history response from Server:")
-//            print("\(myResponseJSON) \n")
-//        }, cacheResponse: { (historyResponse) in
-//            print("\n this is my get history response from Cache:")
-//            let responseJSON = historyResponse.returnDataAsJSON()
-//            print("\(responseJSON)")
-//        }, textMessagesNotSent: { (<#[QueueOfWaitTextMessagesModel]#>) in
-//            <#code#>
-//        }, editMessagesNotSent: { (<#[QueueOfWaitEditMessagesModel]#>) in
-//            <#code#>
-//        }, forwardMessagesNotSent: { (<#[QueueOfWaitForwardMessagesModel]#>) in
-//            <#code#>
-//        }, fileMessagesNotSent: { (<#[QueueOfWaitFileMessagesModel]#>) in
-//            <#code#>
-//        }, uploadImageNotSent: { (<#[QueueOfWaitUploadImagesModel]#>) in
-//            <#code#>
-//        }, uploadFileNotSent: { (<#[QueueOfWaitUploadFilesModel]#>) in
-//            <#code#>
-//        })
+        let inputModel = GetHistoryRequestModel(count: nil, firstMessageId: nil, fromTime: nil/*1541856621893000000*/, lastMessageId: nil, messageId: nil, metadataCriteria: nil, offset: nil, order: nil, query: nil, threadId: 4622, toTime: nil/*1541856821893000000*/, typeCode: nil, uniqueId: nil)
+        Chat.sharedInstance.getHistory(getHistoryInput: inputModel, uniqueId: { (getHistoryUniqueId) in
+            print("\n get history request uniqueId = \t \(getHistoryUniqueId) \n")
+        }, completion: { (myResponse) in
+            let myResponseModel: GetHistoryModel = myResponse as! GetHistoryModel
+            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+            print("\n this is my get history response from Server:")
+            print("\(myResponseJSON) \n")
+        }, cacheResponse: { (historyResponse) in
+            print("\n this is my get history response from Cache:")
+            let responseJSON = historyResponse.returnDataAsJSON()
+            print("\(responseJSON)")
+        }, textMessagesNotSent: { (_) in }, editMessagesNotSent: { (_) in }, forwardMessagesNotSent: { (_) in }, fileMessagesNotSent: { (_) in }, uploadImageNotSent: { (_) in }, uploadFileNotSent: { (_) in })
         
     }
     
     
     @objc func getThreadParticipantsButtonPressed() {
 //        let paramsToSend: JSON = ["count": 3, "offset": 0, "threadId": 1101]
-//        myChatObject?.getThreadParticipants(params: paramsToSend, uniqueId: { (getThreadParticipantUniqueId) in
+//        Chat.sharedInstance.getThreadParticipants(params: paramsToSend, uniqueId: { (getThreadParticipantUniqueId) in
 //            print("\n get thread participant request unique id = \t \(getThreadParticipantUniqueId) \t")
 //        }, completion: { (myResponse) in
 //            let myResponseModel: GetThreadParticipantsModel = myResponse as! GetThreadParticipantsModel
@@ -913,8 +905,8 @@ extension MyViewController {
 //            print("\(myResponseJSON) \n")
 //        })
         
-        let inputModel = GetThreadParticipantsRequestModel(count: 5, firstMessageId: nil, lastMessageId: nil, name: nil, offset: 0, threadId: 1330/*1101*/, typeCode: nil)
-        myChatObject?.getThreadParticipants(getThreadParticipantsInput: inputModel, uniqueId: { (getThreadParticipantUniqueId) in
+        let inputModel = GetThreadParticipantsRequestModel(admin: false, count: 5, firstMessageId: nil, lastMessageId: nil, name: nil, offset: 0, threadId: 293/*1101*/, typeCode: nil, uniqueId: nil)
+        Chat.sharedInstance.getThreadParticipants(getThreadParticipantsInput: inputModel, uniqueId: { (getThreadParticipantUniqueId) in
             print("\n get thread participant request unique id = \t \(getThreadParticipantUniqueId)")
         }, completion: { (myResponse) in
             let myResponseModel: GetThreadParticipantsModel = myResponse as! GetThreadParticipantsModel
@@ -946,9 +938,9 @@ extension MyViewController {
         
 //        let xxx: JSON = ["id": "099810s84527", "idType": InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue]
 //        let invitees: [JSON] = [xxx]
-//        let paramsToSend: JSON = ["type": ThreadTypes.NORMAL.rawValue, "title": "New Group", "invitees": invitees]
+//        let paramsToSend: JSON = ["type": ThreadTypes.OWNER_GROUP.rawValue, "title": "New Group", "invitees": invitees]
 //
-//        myChatObject?.creatThreadWithMessage(params: paramsToSend, sendMessageParams: messageParamsToSend, uniqueId: { (createWithSendMessageUniqeuId) in
+//        Chat.sharedInstance.creatThreadWithMessage(params: paramsToSend, sendMessageParams: messageParamsToSend, uniqueId: { (createWithSendMessageUniqeuId) in
 //            print("\n create thread reqeuest uniqueId = \t \(createWithSendMessageUniqeuId) \n")
 //        }, completion: { (myResponse) in
 //            let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
@@ -972,7 +964,7 @@ extension MyViewController {
 //        let inviteeArray: [Invitee] = [Invitee(id: "2306", idType: "\(InviteeVOidTypes.TO_BE_USER_CONTACT_ID.rawValue)")]
 //        let inviteeArray: [Invitee] = [Invitee(id: "09368640180", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER)")]
 //        let inputModel = CreateThreadRequestModel(description: "nil", image: "nil", invitees: inviteeArray, metadata: "\(messageMetadata)", title: "New Group", type: ThreadTypes.NORMAL.rawValue, uniqueId: nil)
-//        myChatObject?.createThread(createThreadInput: inputModel, uniqueId: { (createThreadUniqeuId) in
+//        Chat.sharedInstance.createThread(createThreadInput: inputModel, uniqueId: { (createThreadUniqeuId) in
 //            print("\n create thread reqeuest uniqueId = \t \(createThreadUniqeuId) \n")
 //        }, completion: { (myResponse) in
 //            let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
@@ -980,6 +972,28 @@ extension MyViewController {
 //        })
         
         
+        // CreateThread
+        let mehdi = Invitee(id: "4457", idType: "\(InviteeVOidTypes.TO_BE_USER_CONTACT_ID.rawValue)")
+        let sina = Invitee(id: "3157", idType: "\(InviteeVOidTypes.TO_BE_USER_CONTACT_ID.rawValue)")
+        let arvin = Invitee(id: "4539", idType: "\(InviteeVOidTypes.TO_BE_USER_CONTACT_ID.rawValue)")
+        let inputModel = CreateThreadRequestModel(description:  nil,
+                                                  image:        nil,
+                                                  invitees:     [mehdi, sina, arvin],
+                                                  metadata:     nil,
+                                                  title:        "this is new group",
+                                                  type:         ThreadTypes.OWNER_GROUP,
+                                                  uniqueId:     nil)
+        
+        Chat.sharedInstance.createThread(createThreadInput: inputModel, uniqueId: { (createThreadUniqeuId) in
+            print("\n create thread reqeuest uniqueId = \t \(createThreadUniqeuId) \n")
+        }, completion: { (myResponse) in
+            let myResponseModel: ThreadModel = myResponse as! ThreadModel
+            print("\n this is my create thread response: \n \(myResponseModel.returnDataAsJSON()) \n")
+        })
+        
+        
+        // createThread and SendMessage
+        /*
         let inviteeArray: [Invitee] = [Invitee(id: "09981084527", idType: "\(InviteeVOidTypes.TO_BE_USER_CELLPHONE_NUMBER.rawValue)")]
         
 //        let inputModel = CreateThreadWithMessageRequestModel(threadDescription: nil,
@@ -1007,7 +1021,7 @@ extension MyViewController {
                                                              messageMetaDataId: 2341234123,
                                                              messageMetaDataType: "BOT_MESSAGE",
                                                              messageMetaDataOwner: "Mahyar")
-        myChatObject?.createThreadWithMessage(creatThreadWithMessageInput: inputModel, uniqueId: { (createWithSendMessageUniqeuId) in
+        Chat.sharedInstance.createThreadWithMessage(creatThreadWithMessageInput: inputModel, uniqueId: { (createWithSendMessageUniqeuId) in
             print("\n create thread reqeuest uniqueId = \t \(createWithSendMessageUniqeuId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
@@ -1021,13 +1035,14 @@ extension MyViewController {
         }, onSeen: { (isSeen) in
             print("the message with is Seen: '\(isSeen)'")
         })
+        */
         
     }
     
     
     @objc func getContactsButtonPressed() {
 //        let paramsToSend: JSON = ["count": 2, "offset": 0]
-//        myChatObject?.getContacts(params: paramsToSend, uniqueId: { (getContactUniqueId) in
+//        Chat.sharedInstance.getContacts(params: paramsToSend, uniqueId: { (getContactUniqueId) in
 //            print("\n get contact request uniqueId = \t \(getContactUniqueId) \n")
 //        }, completion: { (myResponse) in
 //            let myResponseModel: GetContactsModel = myResponse as! GetContactsModel
@@ -1036,8 +1051,8 @@ extension MyViewController {
 //            print("\(myResponseJSON) \n")
 //        })
         
-        let inputModel = GetContactsRequestModel(count: 50, name: nil, offset: 0, typeCode: nil)
-        myChatObject?.getContacts(getContactsInput: inputModel, uniqueId: { (getContactUniqueId) in
+        let inputModel = GetContactsRequestModel(count: 50, offset: 0, query: nil, typeCode: nil, uniqueId: nil)
+        Chat.sharedInstance.getContacts(getContactsInput: inputModel, uniqueId: { (getContactUniqueId) in
             print("\n get contact request uniqueId = \t \(getContactUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: GetContactsModel = myResponse as! GetContactsModel
@@ -1059,13 +1074,14 @@ extension MyViewController {
 //        replyMessage()
 //        forwardMessage()
 //        deleteMessage()
+//        deleteMultipleMessages()
     }
     
     
     func sendMessage() {
         let metadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
 //        let paramsToSend: JSON = ["subjectId": 1328, "content": "\(inputTextFieldToSendMessage.text ?? "empty message")", "metaData": metadata]
-//        myChatObject?.sendTextMessage(params: paramsToSend, uniqueId: { (uniqueIdStr) in
+//        Chat.sharedInstance.sendTextMessage(params: paramsToSend, uniqueId: { (uniqueIdStr) in
 //            print("**************************")
 //            print("message uniqueId is: \(uniqueIdStr)")
 //            print("**************************")
@@ -1084,8 +1100,8 @@ extension MyViewController {
 //        })
         
         
-        let inputModel = SendTextMessageRequestModel(content: "\(inputTextFieldToSendMessage.text ?? "empty message")", metaData: metadata, repliedTo: nil, systemMetadata: nil, threadId: 1202, typeCode: nil, uniqueId: nil)
-        myChatObject?.sendTextMessage(sendTextMessageInput: inputModel, uniqueId: { (uniqueIdStr) in
+        let inputModel = SendTextMessageRequestModel(content: "\(inputTextFieldToSendMessage.text ?? "empty message")", metaData: metadata, repliedTo: nil, systemMetadata: nil, threadId: 4622, typeCode: nil, uniqueId: nil)
+        Chat.sharedInstance.sendTextMessage(sendTextMessageInput: inputModel, uniqueId: { (uniqueIdStr) in
             print("message uniqueId is: \(uniqueIdStr)")
         }, onSent: { (isSent) in
             print("the message is sent = \(isSent)")
@@ -1100,7 +1116,7 @@ extension MyViewController {
     
     func editMessage() {
 //        let cont: JSON = ["subjectId": 10799, "content": "\(inputTextFieldToSendMessage.text ?? "empty message")"]
-//        myChatObject?.editMessage(params: cont, uniqueId: { (editMessageUniqueId) in
+//        Chat.sharedInstance.editMessage(params: cont, uniqueId: { (editMessageUniqueId) in
 //            print("\n edit message request uniqueId = \t \(editMessageUniqueId) \n")
 //        }, completion: { (successResponse) in
 //            print("**************************")
@@ -1109,7 +1125,7 @@ extension MyViewController {
 //        })
         
         let inputModel = EditTextMessageRequestModel(content: "text message", metaData: nil, repliedTo: nil, subjectId: 10799, typeCode: nil, uniqueId: nil)
-        myChatObject?.editMessage(editMessageInput: inputModel, uniqueId: { (editMessageUniqueId) in
+        Chat.sharedInstance.editMessage(editMessageInput: inputModel, uniqueId: { (editMessageUniqueId) in
             print("\n edit message request uniqueId = \t \(editMessageUniqueId) \n")
         }, completion: { (successResponse) in
             print("message is edited successfully: \(successResponse)")
@@ -1120,7 +1136,7 @@ extension MyViewController {
     
     func replyMessage() {
 //        let paramsToSend: JSON = ["subjectId": 1133,"repliedTo": 15397,"content": "\(inputTextFieldToSendMessage.text ?? "empty message")"]
-//        myChatObject?.replyMessageWith3Callbacks(params: paramsToSend, uniqueId: { (uniqueIdStr) in
+//        Chat.sharedInstance.replyMessageWith3Callbacks(params: paramsToSend, uniqueId: { (uniqueIdStr) in
 //            print("**************************")
 //            print("**************************")
 //            print("message uniqueId is: \(uniqueIdStr)")
@@ -1144,8 +1160,8 @@ extension MyViewController {
 //            print("**************************")
 //        })
         
-        let inputModel = ReplyTextMessageRequestModel(content: "text message", metaData: nil, repliedTo: 15397, subjectId: 1133, typeCode: nil, uniqueId: nil)
-        myChatObject?.replyMessage(replyMessageInput: inputModel, uniqueId: { (uniqueIdStr) in
+        let inputModel = ReplyTextMessageRequestModel(content: "\(inputTextFieldToSendMessage.text ?? "empty message")", metaData: nil, repliedTo: 35447, subjectId: 9953, typeCode: nil, uniqueId: nil)
+        Chat.sharedInstance.replyMessage(replyMessageInput: inputModel, uniqueId: { (uniqueIdStr) in
             print("message uniqueId is: \(uniqueIdStr)")
         }, onSent: { (isSent) in
             print("the message is sent = \(isSent)")
@@ -1160,7 +1176,7 @@ extension MyViewController {
     
     func forwardMessage() {
 //        let paramsToSend: JSON = ["subjectId": 1133,"content": [15395]]
-//        myChatObject?.forwardMessageWith3Callbacks(params: paramsToSend, uniqueIds: { (uniqueIdArr) in
+//        Chat.sharedInstance.forwardMessageWith3Callbacks(params: paramsToSend, uniqueIds: { (uniqueIdArr) in
 //            print("**************************")
 //            print("**************************")
 //            print("message uniqueId is: \(uniqueIdArr)")
@@ -1185,7 +1201,7 @@ extension MyViewController {
 //        })
         
         let inputModel = ForwardMessageRequestModel(messageIds: [15395], metaData: nil, repliedTo: nil, subjectId: 1133, typeCode: nil)
-        myChatObject?.forwardMessage(forwardMessageInput: inputModel, uniqueIds: { (uniqueIdArr) in
+        Chat.sharedInstance.forwardMessage(forwardMessageInput: inputModel, uniqueIds: { (uniqueIdArr) in
             print("message uniqueId is: \(uniqueIdArr)")
         }, onSent: { (isSent) in
             print("the message is sent = \(isSent)")
@@ -1200,15 +1216,26 @@ extension MyViewController {
     
     func deleteMessage() {
 //        let paramsToSend: JSON = ["subjectId": 10799]
-//        myChatObject?.deleteMessage(params: paramsToSend, uniqueId: { (deleteMEssageUniqueId) in
+//        Chat.sharedInstance.deleteMessage(params: paramsToSend, uniqueId: { (deleteMEssageUniqueId) in
 //            print("Delete Message Unique ID = \(deleteMEssageUniqueId)")
 //        }, completion: { (response) in
 //            print("delete Message response: \n \(response)")
 //        })
         
-        let inputModel = DeleteMessageRequestModel(deleteForAll: nil, subjectId: 10799, typeCode: nil, uniqueId: nil)
-        myChatObject?.deleteMessage(deleteMessageInput: inputModel, uniqueId: { (deleteMEssageUniqueId) in
+        let inputModel = DeleteMessageRequestModel(deleteForAll: nil, subjectId: 35486, typeCode: nil, uniqueId: nil)
+        Chat.sharedInstance.deleteMessage(deleteMessageInput: inputModel, uniqueId: { (deleteMEssageUniqueId) in
             print("Delete Message Unique ID = \(deleteMEssageUniqueId)")
+        }, completion: { (response) in
+            print("delete Message response: \n \(response)")
+        })
+        
+    }
+    
+    func deleteMultipleMessages() {
+        
+        let inputModel = DeleteMultipleMessagesRequestModel(deleteForAll: nil, threadId: 1103, messageIds: [35486], typeCode: nil, uniqueIds: nil)
+        Chat.sharedInstance.deleteMultipleMessages(deleteMessageInput: inputModel, uniqueId: { (deleteMEssageUniqueId) in
+            print("Delete Multiple Messages Unique ID = \(deleteMEssageUniqueId)")
         }, completion: { (response) in
             print("delete Message response: \n \(response)")
         })
@@ -1218,7 +1245,7 @@ extension MyViewController {
     
     @objc func addParticipantsButtonPressed() {
 //        let paramsToSend: JSON = ["threadId": 1330/*1101*/, "contacts": [2202, 952, 1281, 2306]]
-//        myChatObject?.addParticipants(params: paramsToSend, uniqueId: { (addParticipantsUniqueId) in
+//        Chat.sharedInstance.addParticipants(params: paramsToSend, uniqueId: { (addParticipantsUniqueId) in
 //            print("\n add participant request uniqueId = \t \(addParticipantsUniqueId) \n")
 //        }, completion: { (myResponse) in
 //            print("\n this is my add participants response:")
@@ -1227,15 +1254,19 @@ extension MyViewController {
 //            print("\(responseJSON) \n")
 //        })
         
-        let inputModel = AddParticipantsRequestModel(contacts: [2202, 2869], threadId: 3861, typeCode: nil, uniqueId: nil)
-        myChatObject?.addParticipants(addParticipantsInput: inputModel, uniqueId: { (addParticipantsUniqueId) in
-            print("\n add participant request uniqueId = \t \(addParticipantsUniqueId) \n")
-        }, completion: { (myResponse) in
-            print("\n this is my add participants response:")
-            let response: AddParticipantModel = myResponse as! AddParticipantModel
-            let responseJSON: JSON = response.returnDataAsJSON()
-            print("\(responseJSON) \n")
-        })
+//        let inputModel = AddParticipantsRequestModel(contacts: [2202, 2869], threadId: 3861, typeCode: nil, uniqueId: nil)
+//        Chat.sharedInstance.addParticipants(addParticipantsInput: inputModel, uniqueId: { (addParticipantsUniqueId) in
+//            print("\n add participant request uniqueId = \t \(addParticipantsUniqueId) \n")
+//        }, completion: { (myResponse) in
+//            print("\n this is my add participants response:")
+//            let response: AddParticipantModel = myResponse as! AddParticipantModel
+//            let responseJSON: JSON = response.returnDataAsJSON()
+//            print("\(responseJSON) \n")
+//        })
+        
+        
+        let input = SendSignalMessageRequestModel(signalType: SignalMessageType.IS_TYPING, threadId: 293, uniqueId: nil)
+//        Chat.sharedInstance.startSignalMessage(input: input)
         
     }
     
@@ -1243,7 +1274,7 @@ extension MyViewController {
     @objc func removeParticipantsButtonPressed() {
 //        let paramsToSend: JSON = ["threadId": 1330, "participants": [1]]
 //
-//        myChatObject?.removeParticipants(params: paramsToSend, uniqueId: { (removeParticipantsUniqueId) in
+//        Chat.sharedInstance.removeParticipants(params: paramsToSend, uniqueId: { (removeParticipantsUniqueId) in
 //            print("\n remove participant request uniqueId = \t \(removeParticipantsUniqueId) \n")
 //        }, completion: { (myResponse) in
 //            print("\n this is my remove participants response:")
@@ -1252,8 +1283,11 @@ extension MyViewController {
 //            print("\(responseJSON) \n")
 //        })
         
+        
+//        print(" PEERID :::: \(Chat.sharedInstance.getPeerId()) ")
+        
         let inputModel = RemoveParticipantsRequestModel(content: [1], threadId: 1330, typeCode: nil, uniqueId: nil)
-        myChatObject?.removeParticipants(removeParticipantsInput: inputModel, uniqueId: { (removeParticipantsUniqueId) in
+        Chat.sharedInstance.removeParticipants(removeParticipantsInput: inputModel, uniqueId: { (removeParticipantsUniqueId) in
             print("\n remove participant request uniqueId = \t \(removeParticipantsUniqueId) \n")
         }, completion: { (myResponse) in
             print("\n this is my remove participants response:")
@@ -1270,7 +1304,7 @@ extension MyViewController {
 //        let params: JSON = ["firstName": "Mehdi2",
 //                            "lastName": "Akbarian2",
 //                            "cellphoneNumber": "093686401802"]
-//        myChatObject?.addContact(params: params, uniqueId: { (addContactUniqueId) in
+//        Chat.sharedInstance.addContact(params: params, uniqueId: { (addContactUniqueId) in
 //            print("\n add Contact request uniqueId = \t \(addContactUniqueId) \n")
 //        }, completion: { (myResponse) in
 //            let myResponseModel: ContactModel = myResponse as! ContactModel
@@ -1279,8 +1313,8 @@ extension MyViewController {
 //            print("\(myResponseJSON)")
 //        })
         
-        let inputModel = AddContactsRequestModel(cellphoneNumber: "09354045350", email: nil, firstName: "Sina", lastName: "Javaheri")
-        myChatObject?.addContact(addContactsInput: inputModel, uniqueId: { (addContactUniqueId) in
+        let inputModel = AddContactsRequestModel(cellphoneNumber: "09354045350", email: nil, firstName: "Sina", lastName: "Javaheri", uniqueId: nil)
+        Chat.sharedInstance.addContact(addContactsInput: inputModel, uniqueId: { (addContactUniqueId) in
             print("\n add Contact request uniqueId = \t \(addContactUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: ContactModel = myResponse as! ContactModel
@@ -1297,7 +1331,7 @@ extension MyViewController {
 //                            "lastName": "Akbarian",
 //                            "cellphoneNumber": "09368640180",
 //                            "email": "Mehdi.Akbarian@fanap.ir"]
-//        myChatObject?.updateContact(params: params, uniqueId: { (updateContactUniqueId) in
+//        Chat.sharedInstance.updateContact(params: params, uniqueId: { (updateContactUniqueId) in
 //            print("\n update Contact request uniqueId = \t \(updateContactUniqueId) \n")
 //        }, completion: { (myResponse) in
 //            let myResponseModel: ContactModel = myResponse as! ContactModel
@@ -1308,8 +1342,8 @@ extension MyViewController {
 //        })
         
         
-        let inputModel = UpdateContactsRequestModel(cellphoneNumber: "09368640180", email: "Mehdi.Akbarian@fanap.ir", firstName: "Mehdi", id: 2225, lastName: "Akbarian")
-        myChatObject?.updateContact(updateContactsInput: inputModel, uniqueId: { (updateContactUniqueId) in
+        let inputModel = UpdateContactsRequestModel(cellphoneNumber: "09368640180", email: "Mehdi.Akbarian@fanap.ir", firstName: "Mehdi", id: 2225, lastName: "Akbarian", uniqueId: nil)
+        Chat.sharedInstance.updateContact(updateContactsInput: inputModel, uniqueId: { (updateContactUniqueId) in
             print("\n update Contact request uniqueId = \t \(updateContactUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: ContactModel = myResponse as! ContactModel
@@ -1323,7 +1357,7 @@ extension MyViewController {
     
     @objc func removeContactButtonPressed() {
 //        let params: JSON = ["id": 4121]
-//        myChatObject?.removeContact(params: params, uniqueId: { (removeContactUniqueId) in
+//        Chat.sharedInstance.removeContact(params: params, uniqueId: { (removeContactUniqueId) in
 //            print("\n remove Contact request uniqueId = \t \(removeContactUniqueId) \n")
 //        }, completion: { (myResponse) in
 //            let myResponseModel: RemoveContactModel = myResponse as! RemoveContactModel
@@ -1333,7 +1367,7 @@ extension MyViewController {
 //        })
         
         let inputModel = RemoveContactsRequestModel(id: 4121)
-        myChatObject?.removeContact(removeContactsInput: inputModel, uniqueId: { (removeContactUniqueId) in
+        Chat.sharedInstance.removeContact(removeContactsInput: inputModel, uniqueId: { (removeContactUniqueId) in
             print("\n remove Contact request uniqueId = \t \(removeContactUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: RemoveContactModel = myResponse as! RemoveContactModel
@@ -1348,7 +1382,7 @@ extension MyViewController {
         let image = UIImage(named: "pic")
         if let data = UIImageJPEGRepresentation(image!, 1) {
 //            let myParams: JSON = ["fileName": "newPic"]
-//            myChatObject?.uploadFile(params: myParams, dataToSend: data, uniqueId: { (uploadFileUniqueId) in
+//            Chat.sharedInstance.uploadFile(params: myParams, dataToSend: data, uniqueId: { (uploadFileUniqueId) in
 //                print("********************************")
 //                print("UploadFileUniqueId is = \(uploadFileUniqueId)")
 //                print("********************************")
@@ -1364,7 +1398,7 @@ extension MyViewController {
 //            })
             
             let inputModel = UploadFileRequestModel(dataToSend: data, fileExtension: nil, fileName: "newPic", fileSize: nil, originalFileName: nil, threadId: nil, uniqueId: nil)
-            myChatObject?.uploadFile(uploadFileInput: inputModel, uniqueId: { (uploadFileUniqueId) in
+            Chat.sharedInstance.uploadFile(uploadFileInput: inputModel, uniqueId: { (uploadFileUniqueId) in
                 print("********************************")
                 print("UploadFileUniqueId is = \(uploadFileUniqueId)")
                 print("********************************")
@@ -1380,7 +1414,7 @@ extension MyViewController {
             })
             
 //            let inputModel = UploadImageRequestModel(dataToSend: data, fileExtension: nil, fileName: "newPic", fileSize: nil, originalFileName: nil, threadId: nil, uniqueId: nil, xC: nil, yC: nil, hC: nil, wC: nil)
-//            myChatObject?.uploadImage(uploadImageInput: inputModel, uniqueId: { (UploadImageUniqueId) in
+//            Chat.sharedInstance.uploadImage(uploadImageInput: inputModel, uniqueId: { (UploadImageUniqueId) in
 //                print("UploadImageUniqueId is = \(UploadImageUniqueId)")
 //            }, progress: { (progress) in
 //                print("Upload Image progress is = \(progress)")
@@ -1409,7 +1443,7 @@ extension MyViewController {
         if let data = UIImageJPEGRepresentation(image!, 1) {
 //            let uploadParams: JSON = ["fileName": "newPic"]
 //
-//            myChatObject?.sendFileMessage(textMessagParams: paramsToSendMessage, fileParams: uploadParams, imageToSend: nil, fileToSend: data, uniqueId: { (messageUniqueId) in
+//            Chat.sharedInstance.sendFileMessage(textMessagParams: paramsToSendMessage, fileParams: uploadParams, imageToSend: nil, fileToSend: data, uniqueId: { (messageUniqueId) in
 //                print("message unique id is = \(messageUniqueId)")
 //            }, uploadProgress: { (prpgress) in
 //                print("upload progress is = \(prpgress)")
@@ -1431,8 +1465,8 @@ extension MyViewController {
 //            })
             
             
-            let inputModel = SendFileMessageRequestModel(fileName: "newPic", imageName: "newPic", xC: nil, yC: nil, hC: nil, wC: nil, threadId: 1101, content: "empty message", metaData: metadata, repliedTo: nil, subjectId: 1101, typeCode: nil, fileToSend: data, imageToSend: nil)
-            myChatObject?.sendFileMessage(sendFileMessageInput: inputModel, uniqueId: { (messageUniqueId) in
+            let inputModel = SendFileMessageRequestModel(fileName: "newPic", imageName: "newPic", xC: nil, yC: nil, hC: nil, wC: nil, threadId: 1101, content: "empty message", metaData: metadata, repliedTo: nil, typeCode: nil, fileToSend: data, imageToSend: nil, uniqueId: nil)
+            Chat.sharedInstance.sendFileMessage(sendFileMessageInput: inputModel, uniqueId: { (messageUniqueId) in
                 print("message unique id is = \(messageUniqueId)")
             }, uploadProgress: { (prpgress) in
                 print("upload progress is = \(prpgress)")
@@ -1454,7 +1488,7 @@ extension MyViewController {
     
     @objc func muteThreadButtonPressed() {
 //        let paramsToSend: JSON = ["subjectId": 1101]
-//        myChatObject?.muteThread(params: paramsToSend, uniqueId: { (muteThreadUniqueId) in
+//        Chat.sharedInstance.muteThread(params: paramsToSend, uniqueId: { (muteThreadUniqueId) in
 //            print("\n mute thread request uniqueId = \t \(muteThreadUniqueId) \n")
 //        }, completion: { (response) in
 //            print("***********************")
@@ -1463,8 +1497,8 @@ extension MyViewController {
 //            print("***********************")
 //        })
         
-        let inputModel = MuteAndUnmuteThreadRequestModel(subjectId: 2195, typeCode: nil)
-        myChatObject?.muteThread(muteThreadInput: inputModel, uniqueId: { (muteThreadUniqueId) in
+        let inputModel = MuteAndUnmuteThreadRequestModel(subjectId: 2195, typeCode: nil, uniqueId: nil)
+        Chat.sharedInstance.muteThread(muteThreadInput: inputModel, uniqueId: { (muteThreadUniqueId) in
             print("\n mute thread request uniqueId = \t \(muteThreadUniqueId) \n")
         }, completion: { (response) in
             print("\n this is my mute thread response:")
@@ -1475,7 +1509,7 @@ extension MyViewController {
     
     @objc func unmuteThreadButtonPressed() {
 //        let paramsToSend: JSON = ["subjectId": 1101]
-//        myChatObject?.unmuteThread(params: paramsToSend, uniqueId: { (unmuteThreadUniqueId) in
+//        Chat.sharedInstance.unmuteThread(params: paramsToSend, uniqueId: { (unmuteThreadUniqueId) in
 //            print("\n unmute thread request uniqueId = \t \(unmuteThreadUniqueId) \n")
 //        }, completion: { (response) in
 //            print("***********************")
@@ -1484,8 +1518,8 @@ extension MyViewController {
 //            print("***********************")
 //        })
         
-        let inputModel = MuteAndUnmuteThreadRequestModel(subjectId: 1101, typeCode: nil)
-        myChatObject?.unmuteThread(unmuteThreadInput: inputModel, uniqueId: { (unmuteThreadUniqueId) in
+        let inputModel = MuteAndUnmuteThreadRequestModel(subjectId: 1101, typeCode: nil, uniqueId: nil)
+        Chat.sharedInstance.unmuteThread(unmuteThreadInput: inputModel, uniqueId: { (unmuteThreadUniqueId) in
             print("\n unmute thread request uniqueId = \t \(unmuteThreadUniqueId) \n")
         }, completion: { (response) in
             print("\n this is my unmute thread response:")
@@ -1499,27 +1533,33 @@ extension MyViewController {
         let metaData: JSON = ["id": 1202,
                               "owner": "masoudmanson",
                               "name": "Masoud"]
-        let paramsToSend: JSON = ["subjectId": 1202,
-                                  "image": "https://static2.farakav.com/files/pictures/thumb/01330672.jpg",
-                                  "description": "توضیحات ترد",
-                                  "title": "عنوان ترد",
-                                  "metadata": metaData]
-        myChatObject?.updateThreadInfo(params: paramsToSend, uniqueId: { (updateThreadInfoUniqueId) in
+        
+        let inputModel = UpdateThreadInfoRequestModel(description: "توضیحات ترد",
+                                                      image: "https://static2.farakav.com/files/pictures/thumb/01330672.jpg",
+                                                      metadata: metaData,
+                                                      threadId: 10794,
+                                                      title: "عنوان ترد",
+                                                      typeCode: nil,
+                                                      uniqueId: nil)
+        
+        Chat.sharedInstance.updateThreadInfo(updateThreadInfoInput: inputModel, uniqueId: { (updateThreadInfoUniqueId) in
             print("***************************")
             print("update thread info unique id = \(updateThreadInfoUniqueId)")
             print("***************************")
         }, completion: { (response) in
             print("***************************")
             print("***************************")
-            print("\(response)")
+            let resModel = response as! GetThreadsModel
+            print("\(resModel.returnDataAsJSON())")
             print("***************************")
             print("***************************")
         })
+        
     }
     
     
     @objc func syncContactsButtonPressed() {
-        myChatObject?.syncContacts(uniqueId: { (syncContactUniqueId) in
+        Chat.sharedInstance.syncContacts(uniqueId: { (syncContactUniqueId) in
             print("\n sync Contact request uniqueId = \t \(syncContactUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: ContactModel = myResponse as! ContactModel
@@ -1535,7 +1575,7 @@ extension MyViewController {
     
     @objc func searchContactsButtonPressed() {
 //        let paramsToSend: JSON = ["firstName": "Mas"]
-//        myChatObject?.searchContacts(params: paramsToSend, uniqueId: { (searchContactsUniqueId) in
+//        Chat.sharedInstance.searchContacts(params: paramsToSend, uniqueId: { (searchContactsUniqueId) in
 //            print("\n search contacts request uniqueId = \t\(searchContactsUniqueId)")
 //        }, completion: { (myResponse) in
 //            print("***********************")
@@ -1554,7 +1594,7 @@ extension MyViewController {
                                                     offset: nil,
                                                     size: nil,
                                                     uniqueId: nil)
-        myChatObject?.searchContacts(searchContactsInput: inputModel, uniqueId: { (searchContactsUniqueId) in
+        Chat.sharedInstance.searchContacts(searchContactsInput: inputModel, uniqueId: { (searchContactsUniqueId) in
             print("\n search contacts request uniqueId = \t\(searchContactsUniqueId)")
         }, completion: { (myResponse) in
             print("***********************")
@@ -1578,7 +1618,7 @@ extension MyViewController {
  
     @objc func blockContactButtonPressed() {
 //        let paramsToSend: JSON = ["contactId": 563]
-//        myChatObject?.blockContact(params: paramsToSend, uniqueId: { (blockContactUniqueId) in
+//        Chat.sharedInstance.blockContact(params: paramsToSend, uniqueId: { (blockContactUniqueId) in
 //            print("\n block request uniqueId = \t \(blockContactUniqueId) \n")
 //        }, completion: { (myResponse) in
 //            print("***********************")
@@ -1591,8 +1631,8 @@ extension MyViewController {
         
 //        let inputModel = BlockContactsRequestModel(contactId: 3157, threadId: nil, typeCode: nil, userId: nil)
 //        let inputModel = BlockContactsRequestModel(contactId: nil, threadId: nil, typeCode: nil, userId: 481)
-        let inputModel = BlockContactsRequestModel(contactId: 896, threadId: nil, typeCode: nil, userId: nil)
-        myChatObject?.blockContact(blockContactsInput: inputModel, uniqueId: { (blockContactUniqueId) in
+        let inputModel = BlockContactsRequestModel(contactId: 896, threadId: nil, typeCode: nil, userId: nil, uniqueId: nil)
+        Chat.sharedInstance.blockContact(blockContactsInput: inputModel, uniqueId: { (blockContactUniqueId) in
             print("\n block request uniqueId = \t \(blockContactUniqueId) \n")
         }, completion: { (myResponse) in
             print("***********************")
@@ -1608,7 +1648,7 @@ extension MyViewController {
     
     @objc func unblockContactButtonPressed() {
 //        let paramsToSend: JSON = ["blockId": 61]
-//        myChatObject?.unblockContact(params: paramsToSend, uniqueId: { (unblockContactUniqueId) in
+//        Chat.sharedInstance.unblockContact(params: paramsToSend, uniqueId: { (unblockContactUniqueId) in
 //            print("\n unblock request uniqueId = \t \(unblockContactUniqueId) \n")
 //        }, completion: { (myResponse) in
 //            print("***********************")
@@ -1620,10 +1660,10 @@ extension MyViewController {
 //        })
         
 //        let inputModel = UnblockContactsRequestModel(blockId: nil, contactId: 3157, threadId: nil, typeCode: nil, userId: nil)
-        let inputModel = UnblockContactsRequestModel(blockId: 896, contactId: nil, threadId: nil, typeCode: nil, userId: nil)
+        let inputModel = UnblockContactsRequestModel(blockId: 896, contactId: nil, threadId: nil, typeCode: nil, userId: nil, uniqueId: nil)
 //        let inputModel = UnblockContactsRequestModel(blockId: nil, contactId: nil, threadId: nil, typeCode: nil, userId: 919)
 //        let inputModel = UnblockContactsRequestModel(blockId: 462, contactId: nil, threadId: nil, typeCode: nil, userId: nil)
-        myChatObject?.unblockContact(unblockContactsInput: inputModel, uniqueId: { (unblockContactUniqueId) in
+        Chat.sharedInstance.unblockContact(unblockContactsInput: inputModel, uniqueId: { (unblockContactUniqueId) in
             print("\n unblock request uniqueId = \t \(unblockContactUniqueId) \n")
         }, completion: { (myResponse) in
             print("***********************")
@@ -1639,7 +1679,7 @@ extension MyViewController {
     
     @objc func getBlockedContactsButtonPressed() {
 
-//        myChatObject?.getBlockedContacts(params: nil, uniqueId: { (getBlockedContactListUniqueId) in
+//        Chat.sharedInstance.getBlockedContacts(params: nil, uniqueId: { (getBlockedContactListUniqueId) in
 //            print("\n get blocked list request uniqueId = \t \(getBlockedContactListUniqueId) \n")
 //        }, completion: { (myResponse) in
 //            let myResponseModel: GetBlockedContactListModel = myResponse as! GetBlockedContactListModel
@@ -1648,8 +1688,8 @@ extension MyViewController {
 //            print("\(myResponseJSON) \n")
 //        })
         
-        let inputModel = GetBlockedContactListRequestModel(count: nil, offset: nil, typeCode: nil)
-        myChatObject?.getBlockedContacts(getBlockedContactsInput: inputModel, uniqueId: { (getBlockedContactListUniqueId) in
+        let inputModel = GetBlockedContactListRequestModel(count: nil, offset: nil, typeCode: nil, uniqueId: nil)
+        Chat.sharedInstance.getBlockedContacts(getBlockedContactsInput: inputModel, uniqueId: { (getBlockedContactListUniqueId) in
             print("\n get blocked list request uniqueId = \t \(getBlockedContactListUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: GetBlockedContactListModel = myResponse as! GetBlockedContactListModel
@@ -1663,7 +1703,7 @@ extension MyViewController {
     
     @objc func leaveThreadButtonPressed() {
 //        let paramsToSend: JSON = ["threadId": 1343]
-//        myChatObject?.leaveThread(params: paramsToSend, uniqueId: { (leaveThreadUniqueId) in
+//        Chat.sharedInstance.leaveThread(params: paramsToSend, uniqueId: { (leaveThreadUniqueId) in
 //            print("\n get blocked list request uniqueId = \t \(leaveThreadUniqueId) \n")
 //        }, completion: { (myResponse) in
 //            let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
@@ -1673,10 +1713,10 @@ extension MyViewController {
 //        })
         
         let inputModel = LeaveThreadRequestModel(content: nil, threadId: 1343, typeCode: nil, uniqueId: nil)
-        myChatObject?.leaveThread(leaveThreadInput: inputModel, uniqueId: { (leaveThreadUniqueId) in
+        Chat.sharedInstance.leaveThread(leaveThreadInput: inputModel, uniqueId: { (leaveThreadUniqueId) in
             print("\n get blocked list request uniqueId = \t \(leaveThreadUniqueId) \n")
         }, completion: { (myResponse) in
-            let myResponseModel: CreateThreadModel = myResponse as! CreateThreadModel
+            let myResponseModel: ThreadModel = myResponse as! ThreadModel
             let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
             print("\n this is my leave thread response:")
             print("\(myResponseJSON) \n")
@@ -1685,38 +1725,38 @@ extension MyViewController {
     
     
     @objc func spamThreadButtonPressed() {
-        let paramsToSend: JSON = ["threadId": 1329]
-        myChatObject?.spamPvThread(params: paramsToSend, uniqueId: { (spamThreadUniqueId) in
-            print("\n get blocked list request uniqueId = \t \(spamThreadUniqueId) \n")
-        }, completion: { (myResponse) in
-            print("\n this is my spam thread response:")
-            print("\(myResponse) \n")
-        })
+//        let paramsToSend: JSON = ["threadId": 1329]
+//        Chat.sharedInstance.spamPvThread(params: paramsToSend, uniqueId: { (spamThreadUniqueId) in
+//            print("\n get blocked list request uniqueId = \t \(spamThreadUniqueId) \n")
+//        }, completion: { (myResponse) in
+//            print("\n this is my spam thread response:")
+//            print("\(myResponse) \n")
+//        })
     }
     
     
     @objc func messageDeliverListButtonPressed() {
-        let paramsToSend: JSON = ["messageId": 16791, "subjectId": 1330]
-        myChatObject?.messageDeliveryList(params: paramsToSend, uniqueId: { (messageDeliverListUniqueId) in
-            print("\n Message Deliver list request uniqueId = \t \(messageDeliverListUniqueId) \n")
-        }, completion: { (myResponse) in
-            print("\n this is my Message Deliver list response:")
-            let responseModel: GetThreadParticipantsModel = myResponse as! GetThreadParticipantsModel
-            let responseJSON: JSON = responseModel.returnDataAsJSON()
-            print("\(responseJSON) \n")
-        })
+//        let paramsToSend: JSON = ["messageId": 16791, "subjectId": 1330]
+//        Chat.sharedInstance.messageDeliveryList(params: paramsToSend, uniqueId: { (messageDeliverListUniqueId) in
+//            print("\n Message Deliver list request uniqueId = \t \(messageDeliverListUniqueId) \n")
+//        }, completion: { (myResponse) in
+//            print("\n this is my Message Deliver list response:")
+//            let responseModel: GetThreadParticipantsModel = myResponse as! GetThreadParticipantsModel
+//            let responseJSON: JSON = responseModel.returnDataAsJSON()
+//            print("\(responseJSON) \n")
+//        })
     }
     
     @objc func messageSeenListButtonPressed() {
-        let paramsToSend: JSON = ["messageId": 16791]
-        myChatObject?.messageSeenList(params: paramsToSend, uniqueId: { (messageSeenListUniqueId) in
-            print("\n Message Seen list request uniqueId = \t \(messageSeenListUniqueId) \n")
-        }, completion: { (myResponse) in
-            print("\n this is my Message Seen list response:")
-            let responseModel: GetThreadParticipantsModel = myResponse as! GetThreadParticipantsModel
-            let responseJSON: JSON = responseModel.returnDataAsJSON()
-            print("\(responseJSON) \n")
-        })
+//        let paramsToSend: JSON = ["messageId": 16791]
+//        Chat.sharedInstance.messageSeenList(params: paramsToSend, uniqueId: { (messageSeenListUniqueId) in
+//            print("\n Message Seen list request uniqueId = \t \(messageSeenListUniqueId) \n")
+//        }, completion: { (myResponse) in
+//            print("\n this is my Message Seen list response:")
+//            let responseModel: GetThreadParticipantsModel = myResponse as! GetThreadParticipantsModel
+//            let responseJSON: JSON = responseModel.returnDataAsJSON()
+//            print("\(responseJSON) \n")
+//        })
     }
     
     
@@ -1726,7 +1766,7 @@ extension MyViewController {
 //        let inputModel = GetImageRequestModel(actual: nil, downloadable: nil, hashCode: "1681e9e6009-0.3921679128527612", height: nil, imageId: 52146, width: nil)
         let inputModel = GetImageRequestModel(actual: nil, downloadable: nil, height: nil, hashCode: "16803a16292-0.15831373791354997", imageId: 52004, width: nil)
 
-        myChatObject?.getImage(getImageInput: inputModel, uniqueId: { (getImageUniqueId) in
+        Chat.sharedInstance.getImage(getImageInput: inputModel, uniqueId: { (getImageUniqueId) in
             print("getImage UniqueId = \(getImageUniqueId)")
         }, progress: { (myDownloadProgress) in
             print("downloadProcess = \(myDownloadProgress)")
@@ -1746,7 +1786,7 @@ extension MyViewController {
     @objc func getFileButtonPressed() {
         
         let inputModel = GetFileRequestModel(downloadable: true, fileId: 52171, hashCode: "168232d744d-0.9990232707506134")
-        myChatObject?.getFile(getFileInput: inputModel, uniqueId: { (getFileUniqueId) in
+        Chat.sharedInstance.getFile(getFileInput: inputModel, uniqueId: { (getFileUniqueId) in
             print("getFile UniqueId = \(getFileUniqueId)")
         }, progress: { (myDownloadProgress) in
             print("downloadProcess = \(myDownloadProgress)")
@@ -1766,7 +1806,7 @@ extension MyViewController {
     
     @objc func mapReverseButtonPressed() {
         let inputModel = MapReverseRequestModel(lat: 36.310886959563085, lng: 59.53563741408013)
-        myChatObject?.mapReverse(mapReverseInput: inputModel, uniqueId: { (mapReverseUniqueId) in
+        Chat.sharedInstance.mapReverse(mapReverseInput: inputModel, uniqueId: { (mapReverseUniqueId) in
             print("Map Reverse UniqueId request = \(mapReverseUniqueId)")
         }, completion: { (theResponse) in
             let res = theResponse as! MapReverseModel
@@ -1776,7 +1816,7 @@ extension MyViewController {
     
     @objc func mapSearchButtonPressed() {
         let inputModel = MapSearchRequestModel(lat: 36.310886959563085, lng: 59.53563741408013, term: "س")
-        myChatObject?.mapSearch(mapSearchInput: inputModel, uniqueId: { (mapSearchUniqueId) in
+        Chat.sharedInstance.mapSearch(mapSearchInput: inputModel, uniqueId: { (mapSearchUniqueId) in
             print("Map Search UniqueId request = \(mapSearchUniqueId)")
         }, completion: { (theResponse) in
             let res = theResponse as! MapSearchModel
@@ -1786,7 +1826,7 @@ extension MyViewController {
     
     @objc func mapRoutingButtonPressed() {
         let inputModel = MapRoutingRequestModel(alternative: true, destinationLat: 36.310886959563085, destinationLng: 59.53563741408013, originLat: 36.28984398444424, originLng: 59.59045107288)
-        myChatObject?.mapRouting(mapRoutingInput: inputModel, uniqueId: { (mapRoutingUniqueId) in
+        Chat.sharedInstance.mapRouting(mapRoutingInput: inputModel, uniqueId: { (mapRoutingUniqueId) in
             print("Map Routing UniqueId request = \(mapRoutingUniqueId)")
         }, completion: { (theResponse) in
             let res = theResponse as! MapRoutingModel
@@ -1796,7 +1836,7 @@ extension MyViewController {
     
     @objc func mapStaticImageButtonPressed() {
         let inputModel = MapStaticImageRequestModel(centerLat: 36.310886959563085, centerLng: 59.53563741408013, height: 500, type: "standard-night", width: 800, zoom: 15)
-        myChatObject?.mapStaticImage(mapStaticImageInput: inputModel, uniqueId: { (mapStaticImageUniqueId) in
+        Chat.sharedInstance.mapStaticImage(mapStaticImageInput: inputModel, uniqueId: { (mapStaticImageUniqueId) in
             print("Map Static Image UniqueId request = \(mapStaticImageUniqueId)")
         }, progress: { (myProgress) in
             print("progress downloaded: \(myProgress)")
@@ -1822,10 +1862,11 @@ extension MyViewController {
                                                               sendMessageContent:   "This is my location on the map",
                                                               sendMessageMetaData:  metadata,
                                                               sendMessageRepliedTo: nil,
-                                                              sendMessageSubjectId: 1342,
-                                                              sendMessageTypeCode:  nil)
+                                                              sendMessageTypeCode:  nil,
+                                                              typeCode:             nil,
+                                                              uniqueId:             nil)
         
-        myChatObject?.sendLocationMessage(sendLocationMessageRequest: locationMessage, uniqueId: { (sendLocationMessageUniqueId) in
+        Chat.sharedInstance.sendLocationMessage(sendLocationMessageRequest: locationMessage, uniqueId: { (sendLocationMessageUniqueId) in
             print("sendLocationMessageUniqueId = \(sendLocationMessageUniqueId)")
         }, downloadProgress: { (progress) in
             print("downloaded progress = \(progress)")
@@ -1842,14 +1883,11 @@ extension MyViewController {
     
     
     @objc func clearHistoryButtonPressed() {
-        let inputModel = ClearHistoryRequestModel(threadId: 2195, uniqueId: nil)
-        myChatObject?.clearHistory(clearHistoryInput: inputModel, uniqueId: { (createHistoryUniqueId) in
+        let inputModel = ClearHistoryRequestModel(threadId: 4622, uniqueId: nil)
+        Chat.sharedInstance.clearHistory(clearHistoryInput: inputModel, uniqueId: { (createHistoryUniqueId) in
             print("\n create history request uniqueId = \t \(createHistoryUniqueId) \n")
         }, completion: { (myResponseJSON) in
             print("\n create history server response:")
-            print("\(myResponseJSON) \n")
-        }, cacheResponse: { (myResponseJSON) in
-            print("\n create history cache response:")
             print("\(myResponseJSON) \n")
         })
     }
@@ -1864,6 +1902,22 @@ extension MyViewController {
 
 
 extension MyViewController: ChatDelegates {
+    func chatConnect() {
+        //
+    }
+    
+    func botEvents(type: BotEventTypes, result: Any) {
+        //
+    }
+    
+    func fileUploadEvents(type: FileUploadEventTypes, result: Any) {
+        //
+    }
+    
+    func systemEvents(type: SystemEventTypes, result: Any) {
+        //
+    }
+    
     func chatConnected() {
         //
     }
@@ -1881,10 +1935,6 @@ extension MyViewController: ChatDelegates {
     }
     
     func chatReady(withUserInfo: User) {
-        //
-    }
-    
-    func userEvents(type: UserEventTypes, result: Any) {
         //
     }
     
