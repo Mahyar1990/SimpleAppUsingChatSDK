@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Bucket
+   uuid = "ADFC40C1-A6E2-4E9C-9107-DC5BCF00752A"
    type = "1"
    version = "2.0">
    <Breakpoints>
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
+            uuid = "BAD85266-EA3C-4C6C-8635-40A05923F8CE"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
@@ -15,8 +17,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "1228"
             endingLineNumber = "1228"
-            landmarkName = "Chat"
-            landmarkType = "21">
+            landmarkName = "startTyping(threadId:uniqueId:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

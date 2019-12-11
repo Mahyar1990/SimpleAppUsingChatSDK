@@ -12,7 +12,15 @@
 		3E63A06C213A526F00E4E2C2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E63A06B213A526F00E4E2C2 /* Assets.xcassets */; };
 		3E63A06F213A526F00E4E2C2 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 3E63A06D213A526F00E4E2C2 /* LaunchScreen.storyboard */; };
 		3E63A07A213A526F00E4E2C2 /* SimpleAppUsingChatTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63A079213A526F00E4E2C2 /* SimpleAppUsingChatTests.swift */; };
-		3E85E841217B47E000CAE8EE /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E85E840217B47E000CAE8EE /* File.swift */; };
+		3E85E841217B47E000CAE8EE /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E85E840217B47E000CAE8EE /* View.swift */; };
+		3EA60BF9239F8EA2001A31F0 /* MZButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA60BF8239F8EA2001A31F0 /* MZButton.swift */; };
+		3EA60BFD239FBC2A001A31F0 /* Thread.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA60BFC239FBC2A001A31F0 /* Thread.swift */; };
+		3EA60BFF239FBC33001A31F0 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA60BFE239FBC33001A31F0 /* Message.swift */; };
+		3EA60C01239FBC3C001A31F0 /* File.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA60C00239FBC3C001A31F0 /* File.swift */; };
+		3EA60C03239FBC44001A31F0 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA60C02239FBC44001A31F0 /* Contact.swift */; };
+		3EA60C05239FBCA2001A31F0 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA60C04239FBCA2001A31F0 /* Map.swift */; };
+		3EA60C07239FBF82001A31F0 /* ChatDelegatesImplementations.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA60C06239FBF82001A31F0 /* ChatDelegatesImplementations.swift */; };
+		3EA60C09239FC016001A31F0 /* CollectionViewDlegates.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA60C08239FC016001A31F0 /* CollectionViewDlegates.swift */; };
 		3EEB083E227EF2B2009DA162 /* FanapPodChatSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3EEB083B227EF2A9009DA162 /* FanapPodChatSDK.framework */; };
 /* End PBXBuildFile section */
 
@@ -50,7 +58,15 @@
 		3E63A075213A526F00E4E2C2 /* SimpleAppUsingChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleAppUsingChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E63A079213A526F00E4E2C2 /* SimpleAppUsingChatTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleAppUsingChatTests.swift; sourceTree = "<group>"; };
 		3E63A07B213A526F00E4E2C2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		3E85E840217B47E000CAE8EE /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		3E85E840217B47E000CAE8EE /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
+		3EA60BF8239F8EA2001A31F0 /* MZButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MZButton.swift; sourceTree = "<group>"; };
+		3EA60BFC239FBC2A001A31F0 /* Thread.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Thread.swift; sourceTree = "<group>"; };
+		3EA60BFE239FBC33001A31F0 /* Message.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		3EA60C00239FBC3C001A31F0 /* File.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = File.swift; sourceTree = "<group>"; };
+		3EA60C02239FBC44001A31F0 /* Contact.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		3EA60C04239FBCA2001A31F0 /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
+		3EA60C06239FBF82001A31F0 /* ChatDelegatesImplementations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatDelegatesImplementations.swift; sourceTree = "<group>"; };
+		3EA60C08239FC016001A31F0 /* CollectionViewDlegates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionViewDlegates.swift; sourceTree = "<group>"; };
 		3EEB0830227EF2A9009DA162 /* FanapPodChatSDK.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FanapPodChatSDK.xcodeproj; path = "../Pod-Chat-iOS-SDK/Pod-Chat-iOS-SDK/FanapPodChatSDK.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -98,7 +114,15 @@
 			children = (
 				3E63A064213A526D00E4E2C2 /* AppDelegate.swift */,
 				3E63A066213A526D00E4E2C2 /* MyViewController.swift */,
-				3E85E840217B47E000CAE8EE /* File.swift */,
+				3EA60C06239FBF82001A31F0 /* ChatDelegatesImplementations.swift */,
+				3EA60BFC239FBC2A001A31F0 /* Thread.swift */,
+				3EA60BFE239FBC33001A31F0 /* Message.swift */,
+				3EA60C00239FBC3C001A31F0 /* File.swift */,
+				3EA60C04239FBCA2001A31F0 /* Map.swift */,
+				3EA60C02239FBC44001A31F0 /* Contact.swift */,
+				3E85E840217B47E000CAE8EE /* View.swift */,
+				3EA60C08239FC016001A31F0 /* CollectionViewDlegates.swift */,
+				3EA60BF8239F8EA2001A31F0 /* MZButton.swift */,
 				3E63A06B213A526F00E4E2C2 /* Assets.xcassets */,
 				3E63A06D213A526F00E4E2C2 /* LaunchScreen.storyboard */,
 				3E63A070213A526F00E4E2C2 /* Info.plist */,
@@ -254,8 +278,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EA60C05239FBCA2001A31F0 /* Map.swift in Sources */,
+				3EA60BFD239FBC2A001A31F0 /* Thread.swift in Sources */,
+				3EA60BFF239FBC33001A31F0 /* Message.swift in Sources */,
+				3EA60BF9239F8EA2001A31F0 /* MZButton.swift in Sources */,
+				3EA60C09239FC016001A31F0 /* CollectionViewDlegates.swift in Sources */,
+				3EA60C07239FBF82001A31F0 /* ChatDelegatesImplementations.swift in Sources */,
 				3E63A067213A526D00E4E2C2 /* MyViewController.swift in Sources */,
-				3E85E841217B47E000CAE8EE /* File.swift in Sources */,
+				3EA60C03239FBC44001A31F0 /* Contact.swift in Sources */,
+				3EA60C01239FBC3C001A31F0 /* File.swift in Sources */,
+				3E85E841217B47E000CAE8EE /* View.swift in Sources */,
 				3E63A065213A526D00E4E2C2 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
