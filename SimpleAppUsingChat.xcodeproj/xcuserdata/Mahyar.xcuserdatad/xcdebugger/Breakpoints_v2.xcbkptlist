@@ -15,8 +15,8 @@
             timestampString = "583065677.150383"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "1228"
-            endingLineNumber = "1228"
+            startingLineNumber = "1230"
+            endingLineNumber = "1230"
             landmarkName = "startTyping(threadId:uniqueId:)"
             landmarkType = "7">
          </BreakpointContent>

@@ -43,7 +43,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
 //    let ssoHost                 = "https://accounts.pod.ir"
 //    let platformHost            = "https://sandbox.pod.ir:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
 //    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "32a850ba99e249a4ace1903b68415cb9"
+    let token                   = "9eea34c904ef4c7d8f073163232fc7d8"
     
     
     // Mehrara

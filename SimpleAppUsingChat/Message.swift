@@ -185,14 +185,14 @@ extension MyViewController {
     
     @objc func sendBotMessageButtonPressed() {
         
-        let inputModel = SendBotMessageRequestModel(content: "Hi.........",
-                                                    messageId: 63288,
-                                                    metaData: ["key1":"value1"],
-                                                    systemMetadata: nil,
-                                                    typeCode: nil,
-                                                    uniqueId: nil)
-        Chat.sharedInstance.sendBotMessage(sendBotMessageInput: inputModel,
-                                           uniqueId: { (botMessageUniqueId) in
+        let inputModel = SendInteractiveMessageRequestModel(content: "Hi.........",
+                                                            messageId: 63288,
+                                                            metaData: ["key1":"value1"],
+                                                            systemMetadata: nil,
+                                                            typeCode: nil,
+                                                            uniqueId: nil)
+        Chat.sharedInstance.sendInteractiveMessage(inputModel: inputModel,
+                                                   uniqueId: { (botMessageUniqueId) in
             print("bot message unique id is = \(botMessageUniqueId)")
         }, onSent: { (isSent) in
             print("bot message Sent:")
@@ -246,6 +246,30 @@ extension MyViewController {
             
         }
     }
+    
+    
+    @objc func sendInteractiveMessageButtonPressed() {
+        
+        let metadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
+        let inputModel = SendInteractiveMessageRequestModel(content:        "heloooo",
+                                                            messageId:      121212121212,
+                                                            metaData:       metadata,
+                                                            systemMetadata: nil,
+                                                            typeCode:       nil,
+                                                            uniqueId:       nil)
+        
+        Chat.sharedInstance.sendInteractiveMessage(inputModel: inputModel, uniqueId: { (interactiveMessageUniqueId) in
+            print("interactive Message unique id is = \(interactiveMessageUniqueId)")
+        }, onSent: { (isSent) in
+            print("message Sent: \n \(isSent)")
+        }, onDelivered: { (isDelivered) in
+            print("message Deliver: \n \(isDelivered)")
+        }) { (isSeen) in
+            print("message Seen: \n \(isSeen)")
+        }
+    }
+    
+    
     
 }
 
