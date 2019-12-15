@@ -45,8 +45,8 @@ extension MyViewController {
     }
     
     @objc func sendMessageToSocketPressed() {
-        sendMessage()
-//        editMessage()
+//        sendMessage()
+        editMessage()
 //        replyMessage()
 //        forwardMessage()
 //        deleteMessage()
@@ -55,7 +55,7 @@ extension MyViewController {
     
     func sendMessage() {
         let metadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
-        let inputModel = SendTextMessageRequestModel(content: "\(inputTextFieldToSendMessage.text ?? "empty message")", metaData: metadata, repliedTo: nil, systemMetadata: nil, threadId: 6500, typeCode: nil, uniqueId: nil)
+        let inputModel = SendTextMessageRequestModel(content: "\(inputTextFieldToSendMessage.text ?? "empty message")", metaData: metadata, repliedTo: nil, systemMetadata: nil, threadId: 13544/*6494*/, typeCode: nil, uniqueId: nil)
         Chat.sharedInstance.sendTextMessage(sendTextMessageInput: inputModel, uniqueId: { (uniqueIdStr) in
             print("message uniqueId is: \(uniqueIdStr)")
         }, onSent: { (isSent) in
@@ -69,7 +69,7 @@ extension MyViewController {
     }
     
     func editMessage() {
-        let inputModel = EditTextMessageRequestModel(content: "text message", metaData: nil, repliedTo: nil, messageId: 10799, typeCode: nil, uniqueId: nil)
+        let inputModel = EditTextMessageRequestModel(content: "text message", metaData: nil, repliedTo: nil, messageId: 63291, typeCode: nil, uniqueId: nil)
         Chat.sharedInstance.editMessage(editMessageInput: inputModel, uniqueId: { (editMessageUniqueId) in
             print("\n edit message request uniqueId = \t \(editMessageUniqueId) \n")
         }, completion: { (successResponse) in

@@ -201,6 +201,8 @@ extension MyViewController {
         setAuditor.setTitle("set Audito...", for: .normal)
         setAuditor.addTarget(self, action: #selector(SetAuditorButtonSelected), for: .touchUpInside)
         
+        deleteCache.setTitle("delete Cache", for: .normal)
+        deleteCache.addTarget(self, action: #selector(deleteCacheButtonPressed), for: .touchUpInside)
         
     }
     
@@ -257,6 +259,7 @@ extension MyViewController {
         view.addSubview(sendLocatinoMessage)
         view.addSubview(sendBotMessage)
         view.addSubview(setAuditor)
+        view.addSubview(deleteCache)
         
         view.addSubview(logView)
         logView.addSubview(myLogCollectionView)
@@ -461,6 +464,12 @@ extension MyViewController {
         setAuditor.leftAnchor.constraint(equalTo: getUserInfoButton.leftAnchor).isActive = true
         setAuditor.rightAnchor.constraint(equalTo: getUserInfoButton.rightAnchor).isActive = true
         setAuditor.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        
+        deleteCache.topAnchor.constraint(equalTo: setAuditor.topAnchor).isActive = true
+        deleteCache.leftAnchor.constraint(equalTo: getThreadsButton.leftAnchor).isActive = true
+        deleteCache.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
+        deleteCache.bottomAnchor.constraint(equalTo: setAuditor.bottomAnchor).isActive = true
+        
         
         logView.topAnchor.constraint(equalTo: setAuditor.bottomAnchor, constant: 8).isActive = true
         logView.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true

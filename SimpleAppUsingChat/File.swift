@@ -25,11 +25,12 @@ extension MyViewController {
             print("This is my GetImage Response from Server")
             let rsponseJSON = responseModel.returnDataAsJSON()
             print("\(rsponseJSON)")
-        }, cacheResponse: { (cacheResponse, filePath) in
+//        }, cacheResponse: { (filePath, cacheResponse) in
+        }, cacheResponse: { (fileData, cacheResponse) in
             print("This is my GetImage Response from Cache")
             let rsponseJSON = cacheResponse.returnDataAsJSON()
             print("response = \(rsponseJSON)")
-            print("filePath = \(filePath)")
+//            print("filePath = \(filePath)")
         })
         
     }
@@ -45,11 +46,12 @@ extension MyViewController {
             print("This is my GetFile Response from Server")
             let rsponseJSON = response.returnDataAsJSON()
             print("\(rsponseJSON)")
-        }, cacheResponse: { (cacheResponse, filePath) in
+//        }, cacheResponse: { (cacheResponse, filePath) in
+        }, cacheResponse: { (fileData, cacheResponse) in
             print("This is my GetFile Response from Cache")
             let rsponseJSON = cacheResponse.returnDataAsJSON()
             print("response = \(rsponseJSON)")
-            print("filePath = \(filePath)")
+//            print("filePath = \(filePath)")
         })
         
     }
