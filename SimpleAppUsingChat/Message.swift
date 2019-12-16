@@ -55,7 +55,7 @@ extension MyViewController {
     
     func sendMessage() {
         let metadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
-        let inputModel = SendTextMessageRequestModel(content: "\(inputTextFieldToSendMessage.text ?? "empty message")", metaData: metadata, repliedTo: nil, systemMetadata: nil, threadId: 13544/*6494*/, typeCode: nil, uniqueId: nil)
+        let inputModel = SendTextMessageRequestModel(content: "\(inputTextFieldToSendMessage.text ?? "empty message")", metadata: metadata, repliedTo: nil, systemMetadata: nil, threadId: 13544/*6494*/, typeCode: nil, uniqueId: nil)
         Chat.sharedInstance.sendTextMessage(inputModel: inputModel, uniqueId: { (uniqueIdStr) in
             print("message uniqueId is: \(uniqueIdStr)")
         }, onSent: { (isSent) in
@@ -69,7 +69,7 @@ extension MyViewController {
     }
     
     func editMessage() {
-        let inputModel = EditTextMessageRequestModel(content: "text message", metaData: nil, repliedTo: nil, messageId: 63291, typeCode: nil, uniqueId: nil)
+        let inputModel = EditTextMessageRequestModel(content: "text message", metadata: nil, repliedTo: nil, messageId: 63291, typeCode: nil, uniqueId: nil)
         Chat.sharedInstance.editMessage(inputModel: inputModel, uniqueId: { (editMessageUniqueId) in
             print("\n edit message request uniqueId = \t \(editMessageUniqueId) \n")
         }, completion: { (successResponse) in
@@ -80,7 +80,7 @@ extension MyViewController {
     
     func replyMessage() {
         
-        let inputModel = ReplyTextMessageRequestModel(content: "\(inputTextFieldToSendMessage.text ?? "empty message")", metaData: nil, repliedTo: 35447, subjectId: 9953, typeCode: nil, uniqueId: nil)
+        let inputModel = ReplyTextMessageRequestModel(content: "\(inputTextFieldToSendMessage.text ?? "empty message")", metadata: nil, repliedTo: 35447, subjectId: 9953, typeCode: nil, uniqueId: nil)
         Chat.sharedInstance.replyMessage(inputModel: inputModel, uniqueId: { (uniqueIdStr) in
             print("message uniqueId is: \(uniqueIdStr)")
         }, onSent: { (isSent) in
@@ -95,7 +95,7 @@ extension MyViewController {
     
     func forwardMessage() {
         
-        let inputModel = ForwardMessageRequestModel(messageIds: [15395], metaData: nil, repliedTo: nil, threadId: 1133, typeCode: nil)
+        let inputModel = ForwardMessageRequestModel(messageIds: [15395], metadata: nil, repliedTo: nil, threadId: 1133, typeCode: nil)
         Chat.sharedInstance.forwardMessage(inputModel: inputModel, uniqueIds: { (uniqueIdArr) in
             print("message uniqueId is: \(uniqueIdArr)")
         }, onSent: { (isSent) in
@@ -150,7 +150,7 @@ extension MyViewController {
                                                               sendMessageWC:        nil,
                                                               sendMessageThreadId:  1342,
                                                               sendMessageContent:   "This is my location on the map",
-                                                              sendMessageMetaData:  metadata,
+                                                              sendMessageMetadata:  metadata,
                                                               sendMessageRepliedTo: nil,
                                                               sendMessageTypeCode:  nil,
                                                               typeCode:             nil,
@@ -187,7 +187,7 @@ extension MyViewController {
         
         let inputModel = SendInteractiveMessageRequestModel(content: "Hi.........",
                                                             messageId: 63288,
-                                                            metaData: ["key1":"value1"],
+                                                            metadata: ["key1":"value1"],
                                                             systemMetadata: nil,
                                                             typeCode: nil,
                                                             uniqueId: nil)
@@ -222,7 +222,7 @@ extension MyViewController {
                                                          wC: nil,
                                                          threadId: 1101,
                                                          content: "empty message",
-                                                         metaData: metadata,
+                                                         metadata: metadata,
                                                          repliedTo: nil,
                                                          fileToSend: nil,
                                                          imageToSend: data,
@@ -253,7 +253,7 @@ extension MyViewController {
         let metadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
         let inputModel = SendInteractiveMessageRequestModel(content:        "heloooo",
                                                             messageId:      121212121212,
-                                                            metaData:       metadata,
+                                                            metadata:       metadata,
                                                             systemMetadata: nil,
                                                             typeCode:       nil,
                                                             uniqueId:       nil)

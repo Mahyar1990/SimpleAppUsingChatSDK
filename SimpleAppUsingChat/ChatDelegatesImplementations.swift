@@ -56,7 +56,8 @@ extension MyViewController: ChatDelegates {
     }
     
     func messageEvents(type: MessageEventTypes, result: Any) {
-        //
+        let theType = (type == MessageEventTypes.MESSAGE_NEW) ? "new" : "delete"
+        print("messageEvent Comes: \n messageType = \(theType) \n messageId = \((result as! Message).id)\n message = \((result as! Message).message)\n\n")
     }
     
     func threadEvents(type: ThreadEventTypes, result: Any) {
