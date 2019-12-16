@@ -15,7 +15,7 @@ extension MyViewController {
     @objc func getContactsButtonPressed() {
         
         let inputModel = GetContactsRequestModel(count: 50, offset: 0, query: nil, typeCode: nil, uniqueId: nil)
-        Chat.sharedInstance.getContacts(getContactsInput: inputModel, uniqueId: { (getContactUniqueId) in
+        Chat.sharedInstance.getContacts(inputModel: inputModel, uniqueId: { (getContactUniqueId) in
             print("\n get contact request uniqueId = \t \(getContactUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: GetContactsModel = myResponse as! GetContactsModel
@@ -33,12 +33,12 @@ extension MyViewController {
     @objc func addContactButtonPressed() {
         
         let inputModel = AddContactRequestModel(cellphoneNumber: "09354045350",
-                                                 email: nil,
-                                                 firstName: "Sina",
-                                                 lastName: "Javaheri",
-                                                 typeCode: nil,
-                                                 uniqueId: nil)
-        Chat.sharedInstance.addContact(addContactsInput: inputModel, uniqueId: { (addContactUniqueId) in
+                                                email: nil,
+                                                firstName: "Sina",
+                                                lastName: "Javaheri",
+                                                typeCode: nil,
+                                                uniqueId: nil)
+        Chat.sharedInstance.addContact(inputModel: inputModel, uniqueId: { (addContactUniqueId) in
             print("\n add Contact request uniqueId = \t \(addContactUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: ContactModel = myResponse as! ContactModel
@@ -57,7 +57,7 @@ extension MyViewController {
                                                     lastName: "Akbarian",
                                                     typeCode: nil,
                                                     uniqueId: nil)
-        Chat.sharedInstance.updateContact(updateContactsInput: inputModel, uniqueId: { (updateContactUniqueId) in
+        Chat.sharedInstance.updateContact(inputModel: inputModel, uniqueId: { (updateContactUniqueId) in
             print("\n update Contact request uniqueId = \t \(updateContactUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: ContactModel = myResponse as! ContactModel
@@ -73,7 +73,7 @@ extension MyViewController {
         let inputModel = RemoveContactsRequestModel(contactId: 4121,
                                                     typeCode: nil,
                                                     uniqueId: nil)
-        Chat.sharedInstance.removeContact(removeContactsInput: inputModel, uniqueId: { (removeContactUniqueId) in
+        Chat.sharedInstance.removeContact(inputModel: inputModel, uniqueId: { (removeContactUniqueId) in
             print("\n remove Contact request uniqueId = \t \(removeContactUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: RemoveContactModel = myResponse as! RemoveContactModel
@@ -104,7 +104,7 @@ extension MyViewController {
                                                    userId: nil,
                                                    typeCode: nil,
                                                    uniqueId: nil)
-        Chat.sharedInstance.blockContact(blockContactsInput: inputModel, uniqueId: { (blockContactUniqueId) in
+        Chat.sharedInstance.blockContact(inputModel: inputModel, uniqueId: { (blockContactUniqueId) in
             print("\n block request uniqueId = \t \(blockContactUniqueId) \n")
         }, completion: { (myResponse) in
             print("***********************")
@@ -125,7 +125,7 @@ extension MyViewController {
                                                      userId: nil,
                                                      typeCode: nil,
                                                      uniqueId: nil)
-        Chat.sharedInstance.unblockContact(unblockContactsInput: inputModel, uniqueId: { (unblockContactUniqueId) in
+        Chat.sharedInstance.unblockContact(inputModel: inputModel, uniqueId: { (unblockContactUniqueId) in
             print("\n unblock request uniqueId = \t \(unblockContactUniqueId) \n")
         }, completion: { (myResponse) in
             print("***********************")
@@ -141,7 +141,7 @@ extension MyViewController {
     @objc func getBlockedContactsButtonPressed() {
         
         let inputModel = GetBlockedContactListRequestModel(count: nil, offset: nil, typeCode: nil, uniqueId: nil)
-        Chat.sharedInstance.getBlockedContacts(getBlockedContactsInput: inputModel, uniqueId: { (getBlockedContactListUniqueId) in
+        Chat.sharedInstance.getBlockedContacts(inputModel: inputModel, uniqueId: { (getBlockedContactListUniqueId) in
             print("\n get blocked list request uniqueId = \t \(getBlockedContactListUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: GetBlockedContactListModel = myResponse as! GetBlockedContactListModel
@@ -163,7 +163,7 @@ extension MyViewController {
                                                     size: nil,
                                                     typeCode: nil,
                                                     uniqueId: nil)
-        Chat.sharedInstance.searchContacts(searchContactsInput: inputModel, uniqueId: { (searchContactsUniqueId) in
+        Chat.sharedInstance.searchContacts(inputModel: inputModel, uniqueId: { (searchContactsUniqueId) in
             print("\n search contacts request uniqueId = \t\(searchContactsUniqueId)")
         }, completion: { (myResponse) in
             print("***********************")

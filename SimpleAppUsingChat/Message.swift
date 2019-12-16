@@ -29,7 +29,7 @@ extension MyViewController {
                                                 userId: nil,
                                                 typeCode: nil,
                                                 uniqueId: nil)
-        Chat.sharedInstance.getHistory(getHistoryInput: inputModel, uniqueId: { (getHistoryUniqueId) in
+        Chat.sharedInstance.getHistory(inputModel: inputModel, uniqueId: { (getHistoryUniqueId) in
             print("\n get history request uniqueId = \t \(getHistoryUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: GetHistoryModel = myResponse as! GetHistoryModel
@@ -56,7 +56,7 @@ extension MyViewController {
     func sendMessage() {
         let metadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
         let inputModel = SendTextMessageRequestModel(content: "\(inputTextFieldToSendMessage.text ?? "empty message")", metaData: metadata, repliedTo: nil, systemMetadata: nil, threadId: 13544/*6494*/, typeCode: nil, uniqueId: nil)
-        Chat.sharedInstance.sendTextMessage(sendTextMessageInput: inputModel, uniqueId: { (uniqueIdStr) in
+        Chat.sharedInstance.sendTextMessage(inputModel: inputModel, uniqueId: { (uniqueIdStr) in
             print("message uniqueId is: \(uniqueIdStr)")
         }, onSent: { (isSent) in
             print("the message is sent = \(isSent)")
@@ -70,7 +70,7 @@ extension MyViewController {
     
     func editMessage() {
         let inputModel = EditTextMessageRequestModel(content: "text message", metaData: nil, repliedTo: nil, messageId: 63291, typeCode: nil, uniqueId: nil)
-        Chat.sharedInstance.editMessage(editMessageInput: inputModel, uniqueId: { (editMessageUniqueId) in
+        Chat.sharedInstance.editMessage(inputModel: inputModel, uniqueId: { (editMessageUniqueId) in
             print("\n edit message request uniqueId = \t \(editMessageUniqueId) \n")
         }, completion: { (successResponse) in
             print("message is edited successfully: \(successResponse)")
@@ -81,7 +81,7 @@ extension MyViewController {
     func replyMessage() {
         
         let inputModel = ReplyTextMessageRequestModel(content: "\(inputTextFieldToSendMessage.text ?? "empty message")", metaData: nil, repliedTo: 35447, subjectId: 9953, typeCode: nil, uniqueId: nil)
-        Chat.sharedInstance.replyMessage(replyMessageInput: inputModel, uniqueId: { (uniqueIdStr) in
+        Chat.sharedInstance.replyMessage(inputModel: inputModel, uniqueId: { (uniqueIdStr) in
             print("message uniqueId is: \(uniqueIdStr)")
         }, onSent: { (isSent) in
             print("the message is sent = \(isSent)")
@@ -96,7 +96,7 @@ extension MyViewController {
     func forwardMessage() {
         
         let inputModel = ForwardMessageRequestModel(messageIds: [15395], metaData: nil, repliedTo: nil, threadId: 1133, typeCode: nil)
-        Chat.sharedInstance.forwardMessage(forwardMessageInput: inputModel, uniqueIds: { (uniqueIdArr) in
+        Chat.sharedInstance.forwardMessage(inputModel: inputModel, uniqueIds: { (uniqueIdArr) in
             print("message uniqueId is: \(uniqueIdArr)")
         }, onSent: { (isSent) in
             print("the message is sent = \(isSent)")
@@ -111,7 +111,7 @@ extension MyViewController {
     func deleteMessage() {
         
         let inputModel = DeleteMessageRequestModel(deleteForAll: nil, subjectId: 35486, typeCode: nil, uniqueId: nil)
-        Chat.sharedInstance.deleteMessage(deleteMessageInput: inputModel, uniqueId: { (deleteMEssageUniqueId) in
+        Chat.sharedInstance.deleteMessage(inputModel: inputModel, uniqueId: { (deleteMEssageUniqueId) in
             print("Delete Message Unique ID = \(deleteMEssageUniqueId)")
         }, completion: { (response) in
             print("delete Message response: \n \(response)")
@@ -125,7 +125,7 @@ extension MyViewController {
                                                             threadId: 1103,
                                                             messageIds: [35486],
                                                             typeCode: nil)
-        Chat.sharedInstance.deleteMultipleMessages(deleteMessageInput: inputModel, uniqueId: { (deleteMEssageUniqueId) in
+        Chat.sharedInstance.deleteMultipleMessages(inputModel: inputModel, uniqueId: { (deleteMEssageUniqueId) in
             print("Delete Multiple Messages Unique ID = \(deleteMEssageUniqueId)")
         }, completion: { (response) in
             print("delete Message response: \n \(response)")
@@ -156,7 +156,7 @@ extension MyViewController {
                                                               typeCode:             nil,
                                                               uniqueId:             nil)
         
-        Chat.sharedInstance.sendLocationMessage(sendLocationMessageRequest: locationMessage, uniqueId: { (sendLocationMessageUniqueId) in
+        Chat.sharedInstance.sendLocationMessage(inputModel: locationMessage, uniqueId: { (sendLocationMessageUniqueId) in
             print("sendLocationMessageUniqueId = \(sendLocationMessageUniqueId)")
         }, downloadProgress: { (progress) in
             print("downloaded progress = \(progress)")
@@ -175,7 +175,7 @@ extension MyViewController {
         let inputModel = ClearHistoryRequestModel(threadId: 4622,
                                                   typeCode: nil,
                                                   uniqueId: nil)
-        Chat.sharedInstance.clearHistory(clearHistoryInput: inputModel, uniqueId: { (createHistoryUniqueId) in
+        Chat.sharedInstance.clearHistory(inputModel: inputModel, uniqueId: { (createHistoryUniqueId) in
             print("\n create history request uniqueId = \t \(createHistoryUniqueId) \n")
         }, completion: { (myResponseJSON) in
             print("\n create history server response:")
@@ -228,7 +228,7 @@ extension MyViewController {
                                                          imageToSend: data,
                                                          typeCode: nil,
                                                          uniqueId: nil)
-            Chat.sharedInstance.sendFileMessage(sendFileMessageInput: inputModel, uniqueId: { (messageUniqueId) in
+            Chat.sharedInstance.sendFileMessage(inputModel: inputModel, uniqueId: { (messageUniqueId) in
                 print("message unique id is = \(messageUniqueId)")
             }, uploadProgress: { (prpgress) in
                 print("upload progress is = \(prpgress)")

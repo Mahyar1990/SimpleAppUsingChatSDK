@@ -24,7 +24,7 @@ extension MyViewController {
                                                 threadIds: nil,
                                                 typeCode: nil,
                                                 uniqueId: nil)
-        Chat.sharedInstance.getThreads(getThreadsInput: inputModel, uniqueId: { (getThreadUniqueId) in
+        Chat.sharedInstance.getThreads(inputModel: inputModel, uniqueId: { (getThreadUniqueId) in
             print("\n get thread request uniqueId = \t \(getThreadUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: GetThreadsModel = myResponse as! GetThreadsModel
@@ -50,7 +50,7 @@ extension MyViewController {
                                                            threadId: 3284,
                                                            typeCode: nil,
                                                            uniqueId: nil)
-        Chat.sharedInstance.getThreadParticipants(getThreadParticipantsInput: inputModel, uniqueId: { (getThreadParticipantUniqueId) in
+        Chat.sharedInstance.getThreadParticipants(inputModel: inputModel, uniqueId: { (getThreadParticipantUniqueId) in
             print("\n get thread participant request unique id = \t \(getThreadParticipantUniqueId)")
         }, completion: { (myResponse) in
             let myResponseModel: GetThreadParticipantsModel = myResponse as! GetThreadParticipantsModel
@@ -83,7 +83,7 @@ extension MyViewController {
                                                   typeCode:     nil,
                                                   uniqueId:     nil)
         
-        Chat.sharedInstance.createThread(createThreadInput: inputModel, uniqueId: { (createThreadUniqeuId) in
+        Chat.sharedInstance.createThread(inputModel: inputModel, uniqueId: { (createThreadUniqeuId) in
             print("\n create thread reqeuest uniqueId = \t \(createThreadUniqeuId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: ThreadModel = myResponse as! ThreadModel
@@ -168,7 +168,7 @@ extension MyViewController {
     @objc func removeParticipantsButtonPressed() {
         
         let inputModel = RemoveParticipantsRequestModel(participantIds: [1], threadId: 1330, typeCode: nil, uniqueId: nil)
-        Chat.sharedInstance.removeParticipants(removeParticipantsInput: inputModel, uniqueId: { (removeParticipantsUniqueId) in
+        Chat.sharedInstance.removeParticipants(inputModel: inputModel, uniqueId: { (removeParticipantsUniqueId) in
             print("\n remove participant request uniqueId = \t \(removeParticipantsUniqueId) \n")
         }, completion: { (myResponse) in
             print("\n this is my remove participants response:")
@@ -182,7 +182,7 @@ extension MyViewController {
     @objc func muteThreadButtonPressed() {
         
        let inputModel = MuteAndUnmuteThreadRequestModel(subjectId: 2195, typeCode: nil, uniqueId: nil)
-       Chat.sharedInstance.muteThread(muteThreadInput: inputModel, uniqueId: { (muteThreadUniqueId) in
+       Chat.sharedInstance.muteThread(inputModel: inputModel, uniqueId: { (muteThreadUniqueId) in
            print("\n mute thread request uniqueId = \t \(muteThreadUniqueId) \n")
        }, completion: { (response) in
            print("\n this is my mute thread response:")
@@ -193,7 +193,7 @@ extension MyViewController {
     @objc func unmuteThreadButtonPressed() {
        
        let inputModel = MuteAndUnmuteThreadRequestModel(subjectId: 1101, typeCode: nil, uniqueId: nil)
-       Chat.sharedInstance.unmuteThread(unmuteThreadInput: inputModel, uniqueId: { (unmuteThreadUniqueId) in
+       Chat.sharedInstance.unmuteThread(inputModel: inputModel, uniqueId: { (unmuteThreadUniqueId) in
            print("\n unmute thread request uniqueId = \t \(unmuteThreadUniqueId) \n")
        }, completion: { (response) in
            print("\n this is my unmute thread response:")
@@ -215,7 +215,7 @@ extension MyViewController {
                                                         typeCode: nil,
                                                         uniqueId: nil)
         
-        Chat.sharedInstance.updateThreadInfo(updateThreadInfoInput: inputModel, uniqueId: { (updateThreadInfoUniqueId) in
+        Chat.sharedInstance.updateThreadInfo(inputModel: inputModel, uniqueId: { (updateThreadInfoUniqueId) in
             print("***************************")
             print("update thread info unique id = \(updateThreadInfoUniqueId)")
             print("***************************")
@@ -235,7 +235,7 @@ extension MyViewController {
     @objc func leaveThreadButtonPressed() {
         
         let inputModel = LeaveThreadRequestModel(threadId: 1343, typeCode: nil, uniqueId: nil)
-        Chat.sharedInstance.leaveThread(leaveThreadInput: inputModel, uniqueId: { (leaveThreadUniqueId) in
+        Chat.sharedInstance.leaveThread(inputModel: inputModel, uniqueId: { (leaveThreadUniqueId) in
             print("\n get blocked list request uniqueId = \t \(leaveThreadUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseModel: ThreadModel = myResponse as! ThreadModel
@@ -288,7 +288,7 @@ extension MyViewController {
                                              userId: 1,
                                              typeCode: nil,
                                              uniqueId: nil)
-        Chat.sharedInstance.setRole(setRoleInput: [inputModel], uniqueId: { (setAuiditoUniqueId) in
+        Chat.sharedInstance.setRole(inputModel: [inputModel], uniqueId: { (setAuiditoUniqueId) in
             print("\n set auditor request unique id = \t \(setAuiditoUniqueId)")
         }, completion: { (serverResponse) in
             let serverRes = serverResponse as! UserRolesModel
