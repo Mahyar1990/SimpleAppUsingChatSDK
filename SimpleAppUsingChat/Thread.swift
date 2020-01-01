@@ -18,7 +18,7 @@ extension MyViewController {
                                                 metadataCriteria: nil,
                                                 name: nil,
                                                 new: nil,
-                                                offset: nil,
+                                                offset: 0,
                                                 partnerCoreContactId: nil,
                                                 partnerCoreUserId: nil,
                                                 threadIds: nil,
@@ -282,12 +282,11 @@ extension MyViewController {
     @objc func SetAuditorButtonSelected() {
         
         let roles = [Roles.READ_THREAD , Roles.EDIT_THREAD]
-        let inputModel = SetRoleRequestModel(roles: roles,
-                                             roleOperation: RoleOperations.Add,
-                                             threadId: 3284,
-                                             userId: 1,
-                                             typeCode: nil,
-                                             uniqueId: nil)
+        let inputModel = RoleRequestModel(roles: roles,
+                                          threadId: 3284,
+                                          userId: 1,
+                                          typeCode: nil,
+                                          uniqueId: nil)
         Chat.sharedInstance.setRole(inputModel: [inputModel], uniqueId: { (setAuiditoUniqueId) in
             print("\n set auditor request unique id = \t \(setAuiditoUniqueId)")
         }, completion: { (serverResponse) in

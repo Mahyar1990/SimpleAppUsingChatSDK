@@ -30,20 +30,20 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     */
     
     // Main Addresses
-    var socketAddress   = "wss://msg.pod.ir/ws"
-    var ssoHost         = "https://accounts.pod.ir"
-    var platformHost    = "https://api.pod.ir/srv/core"
-    var fileServer      = "https://core.pod.ir"
-    var serverName      = "chat-server"
+//    var socketAddress   = "wss://msg.pod.ir/ws"
+//    var ssoHost         = "https://accounts.pod.ir"
+//    var platformHost    = "https://api.pod.ir/srv/core"
+//    var fileServer      = "https://core.pod.ir"
+//    var serverName      = "chat-server"
     
     
     // SandBox Addresses:
-//    let socketAddress           = "wss://chat-sandbox.pod.ir/ws"
-//    let serverName              = "chat-server"
-//    let ssoHost                 = "https://accounts.pod.ir"
-//    let platformHost            = "https://sandbox.pod.ir:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
-//    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "7a603f5d8b554424910e977150ff8f86"
+    let socketAddress           = "wss://chat-sandbox.pod.ir/ws"
+    let serverName              = "chat-server"
+    let ssoHost                 = "https://accounts.pod.ir"
+    let platformHost            = "https://sandbox.pod.ir:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
+    let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
+    let token                   = "1f1b87af863945c4b16807defa46330e"
     
     
     // Mehrara

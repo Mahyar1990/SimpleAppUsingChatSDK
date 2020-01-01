@@ -15,7 +15,7 @@ extension MyViewController {
     
     @objc func getImgeButtonPressed() {
         
-        let inputModel = GetImageRequestModel(actual: nil, downloadable: nil, height: nil, hashCode: "16803a16292-0.15831373791354997", imageId: 52004, width: nil)
+        let inputModel = GetImageRequestModel(actual: nil, downloadable: nil, height: nil, hashCode: "16f621fa6ce-0.6413126404223938", imageId: 67976, width: nil, serverResponse: nil)
 
         Chat.sharedInstance.getImage(inputModel: inputModel, uniqueId: { (getImageUniqueId) in
             print("getImage UniqueId = \(getImageUniqueId)")
@@ -37,7 +37,7 @@ extension MyViewController {
     
     @objc func getFileButtonPressed() {
         
-        let inputModel = GetFileRequestModel(downloadable: true, fileId: 52171, hashCode: "168232d744d-0.9990232707506134")
+        let inputModel = GetFileRequestModel(downloadable: true, fileId: 52171, hashCode: "168232d744d-0.9990232707506134", serverResponse: nil)
         Chat.sharedInstance.getFile(inputModel: inputModel, uniqueId: { (getFileUniqueId) in
             print("getFile UniqueId = \(getFileUniqueId)")
         }, progress: { (myDownloadProgress) in
@@ -62,7 +62,6 @@ extension MyViewController {
             let inputModel = UploadFileRequestModel(dataToSend: data,
                                                     fileExtension: nil,
                                                     fileName: "newPic",
-                                                    fileSize: nil,
                                                     originalFileName: nil,
                                                     threadId: nil,
                                                     typeCode: nil,

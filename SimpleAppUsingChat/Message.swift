@@ -14,7 +14,7 @@ extension MyViewController {
     
     @objc func getHistoryButtonPressed() {
         
-        let inputModel = GetHistoryRequestModel(count: nil,
+        let inputModel = GetHistoryRequestModel(count: 10,
                                                 fromTime: nil,
                                                 messageId: nil,
                                                 messageType: nil,
@@ -23,7 +23,7 @@ extension MyViewController {
                                                 order: nil,
                                                 query: nil,
                                                 senderId: nil,
-                                                threadId: 13544,//6494,// 10720,
+                                                threadId: 3284,//13544,//6494,// 10720,
                                                 toTime: nil,
                                                 uniqueIds: nil,
                                                 userId: nil,
@@ -32,21 +32,48 @@ extension MyViewController {
         Chat.sharedInstance.getHistory(inputModel: inputModel, uniqueId: { (getHistoryUniqueId) in
             print("\n get history request uniqueId = \t \(getHistoryUniqueId) \n")
         }, completion: { (myResponse) in
-            let myResponseModel: GetHistoryModel = myResponse as! GetHistoryModel
-            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
-            print("\n this is my get history response from Server:")
-            print("\(myResponseJSON) \n")
+            let myResponseJSON = (myResponse as! GetHistoryModel).returnDataAsJSON()
+            print("\n this is my get history response from Server: \n \(myResponseJSON) \n")
         }, cacheResponse: { (historyResponse) in
-            print("\n this is my get history response from Cache:")
             let responseJSON = historyResponse.returnDataAsJSON()
-            print("\(responseJSON)")
-        }, textMessagesNotSent: { (_) in }, editMessagesNotSent: { (_) in }, forwardMessagesNotSent: { (_) in }, fileMessagesNotSent: { (_) in }, uploadImageNotSent: { (_) in }, uploadFileNotSent: { (_) in })
+            print("\n this is my get history response from Cache: \n \(responseJSON) \n")
+        }, textMessagesNotSent: { (textMessagesWaiting) in
+            print("\n this is my TextWaitQueue response from Cache:")
+            for item in textMessagesWaiting {
+                print("\(item.returnDataAsJSON())")
+            }
+        }, editMessagesNotSent: { (editMessagesWaiting) in
+            print("\n this is my EditWaitQueue response from Cache:")
+            for item in editMessagesWaiting {
+                print("\(item.returnDataAsJSON())")
+            }
+        }, forwardMessagesNotSent: { (forwardMessagesWaiting) in
+            print("\n this is my ForwardWaitQueue response from Cache:")
+            for item in forwardMessagesWaiting {
+                print("\(item.returnDataAsJSON())")
+            }
+        }, fileMessagesNotSent: { (fileMessagesWaiting) in
+            print("\n this is my FileWaitQueue response from Cache:")
+            for item in fileMessagesWaiting {
+                print("\(item.returnDataAsJSONAndData())")
+            }
+        }, uploadImageNotSent: { (uploadImagesWaiting) in
+            print("\n this is my uploadImageWaitQueue response from Cache:")
+            for item in uploadImagesWaiting {
+                print("\(item.returnDataAsJSONAndData())")
+            }
+        }) { (uploadFilesWaiting) in
+            print("\n this is my uploadFileWaitQueue response from Cache:")
+            for item in uploadFilesWaiting {
+                print("\(item.returnDataAsJSONAndData())")
+            }
+        }
         
     }
     
     @objc func sendMessageToSocketPressed() {
-//        sendMessage()
-        editMessage()
+        sendMessage()
+//        editMessage()
 //        replyMessage()
 //        forwardMessage()
 //        deleteMessage()
@@ -54,8 +81,8 @@ extension MyViewController {
     }
     
     func sendMessage() {
-        let metadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
-        let inputModel = SendTextMessageRequestModel(content: "\(inputTextFieldToSendMessage.text ?? "empty message")", metadata: metadata, repliedTo: nil, systemMetadata: nil, threadId: 13544/*6494*/, typeCode: nil, uniqueId: nil)
+        let metadata: JSON = ["id": 3333, "type": "DUMMY_MESSAGE", "owner": "Mahyar"]
+        let inputModel = SendTextMessageRequestModel(content: "\(inputTextFieldToSendMessage.text ?? "empty message")", metadata: metadata, repliedTo: nil, systemMetadata: nil, threadId: 3284/*13544,6494*/, typeCode: nil, uniqueId: nil)
         Chat.sharedInstance.sendTextMessage(inputModel: inputModel, uniqueId: { (uniqueIdStr) in
             print("message uniqueId is: \(uniqueIdStr)")
         }, onSent: { (isSent) in

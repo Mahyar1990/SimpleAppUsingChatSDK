@@ -52,7 +52,7 @@ extension MyViewController {
         
         let inputModel = UpdateContactsRequestModel(cellphoneNumber: "09368640180",
                                                     email: "Mehdi.Akbarian@fanap.ir",
-                                                    firstName: "Mehdi",
+                                                    firstName: "Mehdiiiiii",
                                                     id: 2225,
                                                     lastName: "Akbarian",
                                                     typeCode: nil,
@@ -84,8 +84,8 @@ extension MyViewController {
     }
     
     @objc func syncContactsButtonPressed() {
-        Chat.sharedInstance.syncContacts(uniqueId: { (syncContactUniqueId) in
-            print("\n sync Contact request uniqueId = \t \(syncContactUniqueId) \n")
+        Chat.sharedInstance.syncContacts(uniqueIds: { (syncContactUniqueIds) in
+            print("\n sync Contact request uniqueIds = \t \(syncContactUniqueIds) \n")
         }, completion: { (myResponse) in
             let myResponseModel: ContactModel = myResponse as! ContactModel
             let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
@@ -154,13 +154,14 @@ extension MyViewController {
     
     @objc func searchContactsButtonPressed() {
         
-        let inputModel = SearchContactsRequestModel(cellphoneNumber: "09368640180",
-                                                    email: "",
+        let inputModel = SearchContactsRequestModel(cellphoneNumber: nil,
+                                                    email: nil,
                                                     firstName: nil,
                                                     id: nil,
                                                     lastName: nil,
                                                     offset: nil,
                                                     size: nil,
+                                                    query: "ma",
                                                     typeCode: nil,
                                                     uniqueId: nil)
         Chat.sharedInstance.searchContacts(inputModel: inputModel, uniqueId: { (searchContactsUniqueId) in

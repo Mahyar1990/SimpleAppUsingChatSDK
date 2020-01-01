@@ -13,62 +13,6 @@ import SwiftyJSON
 
 extension MyViewController {
     
-    
-    
-    
-    
-    
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
-        
-        var selectedImage: UIImage?
-        if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
-            selectedImage = editedImage
-        } else if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
-            selectedImage = originalImage
-        }
-        picker.dismiss(animated: true, completion: nil)
-        
-        if let data = UIImageJPEGRepresentation(selectedImage!, 100) {
-            
-//            let myParams: JSON = ["imageName": "newPicture"]
-//            myChatObject?.uploadImage(params: myParams, dataToSend: data, uniqueId: { (uploadFileUniqueId) in
-//                print("********************************")
-//                print("UploadImageUniqueId is = \(uploadFileUniqueId)")
-//                print("********************************")
-//            }, progress: { (progress) in
-//                print("Upload Image Progress = \(progress)")
-//            }, completion: { (response) in
-//                print("********************************")
-//                print("Response from Upload Image:")
-//                let responseModel: UploadImageModel = response as! UploadImageModel
-//                let responseJSON: JSON = responseModel.returnDataAsJSON()
-//                print("\(responseJSON)")
-//                print("********************************")
-//            })
-            
-//            let inputModel = UploadImageRequestModel(fileExtension: nil, fileName: "newPicture", fileSize: nil, threadId: nil, uniqueId: nil, originalFileName: nil, xC: nil, yC: nil, hC: nil, wC: nil, dataToSend: data)
-//            myChatObject?.uploadImage(uploadImageInput: inputModel, uniqueId: { (uploadFileUniqueId) in
-//                print("********************************")
-//                print("UploadImageUniqueId is = \(uploadFileUniqueId)")
-//                print("********************************")
-//            }, progress: { (progress) in
-//                print("Upload Image Progress = \(progress)")
-//            }, completion: { (response) in
-//                print("********************************")
-//                print("Response from Upload Image:")
-//                let responseModel: UploadImageModel = response as! UploadImageModel
-//                let responseJSON: JSON = responseModel.returnDataAsJSON()
-//                print("\(responseJSON)")
-//                print("********************************")
-//            })
-            
-        }
-        
-    }
-    
-    
-    
-    
     func setupView() {
         
         view.backgroundColor = UIColor(white: 1, alpha: 1)
