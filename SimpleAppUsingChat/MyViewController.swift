@@ -43,7 +43,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let ssoHost                 = "https://accounts.pod.ir"
     let platformHost            = "https://sandbox.pod.ir:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "1f1b87af863945c4b16807defa46330e"
+    let token                   = "abc8f75a8cbc4a039bcb2fa3817e682e"
     
     
     // Mehrara
@@ -78,46 +78,62 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     
     
     var getUserInfoButton = MZButton()
+    
     let getThreadsButton = MZButton()
-    let getHistoryButton = MZButton()
-    let getThreadParticipantsButton = MZButton()
+    let searchThreadButton = MZButton()
     let createThreadButton = MZButton()
-    let getContactsButton = MZButton()
-    let sendMessageToSocketButton = MZButton()
+    let updateThreadInfoButton = MZButton()
+    let createThreadWithMessageButton = MZButton()
+    let createThreadWithFileMessageButton = MZButton()
+    let leaveThreadButton = MZButton()
+    let spamThreadButton = MZButton()
+    let muteThreadButton = MZButton()
+    let unmuteThreadButton = MZButton()
+    let setAuditor = MZButton()
+    let removeAuditor = MZButton()
+    let pinThread = MZButton()
+    let unpinThread = MZButton()
     let addParticipantButton = MZButton()
     let removeParticipantButton = MZButton()
+    let getThreadParticipantsButton = MZButton()
+    
+    let getHistoryButton = MZButton()
+    let searchHistoryButton = MZButton()
+    let clearHistoryButton = MZButton()
+    let deleteMessageButton = MZButton()
+    
+    let sendTextMessageButton = MZButton()
+    let editTextMessageButton = MZButton()
+    let replyTextMessageButton = MZButton()
+    let forwardTextMessageButton = MZButton()
+    
+    let getContactsButton = MZButton()
+    let searchContactButton = MZButton()
     let addContactButton = MZButton()
     let updateContactButton = MZButton()
     let removeContactButton = MZButton()
-    let uploadFileButton = MZButton()
-    let uploadImageButton = MZButton()
-    let sendFileMessageButton = MZButton()
-    let muteThreadButton = MZButton()
-    let unmuteThreadButton = MZButton()
-    let updateThreadInfoButton = MZButton()
     let syncContactsButton = MZButton()
-    let searchThreadButton = MZButton()
-    let searchContactButton = MZButton()
-    let searchHistoryButton = MZButton()
-    let clearHistoryButton = MZButton()
     let blockButton = MZButton()
-    let unblockButton = MZButton()
     let getBlockedButton = MZButton()
-    let leaveThreadButton = MZButton()
-    let spamThreadButton = MZButton()
-    let messageDeliverList = MZButton()
-    let messageSeenList = MZButton()
+    let unblockButton = MZButton()
+    
     let getImage = MZButton()
     let getFile = MZButton()
+    let sendFileMessageButton = MZButton()
+    let sendImageMessageButton = MZButton()
+    let replyFileMessageButton = MZButton()
+    let sendBotMessage = MZButton()
+    
+    let messageDeliverList = MZButton()
+    let messageSeenList = MZButton()
+    
     let mapReverse = MZButton()
     let mapSearch = MZButton()
     let mapRouting = MZButton()
     let mapStaticImage = MZButton()
     let sendLocatinoMessage = MZButton()
-    let sendBotMessage = MZButton()
-    let setAuditor = MZButton()
-    let deleteCache = MZButton()
     
+    let deleteCache = MZButton()
     
     let inputTextFieldToSendMessage: UITextField = {
         let mt = UITextField()

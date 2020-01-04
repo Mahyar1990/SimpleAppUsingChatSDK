@@ -68,7 +68,6 @@ extension MyViewController {
     
     @objc func createThreadButtonPressed() {
         
-        let messageMetadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
         // CreateThread
 //        let mehdi = Invitee(id: "4457", idType: "\(INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID.stringValue())")
 //        let sina = Invitee(id: "3157", idType: "\(INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID.stringValue())")
@@ -77,7 +76,7 @@ extension MyViewController {
         let inputModel = CreateThreadRequestModel(description:  nil,
                                                   image:        nil,
                                                   invitees:     [mehdi],
-                                                  metadata:     "\(messageMetadata)",
+                                                  metadata:     nil,
                                                   title:        "new thread created by username",
                                                   type:         ThreadTypes.NORMAL,
                                                   typeCode:     nil,
@@ -279,7 +278,7 @@ extension MyViewController {
 //        })
     }
     
-    @objc func SetAuditorButtonSelected() {
+    @objc func setAuditorButtonSelected() {
         
         let roles = [Roles.READ_THREAD , Roles.EDIT_THREAD]
         let inputModel = RoleRequestModel(roles: roles,
@@ -299,6 +298,25 @@ extension MyViewController {
         }
         
     }
+    
+    @objc func removeAuditorButtonSelected() {
+        
+        
+        
+    }
+    
+    @objc func createThreadWithFileMessageButtonPressed() {
+        
+    }
+    
+    @objc func pinThreadButtonPressed() {
+        
+    }
+    
+    @objc func unpinThreadButtonPressed() {
+        
+    }
+    
     
 }
 

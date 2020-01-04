@@ -56,41 +56,65 @@ extension MyViewController {
         
     }
     
-    @objc func uploadFileButtonPressed() {
+    @objc func sendUploadFileMessageButtonPressed() {
         let image = UIImage(named: "pic")
         if let data = UIImageJPEGRepresentation(image!, 1) {
             let inputModel = UploadFileRequestModel(dataToSend: data,
                                                     fileExtension: nil,
                                                     fileName: "newPic",
                                                     originalFileName: nil,
-                                                    threadId: nil,
+                                                    threadId: 3284,
                                                     typeCode: nil,
                                                     uniqueId: nil)
-            Chat.sharedInstance.uploadFile(inputModel: inputModel, uniqueId: { (uploadFileUniqueId) in
-                print("********************************")
-                print("UploadFileUniqueId is = \(uploadFileUniqueId)")
-                print("********************************")
-            }, progress: { (progress) in
-                print("Upload File progress is = \(progress)")
-            }, completion: { (response) in
-                print("********************************")
-                print("Response from Upload File:")
-                let responseModel: UploadFileModel = response as! UploadFileModel
-                let responseJSON: JSON = responseModel.returnDataAsJSON()
-                print("\(responseJSON)")
-                print("********************************")
-            })
+            let message = SendTextMessageRequestModel(content: "",
+                                                      metadata: nil,
+                                                      repliedTo: nil,
+                                                      systemMetadata: nil,
+                                                      threadId: 3284,
+                                                      typeCode: nil,
+                                                      uniqueId: nil)
+            let fileMessage = SendFileMessageRequestModel(messageInput: message,
+                                                          uploadInput:  inputModel)
             
-//            let inputModel = UploadImageRequestModel(dataToSend: data, fileExtension: nil, fileName: "newPic", fileSize: nil, originalFileName: nil, threadId: nil, uniqueId: nil, xC: nil, yC: nil, hC: nil, wC: nil)
-//            Chat.sharedInstance.uploadImage(uploadImageInput: inputModel, uniqueId: { (UploadImageUniqueId) in
-//                print("UploadImageUniqueId is = \(UploadImageUniqueId)")
+            Chat.sharedInstance.sendFileMessage(inputModel: fileMessage, uploadUniqueId: { (uploadImageUniqueId) in
+                print("********************************")
+                print("Upload File UniqueId is = \(uploadImageUniqueId)")
+                print("********************************")
+            }, uploadProgress: { (progress) in
+                print("Upload File progress is = \(progress)")
+            }, messageUniqueId: { (messageUniqueId) in
+                print("********************************")
+                print("file sendMessageUniqueId is = \(messageUniqueId)")
+                print("********************************")
+            }, onSent: { (sent) in
+                print("********************************")
+                print("file message is Sent = \(sent)")
+                print("********************************")
+            }, onDelivered: { (delivered) in
+                print("********************************")
+                print("file message is Delivered = \(delivered)")
+                print("********************************")
+            }) { (seen) in
+                print("********************************")
+                print("file message is Seen = \(seen)")
+                print("********************************")
+            }
+            
+//            Chat.sharedInstance.uploadFile(inputModel: inputModel, uniqueId: { (uploadFileUniqueId) in
+//                print("********************************")
+//                print("UploadFileUniqueId is = \(uploadFileUniqueId)")
+//                print("********************************")
 //            }, progress: { (progress) in
-//                print("Upload Image progress is = \(progress)")
+//                print("Upload File progress is = \(progress)")
 //            }, completion: { (response) in
-//                let responseModel: UploadImageModel = response as! UploadImageModel
+//                print("********************************")
+//                print("Response from Upload File:")
+//                let responseModel: UploadFileModel = response as! UploadFileModel
 //                let responseJSON: JSON = responseModel.returnDataAsJSON()
 //                print("\(responseJSON)")
+//                print("********************************")
 //            })
+            
         }
     }
     

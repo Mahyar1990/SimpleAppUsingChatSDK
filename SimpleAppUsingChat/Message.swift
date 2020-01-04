@@ -71,16 +71,7 @@ extension MyViewController {
         
     }
     
-    @objc func sendMessageToSocketPressed() {
-        sendMessage()
-//        editMessage()
-//        replyMessage()
-//        forwardMessage()
-//        deleteMessage()
-//        deleteMultipleMessages()
-    }
-    
-    func sendMessage() {
+    @objc func sendTextMessageButtonPressed() {
         let metadata: JSON = ["id": 3333, "type": "DUMMY_MESSAGE", "owner": "Mahyar"]
         let inputModel = SendTextMessageRequestModel(content: "\(inputTextFieldToSendMessage.text ?? "empty message")", metadata: metadata, repliedTo: nil, systemMetadata: nil, threadId: 3284/*13544,6494*/, typeCode: nil, uniqueId: nil)
         Chat.sharedInstance.sendTextMessage(inputModel: inputModel, uniqueId: { (uniqueIdStr) in
@@ -95,7 +86,7 @@ extension MyViewController {
         
     }
     
-    func editMessage() {
+    @objc func editTextMessageButtonPressed() {
         let inputModel = EditTextMessageRequestModel(content: "text message", metadata: nil, repliedTo: nil, messageId: 63291, typeCode: nil, uniqueId: nil)
         Chat.sharedInstance.editMessage(inputModel: inputModel, uniqueId: { (editMessageUniqueId) in
             print("\n edit message request uniqueId = \t \(editMessageUniqueId) \n")
@@ -105,7 +96,7 @@ extension MyViewController {
         
     }
     
-    func replyMessage() {
+    @objc func replyTextMessageButtonPressed() {
         
         let inputModel = ReplyTextMessageRequestModel(content: "\(inputTextFieldToSendMessage.text ?? "empty message")", metadata: nil, repliedTo: 35447, subjectId: 9953, typeCode: nil, uniqueId: nil)
         Chat.sharedInstance.replyMessage(inputModel: inputModel, uniqueId: { (uniqueIdStr) in
@@ -120,7 +111,7 @@ extension MyViewController {
         
     }
     
-    func forwardMessage() {
+    @objc func forwardMessageButtonPressed() {
         
         let inputModel = ForwardMessageRequestModel(messageIds: [15395], metadata: nil, repliedTo: nil, threadId: 1133, typeCode: nil)
         Chat.sharedInstance.forwardMessage(inputModel: inputModel, uniqueIds: { (uniqueIdArr) in
@@ -146,7 +137,7 @@ extension MyViewController {
         
     }
     
-    func deleteMultipleMessages() {
+    @objc func deleteMultipleMessages() {
         
         let inputModel = DeleteMultipleMessagesRequestModel(deleteForAll: nil,
                                                             threadId: 1103,
@@ -175,7 +166,7 @@ extension MyViewController {
                                                               sendMessageYC:        nil,
                                                               sendMessageHC:        nil,
                                                               sendMessageWC:        nil,
-                                                              sendMessageThreadId:  1342,
+                                                              sendMessageThreadId:  3284,
                                                               sendMessageContent:   "This is my location on the map",
                                                               sendMessageMetadata:  metadata,
                                                               sendMessageRepliedTo: nil,
@@ -183,12 +174,14 @@ extension MyViewController {
                                                               typeCode:             nil,
                                                               uniqueId:             nil)
         
-        Chat.sharedInstance.sendLocationMessage(inputModel: locationMessage, uniqueId: { (sendLocationMessageUniqueId) in
-            print("sendLocationMessageUniqueId = \(sendLocationMessageUniqueId)")
-        }, downloadProgress: { (progress) in
+        Chat.sharedInstance.sendLocationMessage(inputModel: locationMessage, downloadProgress: { (progress) in
             print("downloaded progress = \(progress)")
+        }, uploadUniqueId: { (uploadUniqueId) in
+            print("upload UniqueId = \(uploadUniqueId)")
         }, uploadProgress: { (progress) in
             print("uploaded progress = \(progress)")
+        }, messageUniqueId: { (sendLocationMessageUniqueId) in
+            print("sendLocationMessageUniqueId = \(sendLocationMessageUniqueId)")
         }, onSent: { (sent) in
             print("the messsage has been sent: \n\(sent)")
         }, onDelivere: { (deliver) in
@@ -196,6 +189,7 @@ extension MyViewController {
         }, onSeen: { (seen) in
             print("the messsage has been seen: \n\(seen)")
         })
+        
     }
     
     @objc func clearHistoryButtonPressed() {
@@ -234,31 +228,34 @@ extension MyViewController {
         
     }
     
-    @objc func sendFileMessageButtonnPressed() {
-        
-        let metadata: JSON = ["id": 2341234123, "type": "BOT_MESSAGE", "owner": "Mahyar"]
+    @objc func replyFileMessageButtonnPressed() {
         
         let image = UIImage(named: "pic")
         if let data = UIImageJPEGRepresentation(image!, 1) {
             
-            let inputModel = SendFileMessageRequestModel(fileName: "newPic",
-                                                         imageName: "newPic",
-                                                         xC: nil,
-                                                         yC: nil,
-                                                         hC: nil,
-                                                         wC: nil,
-                                                         threadId: 1101,
-                                                         content: "empty message",
-                                                         metadata: metadata,
-                                                         repliedTo: nil,
-                                                         fileToSend: nil,
-                                                         imageToSend: data,
-                                                         typeCode: nil,
-                                                         uniqueId: nil)
-            Chat.sharedInstance.sendFileMessage(inputModel: inputModel, uniqueId: { (messageUniqueId) in
-                print("message unique id is = \(messageUniqueId)")
+            let textMessage = SendTextMessageRequestModel(content: "empty message",
+                                                          metadata: nil,
+                                                          repliedTo: 73297,
+                                                          systemMetadata: nil,
+                                                          threadId: 3284,
+                                                          typeCode: nil,
+                                                          uniqueId: nil)
+            let uploadInput = UploadFileRequestModel(dataToSend: data,
+                                                     fileExtension: nil,
+                                                     fileName: "newPic",
+                                                     originalFileName: nil,
+                                                     threadId: 3284,
+                                                     typeCode: nil,
+                                                     uniqueId: nil)
+            let inputModel = SendFileMessageRequestModel(messageInput:  textMessage,
+                                                         uploadInput:   uploadInput)
+            
+            Chat.sharedInstance.replyFileMessage(inputModel: inputModel, uploadUniqueId: { (uploadUniqueId) in
+                print("upload unique id is = \(uploadUniqueId)")
             }, uploadProgress: { (prpgress) in
                 print("upload progress is = \(prpgress)")
+            }, messageUniqueId: { (messageUniqueId) in
+                print("message unique id is = \(messageUniqueId)")
             }, onSent: { (isSent) in
                 print("message Sent:")
                 print("\(isSent)")
@@ -268,12 +265,10 @@ extension MyViewController {
             }, onSeen: { (isSeen) in
                 print("message Seen:")
                 print("\(isSeen)")
-
             })
             
         }
     }
-    
     
     @objc func sendInteractiveMessageButtonPressed() {
         

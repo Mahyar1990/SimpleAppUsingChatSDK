@@ -24,31 +24,78 @@ extension MyViewController: UIPickerViewDelegate {
         picker.dismiss(animated: true, completion: nil)
         
         if let data = UIImageJPEGRepresentation(selectedImage!, 100) {
+//            let inputModel = UploadImageRequestModel(dataToSend:        data,
+//                                                     fileExtension:     nil,
+//                                                     fileName:          "newPicture",
+//                                                     originalFileName:  nil,
+//                                                     threadId:          nil,
+//                                                     xC:                nil,
+//                                                     yC:                nil,
+//                                                     hC:                nil,
+//                                                     wC:                nil,
+//                                                     typeCode:          nil,
+//                                                     uniqueId:          nil)
+            
             let inputModel = UploadImageRequestModel(dataToSend:        data,
                                                      fileExtension:     nil,
                                                      fileName:          "newPicture",
                                                      originalFileName:  nil,
-                                                     threadId:          nil,
+                                                     threadId:          3284,
                                                      xC:                nil,
                                                      yC:                nil,
                                                      hC:                nil,
                                                      wC:                nil,
                                                      typeCode:          nil,
                                                      uniqueId:          nil)
-            Chat.sharedInstance.uploadImage(inputModel: inputModel, uniqueId: { (uploadFileUniqueId) in
+            let message = SendTextMessageRequestModel(content:          "",
+                                                      metadata:         nil,
+                                                      repliedTo:        nil,
+                                                      systemMetadata:   nil,
+                                                      threadId:         3284,
+                                                      typeCode:         nil,
+                                                      uniqueId:         nil)
+            let fileMessage = SendFileMessageRequestModel(messageInput: message,
+                                                          uploadInput:  inputModel)
+            
+            Chat.sharedInstance.sendFileMessage(inputModel: fileMessage, uploadUniqueId: { (uploadImageUniqueId) in
                 print("********************************")
-                print("UploadImageUniqueId is = \(uploadFileUniqueId)")
+                print("Upload ImageUniqueId is = \(uploadImageUniqueId)")
                 print("********************************")
-            }, progress: { (progress) in
-                print("Upload Image Progress = \(progress)")
-            }, completion: { (response) in
+            }, uploadProgress: { (progress) in
+                print("Upload File progress is = \(progress)")
+            }, messageUniqueId: { (messageUniqueId) in
                 print("********************************")
-                print("Response from Upload Image:")
-                let responseModel: UploadImageModel = response as! UploadImageModel
-                let responseJSON: JSON = responseModel.returnDataAsJSON()
-                print("\(responseJSON)")
+                print("file sendMessageUniqueId is = \(messageUniqueId)")
                 print("********************************")
-            })
+            }, onSent: { (sent) in
+                print("********************************")
+                print("file message is Sent = \(sent)")
+                print("********************************")
+            }, onDelivered: { (delivered) in
+                print("********************************")
+                print("file message is Delivered = \(delivered)")
+                print("********************************")
+            }) { (seen) in
+                print("********************************")
+                print("file message is Seen = \(seen)")
+                print("********************************")
+            }
+            
+            
+//            Chat.sharedInstance.uploadImage(inputModel: inputModel, uniqueId: { (uploadFileUniqueId) in
+//                print("********************************")
+//                print("UploadImageUniqueId is = \(uploadFileUniqueId)")
+//                print("********************************")
+//            }, progress: { (progress) in
+//                print("Upload Image Progress = \(progress)")
+//            }, completion: { (response) in
+//                print("********************************")
+//                print("Response from Upload Image:")
+//                let responseModel: UploadImageModel = response as! UploadImageModel
+//                let responseJSON: JSON = responseModel.returnDataAsJSON()
+//                print("\(responseJSON)")
+//                print("********************************")
+//            })
             
         }
         
