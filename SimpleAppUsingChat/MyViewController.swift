@@ -43,7 +43,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let ssoHost                 = "https://accounts.pod.ir"
     let platformHost            = "https://sandbox.pod.ir:8043/srv/basic-platform"    // {**REQUIRED**} Platform Core Address
     let fileServer              = "http://sandbox.fanapium.com:8080"                    // {**REQUIRED**} File Server Address
-    let token                   = "abc8f75a8cbc4a039bcb2fa3817e682e"
+    let token                   = "58610d2c7d874fe494017be79ef42d25"
     
     
     // Mehrara
@@ -96,6 +96,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let addParticipantButton = MZButton()
     let removeParticipantButton = MZButton()
     let getThreadParticipantsButton = MZButton()
+    let getCurrentUserRolesButton = MZButton()
     
     let getHistoryButton = MZButton()
     let searchHistoryButton = MZButton()
@@ -107,6 +108,13 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let replyTextMessageButton = MZButton()
     let forwardTextMessageButton = MZButton()
     
+    let sendFileMessageButton = MZButton()
+    let sendImageMessageButton = MZButton()
+    let replyFileMessageButton = MZButton()
+    let sendBotMessage = MZButton()
+    let getImage = MZButton()
+    let getFile = MZButton()
+    
     let getContactsButton = MZButton()
     let searchContactButton = MZButton()
     let addContactButton = MZButton()
@@ -116,13 +124,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let blockButton = MZButton()
     let getBlockedButton = MZButton()
     let unblockButton = MZButton()
-    
-    let getImage = MZButton()
-    let getFile = MZButton()
-    let sendFileMessageButton = MZButton()
-    let sendImageMessageButton = MZButton()
-    let replyFileMessageButton = MZButton()
-    let sendBotMessage = MZButton()
+    let getNotSeenDurationButton = MZButton()
     
     let messageDeliverList = MZButton()
     let messageSeenList = MZButton()

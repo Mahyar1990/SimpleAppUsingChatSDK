@@ -42,7 +42,7 @@ extension MyViewController {
         createThreadButton.addTarget(self, action: #selector(createThreadButtonPressed), for: .touchUpInside)
         
         createThreadWithMessageButton.setTitle("CreateThreadWithMsg...", for: .normal)
-        createThreadWithMessageButton.addTarget(self, action: #selector(createThreadWithFileMessageButtonPressed), for: .touchUpInside)
+        createThreadWithMessageButton.addTarget(self, action: #selector(createThreadWithMessageButtonPressed), for: .touchUpInside)
         
         createThreadWithFileMessageButton.setTitle("CreateThreadWithFileMsg...", for: .normal)
         createThreadWithFileMessageButton.addTarget(self, action: #selector(createThreadWithFileMessageButtonPressed), for: .touchUpInside)
@@ -78,13 +78,14 @@ extension MyViewController {
         getThreadParticipantsButton.setTitle("Get thread Participants...", for: .normal)
         getThreadParticipantsButton.addTarget(self, action: #selector(getThreadParticipantsButtonPressed), for: .touchUpInside)
         
-        addParticipantButton.setTitle("Sent isTyping...", for: .normal)
+        addParticipantButton.setTitle("Add Participant...", for: .normal)
         addParticipantButton.addTarget(self, action: #selector(addParticipantsButtonPressed), for: .touchUpInside)
         
         removeParticipantButton.setTitle("Remove Participant...", for: .normal)
         removeParticipantButton.addTarget(self, action: #selector(removeParticipantsButtonPressed), for: .touchUpInside)
         
-        
+        getCurrentUserRolesButton.setTitle("GetCurrentUserRoles...", for: .normal)
+        getCurrentUserRolesButton.addTarget(self, action: #selector(getCurrentUserRolesButtonPressed), for: .touchUpInside)
         
         
         getHistoryButton.setTitle("Get History...", for: .normal)
@@ -116,6 +117,27 @@ extension MyViewController {
         
         
         
+        sendFileMessageButton.setTitle("Send File Message...", for: .normal)
+        sendFileMessageButton.addTarget(self, action: #selector(sendUploadFileMessageButtonPressed), for: .touchUpInside)
+        
+        sendImageMessageButton.setTitle("Send Image Message...", for: .normal)
+        sendImageMessageButton.addTarget(self, action: #selector(uploadImageButtonPressed), for: .touchUpInside)
+        
+        replyFileMessageButton.setTitle("Reply File Message...", for: .normal)
+        replyFileMessageButton.addTarget(self, action: #selector(replyFileMessageButtonnPressed), for: .touchUpInside)
+        
+        sendBotMessage.setTitle("send Bot Message...", for: .normal)
+        sendBotMessage.addTarget(self, action: #selector(sendBotMessageButtonPressed), for: .touchUpInside)
+        
+        getImage.setTitle("Get Image...", for: .normal)
+        getImage.addTarget(self, action: #selector(getImgeButtonPressed), for: .touchUpInside)
+        
+        getFile.setTitle("Get File...", for: .normal)
+        getFile.addTarget(self, action: #selector(getFileButtonPressed), for: .touchUpInside)
+        
+        
+        
+        
         getContactsButton.setTitle("Get Contacts...", for: .normal)
         getContactsButton.addTarget(self, action: #selector(getContactsButtonPressed), for: .touchUpInside)
         
@@ -143,28 +165,8 @@ extension MyViewController {
         unblockButton.setTitle("Unblock...", for: .normal)
         unblockButton.addTarget(self, action: #selector(unblockContactButtonPressed), for: .touchUpInside)
         
-        
-        
-        
-        getImage.setTitle("Get Image...", for: .normal)
-        getImage.addTarget(self, action: #selector(getImgeButtonPressed), for: .touchUpInside)
-        
-        getFile.setTitle("Get File...", for: .normal)
-        getFile.addTarget(self, action: #selector(getFileButtonPressed), for: .touchUpInside)
-        
-        sendFileMessageButton.setTitle("Send File Message...", for: .normal)
-        sendFileMessageButton.addTarget(self, action: #selector(sendUploadFileMessageButtonPressed), for: .touchUpInside)
-        
-        sendImageMessageButton.setTitle("Send Image Message...", for: .normal)
-        sendImageMessageButton.addTarget(self, action: #selector(uploadImageButtonPressed), for: .touchUpInside)
-        
-        replyFileMessageButton.setTitle("Reply File Message...", for: .normal)
-        replyFileMessageButton.addTarget(self, action: #selector(replyFileMessageButtonnPressed), for: .touchUpInside)
-        
-        sendBotMessage.setTitle("send Bot Message...", for: .normal)
-        sendBotMessage.addTarget(self, action: #selector(sendBotMessageButtonPressed), for: .touchUpInside)
-        
-        
+        getNotSeenDurationButton.setTitle("NotSeenDuration...", for: .normal)
+        getNotSeenDurationButton.addTarget(self, action: #selector(notSeenDurationButtonPressed), for: .touchUpInside)
         
         
         messageDeliverList.setTitle("Message Deliver List...", for: .normal)
@@ -220,6 +222,7 @@ extension MyViewController {
         view.addSubview(addParticipantButton)
         view.addSubview(removeParticipantButton)
         view.addSubview(getThreadParticipantsButton)
+        view.addSubview(getCurrentUserRolesButton)
         
         view.addSubview(getHistoryButton)
         view.addSubview(searchHistoryButton)
@@ -241,6 +244,7 @@ extension MyViewController {
         view.addSubview(blockButton)
         view.addSubview(getBlockedButton)
         view.addSubview(unblockButton)
+        view.addSubview(getNotSeenDurationButton)
         
         view.addSubview(getImage)
         view.addSubview(getFile)
@@ -357,8 +361,11 @@ extension MyViewController {
         getThreadParticipantsButton.leftAnchor.constraint(equalTo: getThreadsButton.leftAnchor).isActive = true
         getThreadParticipantsButton.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
         getThreadParticipantsButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        
-        
+        // right
+        getCurrentUserRolesButton.topAnchor.constraint(equalTo: getThreadParticipantsButton.topAnchor).isActive = true
+        getCurrentUserRolesButton.leftAnchor.constraint(equalTo: searchThreadButton.leftAnchor).isActive = true
+        getCurrentUserRolesButton.rightAnchor.constraint(equalTo: searchThreadButton.rightAnchor).isActive = true
+        getCurrentUserRolesButton.bottomAnchor.constraint(equalTo: getThreadParticipantsButton.bottomAnchor).isActive = true
         
         
         // left
@@ -414,7 +421,41 @@ extension MyViewController {
         
         
         // left
-        getContactsButton.topAnchor.constraint(equalTo: replyTextMessageButton.bottomAnchor, constant: 12).isActive = true
+        sendFileMessageButton.topAnchor.constraint(equalTo: replyTextMessageButton.bottomAnchor, constant: 4).isActive = true
+        sendFileMessageButton.leftAnchor.constraint(equalTo: getThreadsButton.leftAnchor).isActive = true
+        sendFileMessageButton.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
+        sendFileMessageButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        // right
+        sendImageMessageButton.topAnchor.constraint(equalTo: sendFileMessageButton.topAnchor).isActive = true
+        sendImageMessageButton.leftAnchor.constraint(equalTo: searchThreadButton.leftAnchor).isActive = true
+        sendImageMessageButton.rightAnchor.constraint(equalTo: searchThreadButton.rightAnchor).isActive = true
+        sendImageMessageButton.bottomAnchor.constraint(equalTo: sendFileMessageButton.bottomAnchor).isActive = true
+        // left
+        replyFileMessageButton.topAnchor.constraint(equalTo: sendFileMessageButton.bottomAnchor, constant: 4).isActive = true
+        replyFileMessageButton.leftAnchor.constraint(equalTo: getThreadsButton.leftAnchor).isActive = true
+        replyFileMessageButton.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
+        replyFileMessageButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        // right
+        sendBotMessage.topAnchor.constraint(equalTo: replyFileMessageButton.topAnchor).isActive = true
+        sendBotMessage.leftAnchor.constraint(equalTo: searchThreadButton.leftAnchor).isActive = true
+        sendBotMessage.rightAnchor.constraint(equalTo: searchThreadButton.rightAnchor).isActive = true
+        sendBotMessage.bottomAnchor.constraint(equalTo: replyFileMessageButton.bottomAnchor).isActive = true
+        // left
+        getImage.topAnchor.constraint(equalTo: replyFileMessageButton.bottomAnchor, constant: 4).isActive = true
+        getImage.leftAnchor.constraint(equalTo: getThreadsButton.leftAnchor).isActive = true
+        getImage.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
+        getImage.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        // right
+        getFile.topAnchor.constraint(equalTo: getImage.topAnchor).isActive = true
+        getFile.leftAnchor.constraint(equalTo: searchThreadButton.leftAnchor).isActive = true
+        getFile.rightAnchor.constraint(equalTo: searchThreadButton.rightAnchor).isActive = true
+        getFile.bottomAnchor.constraint(equalTo: getImage.bottomAnchor).isActive = true
+        
+        
+        
+        
+        // left
+        getContactsButton.topAnchor.constraint(equalTo: getImage.bottomAnchor, constant: 12).isActive = true
         getContactsButton.leftAnchor.constraint(equalTo: getThreadsButton.leftAnchor).isActive = true
         getContactsButton.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
         getContactsButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
@@ -458,46 +499,15 @@ extension MyViewController {
         unblockButton.leftAnchor.constraint(equalTo: getThreadsButton.leftAnchor).isActive = true
         unblockButton.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
         unblockButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        
-        
-        
-        
-        // left
-        getImage.topAnchor.constraint(equalTo: unblockButton.bottomAnchor, constant: 12).isActive = true
-        getImage.leftAnchor.constraint(equalTo: getThreadsButton.leftAnchor).isActive = true
-        getImage.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
-        getImage.heightAnchor.constraint(equalToConstant: 20).isActive = true
         // right
-        getFile.topAnchor.constraint(equalTo: getImage.topAnchor).isActive = true
-        getFile.leftAnchor.constraint(equalTo: searchThreadButton.leftAnchor).isActive = true
-        getFile.rightAnchor.constraint(equalTo: searchThreadButton.rightAnchor).isActive = true
-        getFile.bottomAnchor.constraint(equalTo: getImage.bottomAnchor).isActive = true
-        // left
-        sendFileMessageButton.topAnchor.constraint(equalTo: getImage.bottomAnchor, constant: 4).isActive = true
-        sendFileMessageButton.leftAnchor.constraint(equalTo: getThreadsButton.leftAnchor).isActive = true
-        sendFileMessageButton.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
-        sendFileMessageButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        // right
-        sendImageMessageButton.topAnchor.constraint(equalTo: sendFileMessageButton.topAnchor).isActive = true
-        sendImageMessageButton.leftAnchor.constraint(equalTo: searchThreadButton.leftAnchor).isActive = true
-        sendImageMessageButton.rightAnchor.constraint(equalTo: searchThreadButton.rightAnchor).isActive = true
-        sendImageMessageButton.bottomAnchor.constraint(equalTo: sendFileMessageButton.bottomAnchor).isActive = true
-        // left
-        replyFileMessageButton.topAnchor.constraint(equalTo: sendFileMessageButton.bottomAnchor, constant: 4).isActive = true
-        replyFileMessageButton.leftAnchor.constraint(equalTo: getThreadsButton.leftAnchor).isActive = true
-        replyFileMessageButton.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
-        replyFileMessageButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        // right
-        sendBotMessage.topAnchor.constraint(equalTo: replyFileMessageButton.topAnchor).isActive = true
-        sendBotMessage.leftAnchor.constraint(equalTo: searchThreadButton.leftAnchor).isActive = true
-        sendBotMessage.rightAnchor.constraint(equalTo: searchThreadButton.rightAnchor).isActive = true
-        sendBotMessage.bottomAnchor.constraint(equalTo: replyFileMessageButton.bottomAnchor).isActive = true
-        
-        
+        getNotSeenDurationButton.topAnchor.constraint(equalTo: unblockButton.topAnchor).isActive = true
+        getNotSeenDurationButton.leftAnchor.constraint(equalTo: searchThreadButton.leftAnchor).isActive = true
+        getNotSeenDurationButton.rightAnchor.constraint(equalTo: searchThreadButton.rightAnchor).isActive = true
+        getNotSeenDurationButton.bottomAnchor.constraint(equalTo: unblockButton.bottomAnchor).isActive = true
         
         
         // left
-        messageDeliverList.topAnchor.constraint(equalTo: replyFileMessageButton.bottomAnchor, constant: 12).isActive = true
+        messageDeliverList.topAnchor.constraint(equalTo: unblockButton.bottomAnchor, constant: 12).isActive = true
         messageDeliverList.leftAnchor.constraint(equalTo: getThreadsButton.leftAnchor).isActive = true
         messageDeliverList.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
         messageDeliverList.heightAnchor.constraint(equalToConstant: 20).isActive = true
