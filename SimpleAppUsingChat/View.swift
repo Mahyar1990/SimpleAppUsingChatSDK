@@ -100,6 +100,9 @@ extension MyViewController {
         deleteMessageButton.setTitle("Delete Message...", for: .normal)
         deleteMessageButton.addTarget(self, action: #selector(deleteMultipleMessages), for: .touchUpInside)
         
+        getMentionListButton.setTitle("Get MentionList...", for: .normal)
+        getMentionListButton.addTarget(self, action: #selector(getMentionListButtonPressed), for: .touchUpInside)
+        
         
         
         sendTextMessageButton.setTitle("send text message...", for: .normal)
@@ -228,6 +231,7 @@ extension MyViewController {
         view.addSubview(searchHistoryButton)
         view.addSubview(clearHistoryButton)
         view.addSubview(deleteMessageButton)
+        view.addSubview(getMentionListButton)
         
         view.addSubview(inputTextFieldToSendMessage)
         view.addSubview(sendTextMessageButton)
@@ -388,11 +392,14 @@ extension MyViewController {
         deleteMessageButton.leftAnchor.constraint(equalTo: searchThreadButton.leftAnchor).isActive = true
         deleteMessageButton.rightAnchor.constraint(equalTo: searchThreadButton.rightAnchor).isActive = true
         deleteMessageButton.bottomAnchor.constraint(equalTo: clearHistoryButton.bottomAnchor).isActive = true
+        // left
+        getMentionListButton.topAnchor.constraint(equalTo: clearHistoryButton.bottomAnchor, constant: 4).isActive = true
+        getMentionListButton.leftAnchor.constraint(equalTo: getThreadsButton.leftAnchor).isActive = true
+        getMentionListButton.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
+        getMentionListButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
         
         
-        
-        
-        inputTextFieldToSendMessage.topAnchor.constraint(equalTo: clearHistoryButton.bottomAnchor, constant: 12).isActive = true
+        inputTextFieldToSendMessage.topAnchor.constraint(equalTo: getMentionListButton.bottomAnchor, constant: 12).isActive = true
         inputTextFieldToSendMessage.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true
         inputTextFieldToSendMessage.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -8).isActive = true
         inputTextFieldToSendMessage.heightAnchor.constraint(equalToConstant: 30).isActive = true

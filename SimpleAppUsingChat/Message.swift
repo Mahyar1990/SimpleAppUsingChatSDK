@@ -71,6 +71,25 @@ extension MyViewController {
         
     }
     
+    @objc func getMentionListButtonPressed() {
+        let inputModel = GetMentionRequestModel(count: nil,
+                                                offset: nil,
+                                                threadId: 5182,//12093,//13544,//6494,// 10720,
+                                                onlyUnreadMention: false,
+                                                typeCode: nil,
+                                                uniqueId: nil)
+        Chat.sharedInstance.getMentionList(inputModel: inputModel, uniqueId: { (getMentionListUniqueId) in
+            print("\n get mentionList request uniqueId = \t \(getMentionListUniqueId) \n")
+        }, completion: { (myResponse) in
+            let myResponseJSON = (myResponse as! GetHistoryModel).returnDataAsJSON()
+            print("\n this is my get mentionList response from Server: \n \(myResponseJSON) \n")
+        }) { (mentionResponse) in
+            let responseJSON = mentionResponse.returnDataAsJSON()
+            print("\n this is my get mentionList response from Cache: \n \(responseJSON) \n")
+        }
+    }
+    
+    
     @objc func searchHistoryButtonPressed() {  }
     
     @objc func clearHistoryButtonPressed() {

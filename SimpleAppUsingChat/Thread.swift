@@ -411,7 +411,7 @@ extension MyViewController {
     
     @objc func getCurrentUserRolesButtonPressed() {
         
-        let inputModel = GetCurrentUserRolesRequestModel(threadId: 3284,
+        let inputModel = GetCurrentUserRolesRequestModel(threadId: 7042,
                                                          typeCode: nil,
                                                          uniqueId: nil)
         Chat.sharedInstance.getCurrentUserRoles(inputModel: inputModel, uniqueId: { (getUserRolesUniqueId) in
