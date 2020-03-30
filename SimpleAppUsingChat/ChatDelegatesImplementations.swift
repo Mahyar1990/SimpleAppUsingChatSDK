@@ -12,60 +12,58 @@ import FanapPodChatSDK
 extension MyViewController: ChatDelegates {
     
     func chatConnect() {
-        //
-    }
-    
-    func botEvents(type: BotEventTypes, result: Any) {
-        //
-    }
-    
-    func fileUploadEvents(type: FileUploadEventTypes, result: Any) {
-        //
-    }
-    
-    func systemEvents(type: SystemEventTypes, result: Any) {
-        //
-    }
-    
-    func chatConnected() {
-        //
+        print("chatConnect")
     }
     
     func chatDisconnect() {
-        //
+        print("chatConnected")
     }
     
     func chatReconnect() {
-        //
-    }
-    
-    func chatState(state: Int) {
-        //
+        print("chatReconnect")
     }
     
     func chatReady(withUserInfo: User) {
-        //
+        print("chatReady: \n UserInfo = \(withUserInfo.formatToJSON())")
     }
     
-    func contactEvents(type: ContactEventTypes, result: Any) {
-        //
+    func chatState(state: Int) {
+        print("chatState = \(state)")
     }
     
-    func chatDeliver(messageId: Int, ownerId: Int) {
-        //
-    }
-    
-    func messageEvents(type: MessageEventTypes, result: Any) {
-        let theType = (type == MessageEventTypes.MESSAGE_NEW) ? "new" : "delete"
-        print("messageEvent Comes: \n messageType = \(theType) \n messageId = \((result as! Message).id)\n message = \((result as! Message).message)\n\n")
-    }
-    
-    func threadEvents(type: ThreadEventTypes, result: Any) {
-        //
-    }
     
     func chatError(errorCode: Int, errorMessage: String, errorResult: Any?) {
         print("Error: \n errorCode = \(errorCode) \n errorMessage = \(errorMessage) \n errorResult = \(errorResult ?? "nil")")
+    }
+    
+    
+    
+    func botEvents(model: BotEventModel) {
+        print("botEvents: \n eventType = \(model.type)\n")
+    }
+    
+    func contactEvents(model: ContactEventModel) {
+        print("contactEvents: \n eventType = \(model.type) \n contacts = \(model.contacts)\n")
+    }
+    
+    func fileUploadEvents(model: FileUploadEventModel) {
+        print("fileUploadEvents: \n eventType = \(model.type)\n")
+    }
+    
+    func messageEvents(model: MessageEventModel) {
+        print("messageEvents: \n eventType = \(model.type) \n threadId = \(model.threadId) \n message = \(model.message)\n messageId = \(model.messageId)\n")
+    }
+    
+    func systemEvents(model: SystemEventModel) {
+        print("systemEvents: \n eventType = \(model.type) \n threadId = \(model.threadId) \n")
+    }
+    
+    func threadEvents(model: ThreadEventModel) {
+        print("threadEvents: \n eventType = \(model.type)\n threadId = \(model.threadId) \n threads = \(model.threads) \n")
+        if let th = model.threads {
+            print("here")
+            print(th.first?.formatToJSON())
+        }
     }
     
 }

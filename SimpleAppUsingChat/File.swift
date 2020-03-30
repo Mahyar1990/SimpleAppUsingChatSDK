@@ -15,9 +15,9 @@ extension MyViewController {
     
     @objc func getImgeButtonPressed() {
         
-        let inputModel = GetImageRequestModel(actual: nil, downloadable: nil, height: nil, hashCode: "16803a16292-0.15831373791354997", imageId: 52004, width: nil)
+        let inputModel = GetImageRequestModel(actual: nil, downloadable: nil, height: nil, hashCode: "16f621fa6ce-0.6413126404223938", imageId: 67976, width: nil, serverResponse: nil)
 
-        Chat.sharedInstance.getImage(inputModel: inputModel, uniqueId: { (getImageUniqueId) in
+        Chat.sharedInstance.getImage(inputModel: inputModel, getCacheResponse: nil, uniqueId: { (getImageUniqueId) in
             print("getImage UniqueId = \(getImageUniqueId)")
         }, progress: { (myDownloadProgress) in
             print("downloadProcess = \(myDownloadProgress)")
@@ -37,8 +37,8 @@ extension MyViewController {
     
     @objc func getFileButtonPressed() {
         
-        let inputModel = GetFileRequestModel(downloadable: true, fileId: 52171, hashCode: "168232d744d-0.9990232707506134")
-        Chat.sharedInstance.getFile(inputModel: inputModel, uniqueId: { (getFileUniqueId) in
+        let inputModel = GetFileRequestModel(downloadable: true, fileId: 52171, hashCode: "168232d744d-0.9990232707506134", serverResponse: nil)
+        Chat.sharedInstance.getFile(inputModel: inputModel, getCacheResponse: nil, uniqueId: { (getFileUniqueId) in
             print("getFile UniqueId = \(getFileUniqueId)")
         }, progress: { (myDownloadProgress) in
             print("downloadProcess = \(myDownloadProgress)")
@@ -56,50 +56,7 @@ extension MyViewController {
         
     }
     
-    @objc func uploadFileButtonPressed() {
-        let image = UIImage(named: "pic")
-        if let data = UIImageJPEGRepresentation(image!, 1) {
-            let inputModel = UploadFileRequestModel(dataToSend: data,
-                                                    fileExtension: nil,
-                                                    fileName: "newPic",
-                                                    fileSize: nil,
-                                                    originalFileName: nil,
-                                                    threadId: nil,
-                                                    typeCode: nil,
-                                                    uniqueId: nil)
-            Chat.sharedInstance.uploadFile(inputModel: inputModel, uniqueId: { (uploadFileUniqueId) in
-                print("********************************")
-                print("UploadFileUniqueId is = \(uploadFileUniqueId)")
-                print("********************************")
-            }, progress: { (progress) in
-                print("Upload File progress is = \(progress)")
-            }, completion: { (response) in
-                print("********************************")
-                print("Response from Upload File:")
-                let responseModel: UploadFileModel = response as! UploadFileModel
-                let responseJSON: JSON = responseModel.returnDataAsJSON()
-                print("\(responseJSON)")
-                print("********************************")
-            })
-            
-//            let inputModel = UploadImageRequestModel(dataToSend: data, fileExtension: nil, fileName: "newPic", fileSize: nil, originalFileName: nil, threadId: nil, uniqueId: nil, xC: nil, yC: nil, hC: nil, wC: nil)
-//            Chat.sharedInstance.uploadImage(uploadImageInput: inputModel, uniqueId: { (UploadImageUniqueId) in
-//                print("UploadImageUniqueId is = \(UploadImageUniqueId)")
-//            }, progress: { (progress) in
-//                print("Upload Image progress is = \(progress)")
-//            }, completion: { (response) in
-//                let responseModel: UploadImageModel = response as! UploadImageModel
-//                let responseJSON: JSON = responseModel.returnDataAsJSON()
-//                print("\(responseJSON)")
-//            })
-        }
-    }
     
-    @objc func uploadImageButtonPressed() {
-        picker.delegate = self
-        picker.allowsEditing = true
-        self.present(picker, animated: true, completion: nil)
-    }
     
 }
 
