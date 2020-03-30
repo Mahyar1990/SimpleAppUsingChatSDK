@@ -37,23 +37,25 @@ extension MyViewController: UIPickerViewDelegate {
 //                                                     uniqueId:          nil)
             
             let inputModel = UploadImageRequestModel(dataToSend:        data,
-                                                     fileExtension:     nil,
+                                                     fileExtension:     "png",
                                                      fileName:          "newPicture",
-                                                     originalFileName:  nil,
-                                                     threadId:          3284,
+                                                     mimeType:          nil,
+                                                     originalFileName:  "",
+                                                     threadId:          25301,
                                                      xC:                nil,
                                                      yC:                nil,
                                                      hC:                nil,
                                                      wC:                nil,
                                                      typeCode:          nil,
-                                                     uniqueId:          nil)
-            let message = SendTextMessageRequestModel(content:          "",
+                                                     uniqueId:          "qqqqqqqqqqqqqqqqqqqqqqqqqqqq")
+            let message = SendTextMessageRequestModel(content:          "message",
+                                                      messageType:      MESSAGE_TYPE.text,
                                                       metadata:         nil,
                                                       repliedTo:        nil,
                                                       systemMetadata:   nil,
-                                                      threadId:         3284,
+                                                      threadId:         25301,
                                                       typeCode:         nil,
-                                                      uniqueId:         nil)
+                                                      uniqueId:         "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")
             let fileMessage = SendFileMessageRequestModel(messageInput: message,
                                                           uploadInput:  inputModel)
             

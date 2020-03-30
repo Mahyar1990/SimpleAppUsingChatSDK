@@ -23,13 +23,13 @@ extension MyViewController {
                                                 order: nil,
                                                 query: nil,
                                                 senderId: nil,
-                                                threadId: 12093,//13544,//6494,// 10720,
+                                                threadId: 7292,
                                                 toTime: nil,
-                                                uniqueIds: ["0307944d-c57e-46cc-a616-b3889c40c4e1"],
+                                                uniqueIds: nil,
                                                 userId: nil,
                                                 typeCode: nil,
                                                 uniqueId: nil)
-        Chat.sharedInstance.getHistory(inputModel: inputModel, uniqueId: { (getHistoryUniqueId) in
+        Chat.sharedInstance.getHistory(inputModel: inputModel, getCacheResponse: nil, uniqueId: { (getHistoryUniqueId) in
             print("\n get history request uniqueId = \t \(getHistoryUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseJSON = (myResponse as! GetHistoryModel).returnDataAsJSON()
@@ -78,7 +78,7 @@ extension MyViewController {
                                                 onlyUnreadMention: false,
                                                 typeCode: nil,
                                                 uniqueId: nil)
-        Chat.sharedInstance.getMentionList(inputModel: inputModel, uniqueId: { (getMentionListUniqueId) in
+        Chat.sharedInstance.getMentionList(inputModel: inputModel, getCacheResponse: nil, uniqueId: { (getMentionListUniqueId) in
             print("\n get mentionList request uniqueId = \t \(getMentionListUniqueId) \n")
         }, completion: { (myResponse) in
             let myResponseJSON = (myResponse as! GetHistoryModel).returnDataAsJSON()
@@ -90,10 +90,22 @@ extension MyViewController {
     }
     
     
+    @objc func getAllUnreadMessageCountButtonPressed() {
+        let inputModel = GetAllUnreadMessageCountRequestModel(countMuteThreads: false, typeCode: nil, uniqueId: nil)
+        Chat.sharedInstance.getAllUnreadMessagesCount(inputModel: inputModel, getCacheResponse: nil, uniqueId: { (getAllUnreadMessageCountUniqueId) in
+            print("\n get getAllUnreadMessageCountUniqueId request uniqueId = \t \(getAllUnreadMessageCountUniqueId) \n")
+        }, completion: { (serverResponse) in
+            print("\n this is my getAllUnreadMessageCountUniqueId response from Server: \n \((serverResponse as! UnreadMessageCountModel).returnDataAsJSON()) \n")
+        }) { (cacheResponse) in
+            print("\n this is my getAllUnreadMessageCountUniqueId response from Cache: \n \(cacheResponse.returnDataAsJSON()) \n")
+        }
+    }
+    
+    
     @objc func searchHistoryButtonPressed() {  }
     
     @objc func clearHistoryButtonPressed() {
-        let inputModel = ClearHistoryRequestModel(threadId: 4622,
+        let inputModel = ClearHistoryRequestModel(threadId: 25301,//4622,
                                                   typeCode: nil,
                                                   uniqueId: nil)
         Chat.sharedInstance.clearHistory(inputModel: inputModel, uniqueId: { (createHistoryUniqueId) in
@@ -106,7 +118,7 @@ extension MyViewController {
     
     func deleteMessage() {
         
-        let inputModel = DeleteMessageRequestModel(deleteForAll: nil, subjectId: 35486, typeCode: nil, uniqueId: nil)
+        let inputModel = DeleteMessageRequestModel(deleteForAll: nil, subjectId: 87348, typeCode: nil, uniqueId: nil)
         Chat.sharedInstance.deleteMessage(inputModel: inputModel, uniqueId: { (deleteMEssageUniqueId) in
             print("Delete Message Unique ID = \(deleteMEssageUniqueId)")
         }, completion: { (response) in
@@ -118,13 +130,13 @@ extension MyViewController {
     @objc func deleteMultipleMessages() {
         
         let inputModel = DeleteMultipleMessagesRequestModel(deleteForAll: nil,
-                                                            threadId: 1103,
-                                                            messageIds: [35486],
+                                                            threadId: 7549,
+                                                            messageIds: [87348],
                                                             typeCode: nil)
         Chat.sharedInstance.deleteMultipleMessages(inputModel: inputModel, uniqueIds: { (deleteMEssageUniqueIds) in
             print("Delete Multiple Messages Unique IDs = \(deleteMEssageUniqueIds)")
         }, completion: { (response) in
-            print("delete Message response: \n \(response)")
+            print("delete Message response: \n \((response as! DeleteMessageModel).returnDataAsJSON())")
         })
         
     }
@@ -133,21 +145,36 @@ extension MyViewController {
     
     
     @objc func sendTextMessageButtonPressed() {
-        let inputModel = SendTextMessageRequestModel(content: "\(inputTextFieldToSendMessage.text ?? "empty message")", metadata: nil, repliedTo: nil, systemMetadata: nil, threadId: 12619/* 3284, "{\"type\":4,\"content\":\"{\\\"peerName\\\":\\\"chat-server\\\",\\\"priority\\\":1,\\\"content\\\":\\\"{\\\\n\\\\\\\"token\\\\\\\":\\\\\\\"c8f9d374ef2a4d1d9a642bf4bdf62c97\\\\\\\",\\\\n\\\\\\\"typeCode\\\\\\\":\\\\\\\"default\\\\\\\",\\\\n\\\\\\\"tokenIssuer\\\\\\\":1,\\\\n\\\\\\\"uniqueId\\\\\\\":\\\\\\\"CAEB653F-7C3D-4675-AFB8-4A9BE7E4B7C3\\\\\\\",\\\\n\\\\\\\"content\\\\\\\":\\\\\\\"E \\n e\\\\\\\",\\\\n\\\\\\\"type\\\\\\\":2,\\\\n\\\\\\\"subjectId\\\\\\\":18344\\\\n}\\\",\\\"ttl\\\":86400}\"}", 6494*/, typeCode: nil, uniqueId: nil)
-        Chat.sharedInstance.sendTextMessage(inputModel: inputModel, uniqueId: { (uniqueIdStr) in
-            print("message uniqueId is: \(uniqueIdStr)")
-        }, onSent: { (isSent) in
-            print("the message is sent = \(isSent)")
-        }, onDelivere: { (isDeliver) in
-            print("the message is delivered: '\(isDeliver)'")
-        }, onSeen: { (isSeen) in
-            print("the message with is Seen: '\(isSeen)'")
-        })
-        
+//        let inputModel = SendTextMessageRequestModel(content: "\(inputTextFieldToSendMessage.text ?? "empty message")", messageType: MESSAGE_TYPE.text, metadata: nil, repliedTo: nil, systemMetadata: nil, threadId: 7568, typeCode: nil, uniqueId: nil)
+//        Chat.sharedInstance.sendTextMessage(inputModel: inputModel, uniqueId: { (uniqueIdStr) in
+//            print("message uniqueId is: \(uniqueIdStr)")
+//        }, onSent: { (isSent) in
+//            print("the message is sent = \(isSent)")
+//        }, onDelivere: { (isDeliver) in
+//            print("the message is delivered: '\(isDeliver)'")
+//        }, onSeen: { (isSeen) in
+//            print("the message with is Seen: '\(isSeen)'")
+//        })
+        let inputModel = PinAndUnpinMessageRequestModel(messageId: 84334,
+                                                        notifyAll: true,
+                                                        typeCode: nil,
+                                                        uniqueId: nil)
+        Chat.sharedInstance.pinMessage(inputModel: inputModel,
+                                       uniqueId: { (uniqueIdStr) in
+            print("pinMessage uniqueId is: \(uniqueIdStr)")
+        }) { (resposne) in
+            print("pinMessage response = \((resposne as! PinUnpinMessageModel).returnDataAsJSON())")
+        }
     }
     
     @objc func editTextMessageButtonPressed() {
-        let inputModel = EditTextMessageRequestModel(content: "text message", metadata: nil, repliedTo: nil, messageId: 63291, typeCode: nil, uniqueId: nil)
+        let inputModel = EditTextMessageRequestModel(content:       "text message",
+                                                     messageType:   MESSAGE_TYPE.text,
+                                                     metadata:      nil,
+                                                     repliedTo:     nil,
+                                                     messageId:     63291,
+                                                     typeCode:      nil,
+                                                     uniqueId:      nil)
         Chat.sharedInstance.editMessage(inputModel: inputModel, uniqueId: { (editMessageUniqueId) in
             print("\n edit message request uniqueId = \t \(editMessageUniqueId) \n")
         }, completion: { (successResponse) in
@@ -158,7 +185,7 @@ extension MyViewController {
     
     @objc func replyTextMessageButtonPressed() {
         
-        let inputModel = ReplyTextMessageRequestModel(content: "\(inputTextFieldToSendMessage.text ?? "empty message")", metadata: nil, repliedTo: 35447, subjectId: 9953, typeCode: nil, uniqueId: nil)
+        let inputModel = ReplyTextMessageRequestModel(content: "\(inputTextFieldToSendMessage.text ?? "empty message")", messageType: MESSAGE_TYPE.text, metadata: nil, repliedTo: 35447, subjectId: 9953, typeCode: nil, uniqueId: nil)
         Chat.sharedInstance.replyMessage(inputModel: inputModel, uniqueId: { (uniqueIdStr) in
             print("message uniqueId is: \(uniqueIdStr)")
         }, onSent: { (isSent) in
@@ -190,18 +217,31 @@ extension MyViewController {
     @objc func sendUploadFileMessageButtonPressed() {
             let image = UIImage(named: "pic")
             if let data = UIImageJPEGRepresentation(image!, 1) {
-                let inputModel = UploadFileRequestModel(dataToSend: data,
-                                                        fileExtension: nil,
-                                                        fileName: "newPic",
-                                                        originalFileName: nil,
-                                                        threadId: 3284,
-                                                        typeCode: nil,
-                                                        uniqueId: nil)
+                let inputModel = UploadImageRequestModel(dataToSend: data,
+                                                         fileExtension: "png",
+                                                         fileName: "newNew",
+                                                         mimeType:  nil,
+                                                         originalFileName: "",
+                                                         threadId: 25301,
+                                                         xC: nil,
+                                                         yC: nil,
+                                                         hC: nil,
+                                                         wC: nil,
+                                                         typeCode: nil,
+                                                         uniqueId: nil)
+//                let inputModel = UploadFileRequestModel(dataToSend: data,
+//                                                        fileExtension: nil,
+//                                                        fileName: "newPic",
+//                                                        originalFileName: nil,
+//                                                        threadId: 3284,
+//                                                        typeCode: nil,
+//                                                        uniqueId: nil)
                 let message = SendTextMessageRequestModel(content: "",
+                                                          messageType: MESSAGE_TYPE.picture,
                                                           metadata: nil,
                                                           repliedTo: nil,
                                                           systemMetadata: nil,
-                                                          threadId: 3284,
+                                                          threadId: 25301,
                                                           typeCode: nil,
                                                           uniqueId: nil)
                 let fileMessage = SendFileMessageRequestModel(messageInput: message,
@@ -261,6 +301,7 @@ extension MyViewController {
         if let data = UIImageJPEGRepresentation(image!, 1) {
             
             let textMessage = SendTextMessageRequestModel(content: "empty message",
+                                                          messageType: MESSAGE_TYPE.file,
                                                           metadata: nil,
                                                           repliedTo: 73297,
                                                           systemMetadata: nil,
@@ -270,6 +311,7 @@ extension MyViewController {
             let uploadInput = UploadFileRequestModel(dataToSend: data,
                                                      fileExtension: nil,
                                                      fileName: "newPic",
+                                                     mimeType:  nil,
                                                      originalFileName: nil,
                                                      threadId: 3284,
                                                      typeCode: nil,
@@ -385,6 +427,29 @@ extension MyViewController {
     }
     
     
+    @objc func pinMessageButtonPressed() {
+        let inputmodel = PinAndUnpinMessageRequestModel(messageId:  1,
+                                                        notifyAll:  true,
+                                                        typeCode:   nil,
+                                                        uniqueId:   nil)
+        Chat.sharedInstance.pinMessage(inputModel: inputmodel, uniqueId: { (pinMessageUniqueId) in
+            print("Pin Message Unique ID = \(pinMessageUniqueId)")
+        }) { (response) in
+            print("Pin Message response: \n \((response as! PinUnpinMessageModel).returnDataAsJSON())")
+        }
+    }
+    
+    @objc func unpinMessageButtonPressed() {
+        let inputmodel = PinAndUnpinMessageRequestModel(messageId:  1,
+                                                        notifyAll:  true,
+                                                        typeCode:   nil,
+                                                        uniqueId:   nil)
+        Chat.sharedInstance.unpinMessage(inputModel: inputmodel, uniqueId: { (unpinMessageUniqueId) in
+            print("Pin Message Unique ID = \(unpinMessageUniqueId)")
+        }) { (response) in
+            print("Pin Message response: \n \((response as! PinUnpinMessageModel).returnDataAsJSON())")
+        }
+    }
     
     
 }

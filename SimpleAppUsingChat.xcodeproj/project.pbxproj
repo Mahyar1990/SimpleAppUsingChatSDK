@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3E2AB06D23A51C970036E6DF /* ManageCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2AB06C23A51C970036E6DF /* ManageCache.swift */; };
+		3E400DB923EFE656000DA873 /* Profile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E400DB823EFE656000DA873 /* Profile.swift */; };
 		3E56EDD123BC9CD700FED6CD /* DataPickerDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E56EDD023BC9CD700FED6CD /* DataPickerDelegate.swift */; };
 		3E63A065213A526D00E4E2C2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63A064213A526D00E4E2C2 /* AppDelegate.swift */; };
 		3E63A067213A526D00E4E2C2 /* MyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E63A066213A526D00E4E2C2 /* MyViewController.swift */; };
@@ -52,6 +53,7 @@
 
 /* Begin PBXFileReference section */
 		3E2AB06C23A51C970036E6DF /* ManageCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageCache.swift; sourceTree = "<group>"; };
+		3E400DB823EFE656000DA873 /* Profile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Profile.swift; sourceTree = "<group>"; };
 		3E56EDD023BC9CD700FED6CD /* DataPickerDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataPickerDelegate.swift; sourceTree = "<group>"; };
 		3E63A061213A526D00E4E2C2 /* SimpleAppUsingChat.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleAppUsingChat.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E63A064213A526D00E4E2C2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -120,6 +122,7 @@
 				3E63A066213A526D00E4E2C2 /* MyViewController.swift */,
 				3EA60C06239FBF82001A31F0 /* ChatDelegatesImplementations.swift */,
 				3E2AB06C23A51C970036E6DF /* ManageCache.swift */,
+				3E400DB823EFE656000DA873 /* Profile.swift */,
 				3EA60BFC239FBC2A001A31F0 /* Thread.swift */,
 				3EA60BFE239FBC33001A31F0 /* Message.swift */,
 				3EA60C00239FBC3C001A31F0 /* File.swift */,
@@ -287,6 +290,7 @@
 				3EA60C05239FBCA2001A31F0 /* Map.swift in Sources */,
 				3E2AB06D23A51C970036E6DF /* ManageCache.swift in Sources */,
 				3EA60BFD239FBC2A001A31F0 /* Thread.swift in Sources */,
+				3E400DB923EFE656000DA873 /* Profile.swift in Sources */,
 				3EA60BFF239FBC33001A31F0 /* Message.swift in Sources */,
 				3EA60BF9239F8EA2001A31F0 /* MZButton.swift in Sources */,
 				3EA60C09239FC016001A31F0 /* CollectionViewDlegates.swift in Sources */,

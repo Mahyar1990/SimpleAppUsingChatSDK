@@ -17,7 +17,7 @@ extension MyViewController {
         
         let inputModel = GetImageRequestModel(actual: nil, downloadable: nil, height: nil, hashCode: "16f621fa6ce-0.6413126404223938", imageId: 67976, width: nil, serverResponse: nil)
 
-        Chat.sharedInstance.getImage(inputModel: inputModel, uniqueId: { (getImageUniqueId) in
+        Chat.sharedInstance.getImage(inputModel: inputModel, getCacheResponse: nil, uniqueId: { (getImageUniqueId) in
             print("getImage UniqueId = \(getImageUniqueId)")
         }, progress: { (myDownloadProgress) in
             print("downloadProcess = \(myDownloadProgress)")
@@ -38,7 +38,7 @@ extension MyViewController {
     @objc func getFileButtonPressed() {
         
         let inputModel = GetFileRequestModel(downloadable: true, fileId: 52171, hashCode: "168232d744d-0.9990232707506134", serverResponse: nil)
-        Chat.sharedInstance.getFile(inputModel: inputModel, uniqueId: { (getFileUniqueId) in
+        Chat.sharedInstance.getFile(inputModel: inputModel, getCacheResponse: nil, uniqueId: { (getFileUniqueId) in
             print("getFile UniqueId = \(getFileUniqueId)")
         }, progress: { (myDownloadProgress) in
             print("downloadProcess = \(myDownloadProgress)")

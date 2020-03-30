@@ -51,7 +51,7 @@ extension MyViewController: ChatDelegates {
     }
     
     func messageEvents(model: MessageEventModel) {
-        print("messageEvents: \n eventType = \(model.type) \n threadId = \(model.threadId) \n message = \(model.message)\n")
+        print("messageEvents: \n eventType = \(model.type) \n threadId = \(model.threadId) \n message = \(model.message)\n messageId = \(model.messageId)\n")
     }
     
     func systemEvents(model: SystemEventModel) {
@@ -60,6 +60,10 @@ extension MyViewController: ChatDelegates {
     
     func threadEvents(model: ThreadEventModel) {
         print("threadEvents: \n eventType = \(model.type)\n threadId = \(model.threadId) \n threads = \(model.threads) \n")
+        if let th = model.threads {
+            print("here")
+            print(th.first?.formatToJSON())
+        }
     }
     
 }

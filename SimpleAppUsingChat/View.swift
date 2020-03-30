@@ -28,8 +28,14 @@ extension MyViewController {
     }
     
     func setupViewItems() {
+        
         getUserInfoButton.setTitle("Get UserInfo...", for: .normal)
         getUserInfoButton.addTarget(self, action: #selector(getUserInfoButtonPressed), for: .touchUpInside)
+        
+        setProfileButton.setTitle("Set Profile...", for: .normal)
+        setProfileButton.addTarget(self, action: #selector(setProfileButtonPressed), for: .touchUpInside)
+        
+        
         
         
         getThreadsButton.setTitle("Get Threads...", for: .normal)
@@ -87,6 +93,13 @@ extension MyViewController {
         getCurrentUserRolesButton.setTitle("GetCurrentUserRoles...", for: .normal)
         getCurrentUserRolesButton.addTarget(self, action: #selector(getCurrentUserRolesButtonPressed), for: .touchUpInside)
         
+        joinThreadButton.setTitle("JoinPublicThread...", for: .normal)
+        joinThreadButton.addTarget(self, action: #selector(joinThreadButtonPressed), for: .touchUpInside)
+        
+        isNameAvailableThreadButton.setTitle("IsNameAvailableThread...", for: .normal)
+        isNameAvailableThreadButton.addTarget(self, action: #selector(isNameAvailableThreadButtonPressed), for: .touchUpInside)
+        
+        
         
         getHistoryButton.setTitle("Get History...", for: .normal)
         getHistoryButton.addTarget(self, action: #selector(getHistoryButtonPressed), for: .touchUpInside)
@@ -102,6 +115,9 @@ extension MyViewController {
         
         getMentionListButton.setTitle("Get MentionList...", for: .normal)
         getMentionListButton.addTarget(self, action: #selector(getMentionListButtonPressed), for: .touchUpInside)
+        
+        getAllUnreadMessageCountButton.setTitle("Get All Unread Message Count...", for: .normal)
+        getAllUnreadMessageCountButton.addTarget(self, action: #selector(getAllUnreadMessageCountButtonPressed), for: .touchUpInside)
         
         
         
@@ -207,6 +223,7 @@ extension MyViewController {
 
     func setupLayouts() {
         view.addSubview(getUserInfoButton)
+        view.addSubview(setProfileButton)
         
         view.addSubview(getThreadsButton)
         view.addSubview(searchThreadButton)
@@ -226,12 +243,15 @@ extension MyViewController {
         view.addSubview(removeParticipantButton)
         view.addSubview(getThreadParticipantsButton)
         view.addSubview(getCurrentUserRolesButton)
+        view.addSubview(joinThreadButton)
+        view.addSubview(isNameAvailableThreadButton)
         
         view.addSubview(getHistoryButton)
         view.addSubview(searchHistoryButton)
         view.addSubview(clearHistoryButton)
         view.addSubview(deleteMessageButton)
         view.addSubview(getMentionListButton)
+        view.addSubview(getAllUnreadMessageCountButton)
         
         view.addSubview(inputTextFieldToSendMessage)
         view.addSubview(sendTextMessageButton)
@@ -276,7 +296,11 @@ extension MyViewController {
         getUserInfoButton.leftAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leftAnchor, constant: 8).isActive = true
         getUserInfoButton.widthAnchor.constraint(equalToConstant: ((view.frame.width - 24) / 2)).isActive = true
         getUserInfoButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
-        
+        // right
+        setProfileButton.topAnchor.constraint(equalTo: getUserInfoButton.topAnchor).isActive = true
+        setProfileButton.leftAnchor.constraint(equalTo: getUserInfoButton.rightAnchor, constant: 8).isActive = true
+        setProfileButton.rightAnchor.constraint(equalTo: view.safeAreaLayoutGuide.rightAnchor, constant: -8).isActive = true
+        setProfileButton.bottomAnchor.constraint(equalTo: getUserInfoButton.bottomAnchor).isActive = true
         
         
         
@@ -370,10 +394,22 @@ extension MyViewController {
         getCurrentUserRolesButton.leftAnchor.constraint(equalTo: searchThreadButton.leftAnchor).isActive = true
         getCurrentUserRolesButton.rightAnchor.constraint(equalTo: searchThreadButton.rightAnchor).isActive = true
         getCurrentUserRolesButton.bottomAnchor.constraint(equalTo: getThreadParticipantsButton.bottomAnchor).isActive = true
+        // left
+        joinThreadButton.topAnchor.constraint(equalTo: getThreadParticipantsButton.bottomAnchor, constant: 4).isActive = true
+        joinThreadButton.leftAnchor.constraint(equalTo: getThreadsButton.leftAnchor).isActive = true
+        joinThreadButton.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
+        joinThreadButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        // right
+        isNameAvailableThreadButton.topAnchor.constraint(equalTo: joinThreadButton.topAnchor).isActive = true
+        isNameAvailableThreadButton.leftAnchor.constraint(equalTo: searchThreadButton.leftAnchor).isActive = true
+        isNameAvailableThreadButton.rightAnchor.constraint(equalTo: searchThreadButton.rightAnchor).isActive = true
+        isNameAvailableThreadButton.bottomAnchor.constraint(equalTo: joinThreadButton.bottomAnchor).isActive = true
+        
+        
         
         
         // left
-        getHistoryButton.topAnchor.constraint(equalTo: getThreadParticipantsButton.bottomAnchor, constant: 12).isActive = true
+        getHistoryButton.topAnchor.constraint(equalTo: joinThreadButton.bottomAnchor, constant: 12).isActive = true
         getHistoryButton.leftAnchor.constraint(equalTo: getThreadsButton.leftAnchor).isActive = true
         getHistoryButton.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
         getHistoryButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
@@ -397,6 +433,13 @@ extension MyViewController {
         getMentionListButton.leftAnchor.constraint(equalTo: getThreadsButton.leftAnchor).isActive = true
         getMentionListButton.rightAnchor.constraint(equalTo: getThreadsButton.rightAnchor).isActive = true
         getMentionListButton.heightAnchor.constraint(equalToConstant: 20).isActive = true
+        // right
+        getAllUnreadMessageCountButton.topAnchor.constraint(equalTo: getMentionListButton.topAnchor).isActive = true
+        getAllUnreadMessageCountButton.leftAnchor.constraint(equalTo: searchThreadButton.leftAnchor).isActive = true
+        getAllUnreadMessageCountButton.rightAnchor.constraint(equalTo: searchThreadButton.rightAnchor).isActive = true
+        getAllUnreadMessageCountButton.bottomAnchor.constraint(equalTo: getMentionListButton.bottomAnchor).isActive = true
+        
+        
         
         
         inputTextFieldToSendMessage.topAnchor.constraint(equalTo: getMentionListButton.bottomAnchor, constant: 12).isActive = true
