@@ -1,4 +1,4 @@
-//
+
 //  File.swift
 //  SimpleAppUsingChat
 //
@@ -150,9 +150,13 @@ extension MyViewController {
         
         getImage.setTitle("Get Image...", for: .normal)
         getImage.addTarget(self, action: #selector(getImgeButtonPressed), for: .touchUpInside)
+        getFile.setTitle("Uoload Image...", for: .normal)
+        getFile.addTarget(self, action: #selector(uploadImageButtonPressed), for: .touchUpInside)
         
-        getFile.setTitle("Get File...", for: .normal)
-        getFile.addTarget(self, action: #selector(getFileButtonPressed), for: .touchUpInside)
+//        getFile.setTitle("Get File...", for: .normal)
+//        getFile.addTarget(self, action: #selector(getFileButtonPressed), for: .touchUpInside)
+//        getFile.setTitle("Upload File...", for: .normal)
+//        getFile.addTarget(self, action: #selector(uploadFileButtonPressed), for: .touchUpInside)
         
         
         

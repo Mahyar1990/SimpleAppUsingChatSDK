@@ -14,11 +14,11 @@ extension MyViewController {
     
     @objc func getThreadsButtonPressed() {
         
-        let inputModel = GetThreadsRequestModel(count: 10,
+        let inputModel = GetThreadsRequestModel(count: 7,
                                                 creatorCoreUserId: nil,
                                                 metadataCriteria: nil,
                                                 name: nil,
-                                                new: true,
+                                                new: false,
                                                 offset: 0,
                                                 partnerCoreContactId: nil,
                                                 partnerCoreUserId: nil,
@@ -28,7 +28,7 @@ extension MyViewController {
         Chat.sharedInstance.getThreads(inputModel: inputModel, getCacheResponse: nil, uniqueId: { (getThreadUniqueId) in
             print("\n get thread request uniqueId = \t \(getThreadUniqueId) \n")
         }, completion: { (myResponse) in
-            let myResponseModel: GetThreadsModel = myResponse as! GetThreadsModel
+            let myResponseModel: GetThreadsResponse = myResponse as! GetThreadsResponse
             let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
             print("\n this is my get thread response from Server:")
             print("\(myResponseJSON) \n")
@@ -71,20 +71,21 @@ extension MyViewController {
     @objc func createThreadButtonPressed() {
             
         // CreateThread
-//        let mehdi = Invitee(id: "4457", idType: "\(INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID.stringValue())")
-//        let sina = Invitee(id: "3157", idType: "\(INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID.stringValue())")
-//        let arvin = Invitee(id: "4539", idType: "\(INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID.stringValue())")
-//        let sina = Invitee(id: "s.javaheri", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_USERNAME.stringValue())
-//        let sara = Invitee(id: "23464", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
-//        let zizi = Invitee(id: "09981084527", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER.stringValue())
-        let sss = Invitee(id: "563", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID.stringValue())
+//        let mehdi = Invitee(id: "4457", idType: "\(InviteeVoIdTypes.TO_BE_USER_CONTACT_ID.stringValue())")
+//        let sina = Invitee(id: "3157", idType: "\(InviteeVoIdTypes.TO_BE_USER_CONTACT_ID.stringValue())")
+//        let arvin = Invitee(id: "4539", idType: "\(InviteeVoIdTypes.TO_BE_USER_CONTACT_ID.stringValue())")
+//        let sina = Invitee(id: "s.javaheri", idType: InviteeVoIdTypes.TO_BE_USER_USERNAME.stringValue())
+//        let sara = Invitee(id: "23464", idType: InviteeVoIdTypes.TO_BE_USER_CONTACT_ID)
+//        let zizi = Invitee(id: "09981084527", idType: InviteeVoIdTypes.TO_BE_USER_CELLPHONE_NUMBER.stringValue())
+        let sss = Invitee(id: "563", idType: InviteeVoIdTypes.TO_BE_USER_CONTACT_ID.stringValue())
+        
         let inputModel = CreateThreadRequestModel(description:  nil,
                                                   image:        nil,
                                                   invitees:     [sss],
                                                   metadata:     nil,
-                                                  uniqueName:   "abcdefghigklmno",
+                                                  uniqueName:   nil,
                                                   title:        "new public thread created by contactId",
-                                                  type:         ThreadTypes.PUBLIC_GROUP,
+                                                  type:         ThreadTypes.OWNER_GROUP,
                                                   typeCode:     nil,
                                                   uniqueId:     nil)
         
@@ -195,12 +196,12 @@ extension MyViewController {
         let messageModel = MessageInput(forwardedMessageIds: nil,
                                         repliedTo:          nil,
                                         text:               "blah blah",
-                                        messageType:        MESSAGE_TYPE.text,
+                                        messageType:        MessageType.TEXT,
 //                                        metadata:           nil,
                                         systemMetadata:     nil,
                                         uniqueId:           nil)
         
-        let invitee = Invitee(id: "25397", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CONTACT_ID)
+        let invitee = Invitee(id: "25397", idType: InviteeVoIdTypes.TO_BE_USER_CONTACT_ID)
         let createThreadModel = CreateThreadRequestModel(description: nil,
                                                          image:     nil,
                                                          invitees:  [invitee],
@@ -226,55 +227,57 @@ extension MyViewController {
         })
     }
     
+    
+    // ToDo: implemnt this method with new implementation of createThreadWIthMessage
     @objc func createThreadWithFileMessageButtonPressed() {
         
-        let image = UIImage(named: "pic")
-        if let data = UIImageJPEGRepresentation(image!, 1) {
-            let invitee = Invitee(id: "09155081967", idType: INVITEE_VO_ID_TYPES.TO_BE_USER_CELLPHONE_NUMBER)
-            let createThreadModel = CreateThreadRequestModel(description:   nil,
-                                                             image:         nil,
-                                                             invitees:      [invitee],
-                                                             metadata:      nil,
-                                                             uniqueName:    nil,
-                                                             title:         "new Thread",
-                                                             type:          ThreadTypes.NORMAL,
-                                                             typeCode:      nil,
-                                                             uniqueId:      nil)
-            let messageModel = MessageInput(forwardedMessageIds: nil,
-                                            repliedTo:          nil,
-                                            text:               "dummy message text",
-                                            messageType:        MESSAGE_TYPE.picture,
-//                                            metadata:           nil,
-                                            systemMetadata:     nil,
-                                            uniqueId:           nil)
-            let createThreadMessageModel = CreateThreadWithMessageRequestModel(createThreadInput:   createThreadModel,
-                                                                               sendMessageInput:    messageModel)
-            let uploadModel = UploadFileRequestModel(dataToSend:    data,
-                                                     fileExtension: nil,
-                                                     fileName:      nil,
-                                                     mimeType:      nil,
-                                                     originalFileName: nil,
-                                                     threadId:      nil,
-                                                     typeCode:      nil,
-                                                     uniqueId:      nil)
-            let inputModel = CreateThreadWithFileMessageRequestModel(creatThreadWithMessageInput:   createThreadMessageModel,
-                                                                     uploadInput:                   uploadModel)
-            Chat.sharedInstance.createThreadWithFileMessage(inputModel: inputModel, uploadUniqueId: { (uploadUniqueIdResponse) in
-                print("the upload uniqueId = \(uploadUniqueIdResponse)")
-            }, uploadProgress: { (progress) in
-                print("the upload progress = \(progress)")
-            }, uniqueId: { (messageUniqueIdResponse) in
-                print("the createThread uniqueId = \(messageUniqueIdResponse)")
-            }, completion: { (createThreadResponse) in
-                print("the createThread response is sent = \((createThreadResponse as! ThreadModel).returnDataAsJSON())")
-            }, onSent: { (isSent) in
-                print("the message is sent = \(isSent)")
-            }, onDelivered: { (isDeliver) in
-                print("the message is delivered: '\(isDeliver)'")
-            }, onSeen: { (isSeen) in
-                print("the message with is Seen: '\(isSeen)'")
-            })
-        }
+//        let image = UIImage(named: "pic")
+//        if let data = UIImageJPEGRepresentation(image!, 1) {
+//            let invitee = Invitee(id: "09155081967", idType: InviteeVoIdTypes.TO_BE_USER_CELLPHONE_NUMBER)
+//            let createThreadModel = CreateThreadRequestModel(description:   nil,
+//                                                             image:         nil,
+//                                                             invitees:      [invitee],
+//                                                             metadata:      nil,
+//                                                             uniqueName:    nil,
+//                                                             title:         "new Thread",
+//                                                             type:          ThreadTypes.NORMAL,
+//                                                             typeCode:      nil,
+//                                                             uniqueId:      nil)
+//            let messageModel = MessageInput(forwardedMessageIds: nil,
+//                                            repliedTo:          nil,
+//                                            text:               "dummy message text",
+//                                            messageType:        MessageType.PICTURE,
+////                                            metadata:           nil,
+//                                            systemMetadata:     nil,
+//                                            uniqueId:           nil)
+//            let createThreadMessageModel = CreateThreadWithMessageRequestModel(createThreadInput:   createThreadModel,
+//                                                                               sendMessageInput:    messageModel)
+//            let uploadModel = UploadFileRequestModel(dataToSend:    data,
+//                                                     fileExtension: nil,
+//                                                     fileName:      nil,
+//                                                     mimeType:      nil,
+//                                                     originalFileName: nil,
+//                                                     threadId:      nil,
+//                                                     typeCode:      nil,
+//                                                     uniqueId:      nil)
+//            let inputModel = CreateThreadWithFileMessageRequestModel(creatThreadWithMessageInput:   createThreadMessageModel,
+//                                                                     uploadInput:                   uploadModel)
+//            Chat.sharedInstance.createThreadWithFileMessage(inputModel: inputModel, uploadUniqueId: { (uploadUniqueIdResponse) in
+//                print("the upload uniqueId = \(uploadUniqueIdResponse)")
+//            }, uploadProgress: { (progress) in
+//                print("the upload progress = \(progress)")
+//            }, uniqueId: { (messageUniqueIdResponse) in
+//                print("the createThread uniqueId = \(messageUniqueIdResponse)")
+//            }, completion: { (createThreadResponse) in
+//                print("the createThread response is sent = \((createThreadResponse as! ThreadModel).returnDataAsJSON())")
+//            }, onSent: { (isSent) in
+//                print("the message is sent = \(isSent)")
+//            }, onDelivered: { (isDeliver) in
+//                print("the message is delivered: '\(isDeliver)'")
+//            }, onSeen: { (isSeen) in
+//                print("the message with is Seen: '\(isSeen)'")
+//            })
+//        }
         
     }
     
@@ -431,7 +434,8 @@ extension MyViewController {
 //        })
         
 //        let inputModel = AddParticipantsRequestModel(contactIds: [2202, 2869], threadId: 7550, typeCode: nil, uniqueId: nil)
-        let inputModel = AddParticipantsRequestModel(usernames: ["fkheirkhah"], threadId: 7550, typeCode: nil, uniqueId: nil)
+        let inputModel = AddParticipantsRequestModel(usernames: ["yrojadsfljjnsvBOT"], threadId: 7468, typeCode: nil, uniqueId: nil)
+//        let inputModel = AddParticipantsRequestModel(coreUserIds: [16704], threadId: 7468, typeCode: nil, uniqueId: nil)
         Chat.sharedInstance.addParticipants(inputModel: inputModel, uniqueId: { (addParticipantsUniqueId) in
             print("\n add participant request uniqueId = \t \(addParticipantsUniqueId) \n")
         }, completion: { (myResponse) in
@@ -469,7 +473,7 @@ extension MyViewController {
                                                            lastMessageId: nil,
                                                            name: nil,
                                                            offset: 0,
-                                                           threadId: 7308,
+                                                           threadId: 12090,
                                                            typeCode: nil,
                                                            uniqueId: nil)
         Chat.sharedInstance.getThreadParticipants(inputModel: inputModel, getCacheResponse: nil, uniqueId: { (getThreadParticipantUniqueId) in

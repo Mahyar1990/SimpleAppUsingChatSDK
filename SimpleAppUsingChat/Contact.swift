@@ -23,7 +23,7 @@ extension MyViewController {
             print("\n this is my get contacts response from Server:")
             print("\(myResponseJSON) \n")
         }, cacheResponse: { (contactResponse) in
-            print("\n this is my get contact response from Cache:")
+            print("\n this is my get contacts response from Cache:")
             let responseJSON = contactResponse.returnDataAsJSON()
             print("\(responseJSON)")
         })
@@ -32,12 +32,13 @@ extension MyViewController {
     
     @objc func searchContactsButtonPressed() {
         
-        let inputModel = SearchContactsRequestModel(cellphoneNumber: "09151675045",
+        let inputModel = SearchContactsRequestModel(cellphoneNumber: nil,//"09151675045",
                                                     email: nil,
                                                     firstName: nil,
-                                                    id: nil,
+                                                    id: 4121,
                                                     lastName: nil,
                                                     offset: nil,
+                                                    ownerId: nil,
                                                     size: nil,
                                                     query: nil,
                                                     typeCode: nil,
@@ -71,6 +72,7 @@ extension MyViewController {
                                                 email: nil,
                                                 firstName: "Mahyar",
                                                 lastName: nil,
+                                                ownerId: nil,
                                                 typeCode: nil,
                                                 uniqueId: nil)
         Chat.sharedInstance.addContact(inputModel: inputModel, uniqueId: { (addContactUniqueId) in
@@ -133,7 +135,7 @@ extension MyViewController {
  
     @objc func blockContactButtonPressed() {
         
-        let inputModel = BlockContactsRequestModel(contactId: 2225,
+        let inputModel = BlockContactsRequestModel(contactId: 4121,
                                                    threadId: nil,
                                                    userId: nil,
                                                    typeCode: nil,

@@ -15,18 +15,25 @@ extension MyViewController {
     
     
     @objc func getUserInfoButtonPressed() {
-        Chat.sharedInstance.getUserInfo(getCacheResponse: nil, uniqueId: { (getUserInfoUniqueId) in
-            print("\n get user info request uniqueId = \t \(getUserInfoUniqueId) \n")
-        }, completion: { (myResponse) in
-            print("\n this is my get user info response from Server:")
-            let myResponseModel: UserInfoModel = myResponse as! UserInfoModel
-            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
-            print("\(myResponseJSON) \n")
-        }, cacheResponse: { (userInfoResponse) in
-            print("\n this is my get user info response from Cache:")
-            let responseJSON = userInfoResponse.returnDataAsJSON()
-            print("\(responseJSON)")
-        })
+//        let x = Chat.sharedInstance.isConnectedToInternet() as! String
+        
+//        Chat.sharedInstance.getUserInfo(getCacheResponse: nil, uniqueId: { (getUserInfoUniqueId) in
+//            print("\n get user info request uniqueId = \t \(getUserInfoUniqueId) \n")
+//        }, completion: { (myResponse) in
+//            print("\n this is my get user info response from Server:")
+//            let myResponseModel: UserInfoModel = myResponse as! UserInfoModel
+//            let myResponseJSON: JSON = myResponseModel.returnDataAsJSON()
+//            print("\(myResponseJSON) \n")
+//        }, cacheResponse: { (userInfoResponse) in
+//            print("\n this is my get user info response from Cache:")
+//            let responseJSON = userInfoResponse.returnDataAsJSON()
+//            print("\(responseJSON)")
+//        })
+        
+        
+        let x = 1
+        let ss = x as! MyViewController
+        
     }
     
     @objc func setProfileButtonPressed() {

@@ -24,80 +24,85 @@ extension MyViewController: UIPickerViewDelegate {
         picker.dismiss(animated: true, completion: nil)
         
         if let data = UIImageJPEGRepresentation(selectedImage!, 100) {
-//            let inputModel = UploadImageRequestModel(dataToSend:        data,
-//                                                     fileExtension:     nil,
-//                                                     fileName:          "newPicture",
-//                                                     originalFileName:  nil,
-//                                                     threadId:          nil,
-//                                                     xC:                nil,
-//                                                     yC:                nil,
-//                                                     hC:                nil,
-//                                                     wC:                nil,
-//                                                     typeCode:          nil,
-//                                                     uniqueId:          nil)
             
-            let inputModel = UploadImageRequestModel(dataToSend:        data,
-                                                     fileExtension:     "png",
-                                                     fileName:          "newPicture",
-                                                     mimeType:          nil,
-                                                     originalFileName:  "",
-                                                     threadId:          25301,
-                                                     xC:                nil,
-                                                     yC:                nil,
-                                                     hC:                nil,
-                                                     wC:                nil,
-                                                     typeCode:          nil,
-                                                     uniqueId:          "qqqqqqqqqqqqqqqqqqqqqqqqqqqq")
-            let message = SendTextMessageRequestModel(content:          "message",
-                                                      messageType:      MESSAGE_TYPE.text,
-                                                      metadata:         nil,
-                                                      repliedTo:        nil,
-                                                      systemMetadata:   nil,
-                                                      threadId:         25301,
-                                                      typeCode:         nil,
-                                                      uniqueId:         "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")
-            let fileMessage = SendFileMessageRequestModel(messageInput: message,
-                                                          uploadInput:  inputModel)
+//            let inputModel = UploadImageRequest(dataToSend:     data,
+//                                                fileExtension:  "png",
+//                                                fileName:       "newPicture",
+//                                                mimeType:       nil,
+//                                                xC:             nil,
+//                                                yC:             nil,
+//                                                hC:             nil,
+//                                                wC:             nil,
+//                                                userGroupHash:  "",
+//                                                typeCode:       nil,
+//                                                uniqueId:       "qqqqqqqqqqqqqqqqqqqqqqqqqqqq")
+//            let message = SendTextMessageRequestModel(content:          "message",
+//                                                      messageType:      MessageType.TEXT,
+//                                                      metadata:         nil,
+//                                                      repliedTo:        nil,
+//                                                      systemMetadata:   nil,
+//                                                      threadId:         25301,
+//                                                      typeCode:         nil,
+//                                                      uniqueId:         "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm")
+//            let fileMessage = SendFileMessageRequestModel(messageInput: message,
+//                                                          uploadInput:  inputModel)
+//            Chat.sharedInstance.sendFileMessage(inputModel: fileMessage, uploadUniqueId: { (uploadImageUniqueId) in
+//                print("********************************")
+//                print("Upload ImageUniqueId is = \(uploadImageUniqueId)")
+//                print("********************************")
+//            }, uploadProgress: { (progress) in
+//                print("Upload File progress is = \(progress)")
+//            }, messageUniqueId: { (messageUniqueId) in
+//                print("********************************")
+//                print("file sendMessageUniqueId is = \(messageUniqueId)")
+//                print("********************************")
+//            }, onSent: { (sent) in
+//                print("********************************")
+//                print("file message is Sent = \(sent)")
+//                print("********************************")
+//            }, onDelivered: { (delivered) in
+//                print("********************************")
+//                print("file message is Delivered = \(delivered)")
+//                print("********************************")
+//            }) { (seen) in
+//                print("********************************")
+//                print("file message is Seen = \(seen)")
+//                print("********************************")
+//            }
             
-            Chat.sharedInstance.sendFileMessage(inputModel: fileMessage, uploadUniqueId: { (uploadImageUniqueId) in
-                print("********************************")
-                print("Upload ImageUniqueId is = \(uploadImageUniqueId)")
-                print("********************************")
-            }, uploadProgress: { (progress) in
-                print("Upload File progress is = \(progress)")
-            }, messageUniqueId: { (messageUniqueId) in
-                print("********************************")
-                print("file sendMessageUniqueId is = \(messageUniqueId)")
-                print("********************************")
-            }, onSent: { (sent) in
-                print("********************************")
-                print("file message is Sent = \(sent)")
-                print("********************************")
-            }, onDelivered: { (delivered) in
-                print("********************************")
-                print("file message is Delivered = \(delivered)")
-                print("********************************")
-            }) { (seen) in
-                print("********************************")
-                print("file message is Seen = \(seen)")
-                print("********************************")
+            
+            let inptutModel = UploadImageRequest(dataToSend:    data,
+                                                 fileExtension: nil,
+                                                 fileName:      nil,
+                                                 isPublic:      true,
+                                                 mimeType:      "",
+                                                 xC:            0,
+                                                 yC:            0,
+                                                 hC:            99999,
+                                                 wC:            99999,
+                                                 typeCode:      nil,
+                                                 uniqueId:      nil)
+//            let inptutModel = UploadImageRequest(dataToSend:    data,
+//                                                 fileExtension: nil,
+//                                                 fileName:      nil,
+//                                                 mimeType:      "",
+//                                                 xC:            0,
+//                                                 yC:            0,
+//                                                 hC:            99999,
+//                                                 wC:            99999,
+//                                                 userGroupHash: "TXZLOYMAFZCCVS",
+//                                                 typeCode:      nil,
+//                                                 uniqueId:      nil)
+            
+            Chat.sharedInstance.uploadImage(inputModel: inptutModel, uniqueId: { (uploadImageUniqueId) in
+                print("Upload Image UniqueId = \(uploadImageUniqueId)")
+            }, progress: { (myUploadProgress) in
+                print("uploadProcess = \(myUploadProgress)")
+            }) { (response) in
+                let rsponseJSON = (response as! UploadImageResponse).returnDataAsJSON()
+                print("This is my Upload Image Response: \n\(rsponseJSON)")
             }
             
-            
-//            Chat.sharedInstance.uploadImage(inputModel: inputModel, uniqueId: { (uploadFileUniqueId) in
-//                print("********************************")
-//                print("UploadImageUniqueId is = \(uploadFileUniqueId)")
-//                print("********************************")
-//            }, progress: { (progress) in
-//                print("Upload Image Progress = \(progress)")
-//            }, completion: { (response) in
-//                print("********************************")
-//                print("Response from Upload Image:")
-//                let responseModel: UploadImageModel = response as! UploadImageModel
-//                let responseJSON: JSON = responseModel.returnDataAsJSON()
-//                print("\(responseJSON)")
-//                print("********************************")
-//            })
             
         }
         

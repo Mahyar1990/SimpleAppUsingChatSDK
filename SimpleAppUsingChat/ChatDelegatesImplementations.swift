@@ -12,23 +12,23 @@ import FanapPodChatSDK
 extension MyViewController: ChatDelegates {
     
     func chatConnect() {
-        print("chatConnect")
+//        print("chatConnect")
     }
     
     func chatDisconnect() {
-        print("chatConnected")
+//        print("chatConnected")
     }
     
     func chatReconnect() {
-        print("chatReconnect")
+//        print("chatReconnect")
     }
     
     func chatReady(withUserInfo: User) {
         print("chatReady: \n UserInfo = \(withUserInfo.formatToJSON())")
     }
     
-    func chatState(state: Int) {
-        print("chatState = \(state)")
+    func chatState(state: AsyncStateType) {
+//        print("chatState = \(state)")
     }
     
     
@@ -39,31 +39,31 @@ extension MyViewController: ChatDelegates {
     
     
     func botEvents(model: BotEventModel) {
-        print("botEvents: \n eventType = \(model.type)\n")
+//        print("botEvents: \n eventType = \(model.type)\n")
     }
     
     func contactEvents(model: ContactEventModel) {
-        print("contactEvents: \n eventType = \(model.type) \n contacts = \(model.contacts)\n")
+//        print("contactEvents: \n eventType = \(model.type) \n contacts = \(model.contacts)\n")
     }
     
     func fileUploadEvents(model: FileUploadEventModel) {
-        print("fileUploadEvents: \n eventType = \(model.type)\n")
+//        print("fileUploadEvents: \n eventType = \(model.type)\n")
     }
     
     func messageEvents(model: MessageEventModel) {
-        print("messageEvents: \n eventType = \(model.type) \n threadId = \(model.threadId) \n message = \(model.message)\n messageId = \(model.messageId)\n")
+//        print("messageEvents: \n eventType = \(model.type) \n threadId = \(model.threadId) \n message = \(model.message)\n messageId = \(model.messageId)\n")
     }
     
     func systemEvents(model: SystemEventModel) {
-        print("systemEvents: \n eventType = \(model.type) \n threadId = \(model.threadId) \n")
+//        print("systemEvents: \n eventType = \(model.type) \n threadId = \(model.threadId) \n")
     }
     
     func threadEvents(model: ThreadEventModel) {
-        print("threadEvents: \n eventType = \(model.type)\n threadId = \(model.threadId) \n threads = \(model.threads) \n")
-        if let th = model.threads {
-            print("here")
-            print(th.first?.formatToJSON())
-        }
+//        print("threadEvents: \n eventType = \(model.type)\n threadId = \(model.threadId) \n threads = \(model.threads) \n")
+//        if let th = model.threads {
+//            print("here")
+//            print(th.first?.formatToJSON())
+//        }
     }
     
 }

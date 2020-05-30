@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import FanapPodChatSDK
+//import Sentry
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -19,7 +21,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window = UIWindow(frame: UIScreen.main.bounds)
         window?.makeKeyAndVisible()
         
+//        _ = SentrySDK(options: [
+//            "dsn": "https://a06c7828c36d47c7bbb24605ba5d0d26@o376741.ingest.sentry.io/5198368",
+//            "debug": true // Enabled debug when first installing is always helpful
+//        ])
+//        Chat.sharedInstance.runSentrySDK()
         window?.rootViewController = UINavigationController(rootViewController: MyViewController())
+        
+//        print("Chat init is called. \n here we will start using Sentry package")
+//        SentrySDK.start(options: [
+//            "dsn": "https://a06c7828c36d47c7bbb24605ba5d0d26@o376741.ingest.sentry.io/5198368",
+//            "debug": true // Helpful to see what's going on. (Enabled debug when first installing is always helpful)
+//        ])
         
         return true
     }

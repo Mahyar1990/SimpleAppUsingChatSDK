@@ -3,22 +3,4 @@
    uuid = "ADFC40C1-A6E2-4E9C-9107-DC5BCF00752A"
    type = "1"
    version = "2.0">
-   <Breakpoints>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "79FDA6EB-0264-4DF5-BFE5-694534C15394"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "../Pod-Chat-iOS-SDK/Pod-Chat-iOS-SDK/Chat/Main/AsyncDelegatesImplementation.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "131"
-            endingLineNumber = "131"
-            landmarkName = "asyncError(errorCode:errorMessage:errorEvent:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-   </Breakpoints>
 </Bucket>

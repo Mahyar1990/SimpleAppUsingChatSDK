@@ -43,7 +43,7 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
     let ssoHost                 = "https://accounts.pod.ir"
     let platformHost            = "https://sandbox.pod.ir:8043/srv/basic-platform"
     let fileServer              = "http://sandbox.fanapium.com:8080"
-    let token                   = "e19afcd4dc834ddea26d4ddec9b02369"
+    let token                   = "382ef911e3f548208dc1a4f93891e98b"
     
     // Integration Adresses:
 //    let socketAddress           = "ws://172.16.110.235:8003/ws"
@@ -203,20 +203,20 @@ https://accounts.pod.land/oauth2/authorize/index.html?client_id=2051121e4348af52
                                              mapServer:              "https://api.neshan.org/v1",
                                              typeCode:               "default",
                                              enableCache:            true,
-                                             cacheTimeStampInSec:    nil,
-                                             msgPriority:            1,
+                                             cacheTimeStampInSec:    (2 * 24) * (60 * 60),//nil,
+                                             msgPriority:            nil,//1,
                                              msgTTL:                 messageTtl,
                                              httpRequestTimeout:     nil,
                                              actualTimingLog:        nil,
-                                             wsConnectionWaitTime:   Double(wsConnectionWaitTime),
-                                             connectionRetryInterval: connectionRetryInterval,
-                                             connectionCheckTimeout: connectionCheckTimeout,
-                                             messageTtl:             messageTtl,
+                                             wsConnectionWaitTime:   0,//Double(wsConnectionWaitTime),
+                                             connectionRetryInterval: 10000,//connectionRetryInterval,
+                                             connectionCheckTimeout: 10000,//connectionCheckTimeout,
+                                             messageTtl:             10000,//messageTtl,
                                              maxReconnectTimeInterval: nil,
-                                             reconnectOnClose:       true,
+                                             reconnectOnClose:       false,
                                              localImageCustomPath:   nil,
                                              localFileCustomPath:    nil,
-                                             deviecLimitationSpaceMB: 100)
+                                             deviecLimitationSpaceMB: 10)
         
         Chat.sharedInstance.delegate = self
     }

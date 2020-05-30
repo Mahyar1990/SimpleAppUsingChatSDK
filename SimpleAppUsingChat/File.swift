@@ -15,8 +15,12 @@ extension MyViewController {
     
     @objc func getImgeButtonPressed() {
         
-        let inputModel = GetImageRequestModel(actual: nil, downloadable: nil, height: nil, hashCode: "16f621fa6ce-0.6413126404223938", imageId: 67976, width: nil, serverResponse: nil)
-
+        let inputModel = GetImageRequest(imageId:           67976,
+                                         hashCode:          "SUDJUDMVTOVBIW6T",
+                                         quality:           nil,
+                                         crop:              nil,
+                                         size:              nil,
+                                         serverResponse:    nil)
         Chat.sharedInstance.getImage(inputModel: inputModel, getCacheResponse: nil, uniqueId: { (getImageUniqueId) in
             print("getImage UniqueId = \(getImageUniqueId)")
         }, progress: { (myDownloadProgress) in
@@ -33,11 +37,24 @@ extension MyViewController {
 //            print("filePath = \(filePath)")
         })
         
+        
+//        let input = UploadImageRequest(dataToSend: <#T##Data#>, fileExtension: <#T##String?#>, fileName: <#T##String?#>, mimeType: <#T##String?#>, originalFileName: <#T##String?#>, threadId: <#T##Int?#>, xC: <#T##Int?#>, yC: <#T##Int?#>, hC: <#T##Int?#>, wC: <#T##Int?#>, typeCode: <#T##String?#>, uniqueId: <#T##String?#>)
+//        Chat.sharedInstance.uploadImage(inputModel: input, uniqueId: { (uploadImageUniqueId) in
+//            print("upload Image UniqueId = \(uploadImageUniqueId)")
+//        }, progress: { (uploadProcess) in
+//            print("uploadProcess = \(uploadProcess)")
+//        }) { (myResponse) in
+//            let response = myResponse as! UploadImageResponse
+//            print("This is my UploadImage Response: \n\(response.returnDataAsJSON())")
+//        }
+        
     }
     
     @objc func getFileButtonPressed() {
         
-        let inputModel = GetFileRequestModel(downloadable: true, fileId: 52171, hashCode: "168232d744d-0.9990232707506134", serverResponse: nil)
+        let inputModel = GetFileRequest(fileId:         52171,
+                                        hashCode:       "SUDJUDMVTOVBIW6T",
+                                        serverResponse: nil)
         Chat.sharedInstance.getFile(inputModel: inputModel, getCacheResponse: nil, uniqueId: { (getFileUniqueId) in
             print("getFile UniqueId = \(getFileUniqueId)")
         }, progress: { (myDownloadProgress) in
@@ -56,6 +73,45 @@ extension MyViewController {
         
     }
     
+    
+    @objc func uploadFileButtonPressed() {
+        
+        let image = UIImage(named: "pic")
+        if let data = UIImageJPEGRepresentation(image!, 1) {
+            let inptutModel = UploadFileRequest(dataToSend:     data,
+                                                fileExtension:  nil,
+                                                fileName:       nil,
+                                                isPublic:       true,
+                                                mimeType:       "",
+                                                typeCode:       nil,
+                                                uniqueId:       nil)
+            
+//            let inptutModel = UploadFileRequest(dataToSend:     data,
+//                                                fileExtension:  nil,
+//                                                fileName:       nil,
+//                                                mimeType:       "",
+//                                                userGroupHash:  "TXZLOYMAFZCCVS",
+//                                                typeCode:       nil,
+//                                                uniqueId:       nil)
+            
+            Chat.sharedInstance.uploadFile(inputModel: inptutModel, uniqueId: { (uploadFileUniqueId) in
+                print("Upload File UniqueId = \(uploadFileUniqueId)")
+            }, progress: { (myUploadProgress) in
+                print("uploadProcess = \(myUploadProgress)")
+            }) { (response) in
+                let rsponseJSON = (response as! UploadFileResponse).returnDataAsJSON()
+                print("This is my Upload File Response: \n\(rsponseJSON)")
+            }
+        }
+        
+    }
+    
+    
+    @objc func uploadImageButtonPressed() {
+        picker.delegate = self
+        picker.allowsEditing = true
+        self.present(picker, animated: true, completion: nil)
+    }
     
     
 }
